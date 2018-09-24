@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">SpaceInvadersProcesosSoftware</string>
+    <string name="button_younger">-13</string>
+    <string name="button_older">+13</string>
+</resources>
