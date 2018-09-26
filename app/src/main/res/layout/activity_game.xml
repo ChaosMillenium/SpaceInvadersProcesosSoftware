@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_left"
             android:layout_alignParentLeft="true"
-            android:onClick="mueveIzquierda"/>
+            />
 
         <Button
             android:id="@+id/button_der"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_right"
             android:layout_alignParentRight="true"
-            android:onClick="mueveDerecha"/>
+            />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
