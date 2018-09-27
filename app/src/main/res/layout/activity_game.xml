@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".GameActivity">
     <RelativeLayout
         android:id="@+id/relative_buttons"
@@ -38,5 +39,17 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             app:srcCompat="@drawable/spritenave" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/relative_buttons">
+        <ImageView
+            android:id="@+id/marcianito"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/spritemarciano"
+            />
     </RelativeLayout>
 </RelativeLayout>
