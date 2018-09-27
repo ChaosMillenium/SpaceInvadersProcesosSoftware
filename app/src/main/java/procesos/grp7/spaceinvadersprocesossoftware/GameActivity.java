@@ -122,5 +122,5 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
     }
 
-    //ewwwwwwww
+  
 }
