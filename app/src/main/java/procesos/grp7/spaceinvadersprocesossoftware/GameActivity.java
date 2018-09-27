@@ -26,32 +26,14 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         buttonRight = findViewById(R.id.button_der);
 
         //Listeners del boton izquierdo
-        //buttonLeft.setOnClickListener(this);
-        //buttonLeft.setOnLongClickListener(this);
+
         buttonLeft.setOnTouchListener(this);
 
         //Listeners del boton derecho
-        //buttonRight.setOnClickListener(this);
-        //buttonRight.setOnLongClickListener(this);
+
         buttonRight.setOnTouchListener(this);
     }
 
-
-/*
-    public boolean onTouch(View view, MotionEvent event){
-        switch(view.getId()){
-            case R.id.button_der:
-                this.mueveDerecha();
-                break;
-            case R.id.button_izq:
-                this.mueveIzquierda();
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
-*/
     public boolean onTouch(View view, MotionEvent event){
         switch(view.getId()){
             case R.id.button_der:
@@ -107,20 +89,19 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
 
     public void mueveIzquierda() {
-
-        float desplazamiento = sprite.getX() - 1;
+        if (sprite.getX() > 0) {
+            float desplazamiento = sprite.getX() - 1;
             sprite.setX(desplazamiento);
-
+        }
 
     }
 
     public void mueveDerecha() {
-
+        if (sprite.getX() < 2000) {
             float desplazamiento = sprite.getX() + 1;
             sprite.setX(desplazamiento);
-            Log.d("Movimiento", "movio a derecha");
-
+        }
     }
 
-  
+
 }
