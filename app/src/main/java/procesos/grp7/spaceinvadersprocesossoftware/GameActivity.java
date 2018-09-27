@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
-    ImageView shipView;
-    RelativeLayout gameLayout;
+    private ImageView shipView;
+    private RelativeLayout gameLayout;
+    private ArrayList<Bullet> bullets;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void disparar(View view){
-        Bullet bullet = new Bullet(this, gameLayout);
-        bullet.shoot();
+        Bullet bullet = new Bullet(this, gameLayout,Bullet.UP);
+        bullet.update();
     }
 }
