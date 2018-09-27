@@ -27,9 +27,6 @@ public class Bullet {
         params.addRule(RelativeLayout.ABOVE, R.id.ship);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         gameLayout.addView(bulletView, params);
-        //TODO: Si se ejecuta lo comentado, la app se congela
-        //Thread movementThread = new Thread(new BulletMovement(bulletView));
-        //movementThread.run();
         this.bulletView = bulletView;
 
     }
