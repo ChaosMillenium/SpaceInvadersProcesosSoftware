@@ -1,14 +1,20 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-public class GameActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener, View.OnTouchListener{
+public class GameActivity extends AppCompatActivity implements View.OnTouchListener{
     ImageView sprite;
+    Button buttonLeft;
+    Button buttonRight;
+    boolean pressedLeft = false;
+    boolean pressedRight = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,73 +22,105 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         sprite = findViewById(R.id.nave);
 
         //Definicion de botones
-        Button buttonLeft = findViewById(R.id.button_izq);
-        Button buttonRight = findViewById(R.id.button_der);
+        buttonLeft = findViewById(R.id.button_izq);
+        buttonRight = findViewById(R.id.button_der);
 
         //Listeners del boton izquierdo
-        buttonLeft.setOnClickListener(this);
-        buttonLeft.setOnLongClickListener(this);
+        //buttonLeft.setOnClickListener(this);
+        //buttonLeft.setOnLongClickListener(this);
         buttonLeft.setOnTouchListener(this);
 
         //Listeners del boton derecho
-        buttonRight.setOnClickListener(this);
-        buttonRight.setOnLongClickListener(this);
+        //buttonRight.setOnClickListener(this);
+        //buttonRight.setOnLongClickListener(this);
         buttonRight.setOnTouchListener(this);
     }
 
-    public void onClick(View view){
-        switch(view.getId()) {
-            case R.id.button_der:
-                this.mueveDerecha(view);
-                break;
 
-            case R.id.button_izq:
-                this.mueveIzquierda(view);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    public boolean onLongClick(View view){
-        switch(view.getId()){
-            case R.id.button_der:
-                this.mueveDerecha(view);
-                break;
-
-            case R.id.button_izq:
-                this.mueveIzquierda(view);
-                break;
-            default:
-                break;
-        }
-        return true;
-    }
-
+/*
     public boolean onTouch(View view, MotionEvent event){
         switch(view.getId()){
             case R.id.button_der:
-                this.mueveDerecha(view);
+                this.mueveDerecha();
                 break;
-
             case R.id.button_izq:
-                this.mueveIzquierda(view);
+                this.mueveIzquierda();
                 break;
             default:
                 break;
         }
         return true;
     }
+*/
+    public boolean onTouch(View view, MotionEvent event){
+        switch(view.getId()){
+            case R.id.button_der:
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedRight){
+                            pressedRight = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedRight = false;
+                }
+                break;
+            case R.id.button_izq:
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedLeft){
+                            pressedLeft = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedLeft = false;
+                }
+                break;
+        }
+        return true;
 
-
-    public void mueveIzquierda(View view) {
-        float desplazamiento = sprite.getX() - 10;
-        sprite.setX(desplazamiento);
     }
 
-    public void mueveDerecha(View view) {
-        float desplazamiento = sprite.getX() + 10;
-        sprite.setX(desplazamiento);
+    private class MovimientoNave extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while (pressedRight){
+                mueveDerecha();
+                try{
+                    Thread.sleep(1);
+                }catch(InterruptedException ex){ex.printStackTrace();}
+            }
+            while (pressedLeft){
+                mueveIzquierda();
+                try{
+                    Thread.sleep(1);
+                }catch(InterruptedException ex){ex.printStackTrace();}
+            }
+
+            return null;
+        }
     }
+
+
+
+    public void mueveIzquierda() {
+
+        float desplazamiento = sprite.getX() - 1;
+            sprite.setX(desplazamiento);
+
+
+    }
+
+    public void mueveDerecha() {
+
+            float desplazamiento = sprite.getX() + 1;
+            sprite.setX(desplazamiento);
+            Log.d("Movimiento", "movio a derecha");
+
+    }
+
+
 }
