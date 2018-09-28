@@ -22,9 +22,46 @@
             android:id="@+id/button_der"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_right"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            />
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="419dp"
+            android:text="@string/button_right" />
+
+        <Button
+            android:id="@+id/button_shot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:text="PUM" />
+
+        <TextView
+            android:id="@+id/puntuacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="191dp"
+            android:layout_marginLeft="191dp"
+            android:text="Puntuación:"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/Puntos"
+            android:layout_width="69dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="242dp"
+            android:layout_marginRight="242dp"
+            android:text="0"
+            android:textStyle="bold"/>
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
