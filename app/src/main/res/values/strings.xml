@@ -4,4 +4,5 @@
     <string name="button_older">+13</string>
     <string name="button_left">LEFT</string>
     <string name="button_right">RIGHT</string>
+    <string name="button_shoot">Shoot</string>
 </resources>

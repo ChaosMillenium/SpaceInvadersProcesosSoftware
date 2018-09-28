@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".GameActivity">
     <RelativeLayout
         android:id="@+id/relative_buttons"
@@ -16,23 +17,38 @@
             android:layout_height="wrap_content"
             android:text="@string/button_left"
             android:layout_alignParentLeft="true"
-            android:onClick="mueveIzquierda"/>
+            android:onClick="mueveIzquierda"
+            android:layout_alignParentStart="true" />
 
         <Button
             android:id="@+id/button_der"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/button_right"
+            android:layout_toRightOf="@id/button_izq"
+            android:onClick="mueveDerecha"
+            android:layout_toEndOf="@id/button_izq" />
+
+        <Button
+            android:id="@+id/button_shoot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:onClick="mueveDerecha"/>
+            android:text="@string/button_shoot"
+            android:onClick="disparar"/>
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/layout_game"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/relative_buttons">
+        android:layout_above="@id/relative_buttons"
+        android:layout_alignParentTop="true">
+
         <ImageView
-            android:id="@+id/nave"
+            android:id="@+id/ship"
             android:layout_width="112dp"
             android:layout_height="73dp"
             android:layout_alignParentBottom="true"
