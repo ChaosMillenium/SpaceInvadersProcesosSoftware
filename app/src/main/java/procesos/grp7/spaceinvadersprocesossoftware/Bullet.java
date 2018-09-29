@@ -11,7 +11,7 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-public class Bullet{
+public class Bullet {
 
     private Activity context;
     private RelativeLayout gameLayout;
@@ -38,32 +38,33 @@ public class Bullet{
         params.addRule(RelativeLayout.ABOVE, R.id.ship);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
         gameLayout.addView(bulletView, params);
+        this.bulletView = bulletView;
         //ObjectAnimator puede dar problemas a la hora de comprobar colisiones,
-        ObjectAnimator bulletAnimator = ObjectAnimator.ofFloat(bulletView, "translationY",0f, screenSize.y*direction);
+        ObjectAnimator bulletAnimator = ObjectAnimator.ofFloat(bulletView, "translationY", 0f, screenSize.y * direction);
         bulletAnimator.setDuration(DURATION);
         bulletAnimator.setInterpolator(new LinearInterpolator());
         bulletAnimator.start();
         bulletAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                yPosition = (Float)animation.getAnimatedValue();
+                yPosition = (Float) animation.getAnimatedValue();
             }
         });
     }
 
     @Nullable
-    public View detectCollision(Iterable<View> views){
-        Rect bullet = new Rect(bulletView.getLeft(),bulletView.getTop(),bulletView.getRight(),bulletView.getBottom());
-        for (View view : views){
-            Rect viewRect = new Rect(view.getLeft(),view.getTop(),view.getRight(),view.getBottom());
-            if (bullet.intersect(viewRect)){
+    public View detectCollision(Iterable<View> views) {
+        Rect bullet = new Rect(bulletView.getLeft(), bulletView.getTop(), bulletView.getRight(), bulletView.getBottom());
+        for (View view : views) {
+            Rect viewRect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+            if (bullet.intersect(viewRect)) {
                 return view;
             }
         }
         return null;
     }
 
-    public synchronized boolean isInScreen(){
-        return (yPosition > 0) && (yPosition<screenSize.y);
+    public synchronized boolean isInScreen() {
+        return (yPosition >= 0) && (yPosition <= screenSize.y);
     }
 }
