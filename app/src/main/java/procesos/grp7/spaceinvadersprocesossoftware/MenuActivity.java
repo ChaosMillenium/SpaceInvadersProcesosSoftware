@@ -13,7 +13,10 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
     }
     public void StartAlertDialog (View view){
-        new AlertDialog(this);
+        Intent intent = new Intent(this, AlertDialog.class);
+        startActivity(intent);
+        finish();
+
     }
 
 }
