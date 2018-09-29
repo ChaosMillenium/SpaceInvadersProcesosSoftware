@@ -20,12 +20,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void mueveIzquierda(View view) {
-        float desplazamiento = shipView.getX() - 10;
+        float desplazamiento = shipView.getX() - 100;
         shipView.setX(desplazamiento);
     }
 
     public void mueveDerecha(View view) {
-        float desplazamiento = shipView.getX() + 10;
+        float desplazamiento = shipView.getX() + 100;
         shipView.setX(desplazamiento);
     }
 

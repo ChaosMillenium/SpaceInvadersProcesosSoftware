@@ -19,7 +19,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".GameOverScreen"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
             android:name=".GameActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".AlertDialog"
             android:screenOrientation="landscape">
         </activity>
     </application>
