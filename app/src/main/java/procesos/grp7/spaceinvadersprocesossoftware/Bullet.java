@@ -31,11 +31,13 @@ public class Bullet {
         context.getWindowManager().getDefaultDisplay().getSize(screenSize);
     }
 
-    public void generateView() {
+    public void generateView(float coordsX, float coordsY) {
         ImageView bulletView = new ImageView(context);
         bulletView.setImageResource(R.drawable.bullet);
+        bulletView.setX (coordsX - 845);
+        bulletView.setY (coordsY);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ABOVE, R.id.ship);
+        params.addRule(RelativeLayout.ALIGN_TOP, R.id.ship);
         params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
         gameLayout.addView(bulletView, params);
         this.bulletView = bulletView;

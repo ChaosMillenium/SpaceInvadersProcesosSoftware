@@ -36,7 +36,9 @@ public class GameActivity extends AppCompatActivity {
 
     public void disparar(View view) {
             final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
-            bullet.generateView();
+            float coords = spriteShip.getX();
+            float coords2 = spriteShip.getY();
+            bullet.generateView(coords, coords2);
             Thread collisionDetector = new Thread(new Runnable() {
                 @Override
                 public void run() {
