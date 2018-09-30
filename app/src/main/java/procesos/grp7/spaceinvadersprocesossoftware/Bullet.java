@@ -15,15 +15,15 @@ public class Bullet {
 
     private Activity context;
     private RelativeLayout gameLayout;
-    public static final float UP = -1;
-    public static final float DOWN = 1;
-    private float direction; //-1 hacia arriba, 1 hacia abajo
+    public static final int UP = -1;
+    public static final int DOWN = 1;
+    private int direction; //-1 hacia arriba, 1 hacia abajo
     private final int DURATION = 1000;
     private Point screenSize;
     private ImageView bulletView;
     private float yPosition;
 
-    public Bullet(Activity context, RelativeLayout gameLayout, float direction) {
+    public Bullet(Activity context, RelativeLayout gameLayout, int direction) {
         this.context = context;
         this.gameLayout = gameLayout;
         this.direction = direction;
@@ -31,14 +31,13 @@ public class Bullet {
         context.getWindowManager().getDefaultDisplay().getSize(screenSize);
     }
 
-    public void generateView(float coordsX, float coordsY) {
+    public void generateView(float coordsX, float sizeShipX) {
         ImageView bulletView = new ImageView(context);
         bulletView.setImageResource(R.drawable.bullet);
-        bulletView.setX (coordsX - 845);
-        bulletView.setY (coordsY);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.addRule(RelativeLayout.ALIGN_TOP, R.id.ship);
-        params.addRule(RelativeLayout.CENTER_HORIZONTAL, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ABOVE, R.id.ship);
+        bulletView.setX(coordsX + (sizeShipX / 2)-2);
+        params.setMargins(0, 0, 0, 5);
         gameLayout.addView(bulletView, params);
         this.bulletView = bulletView;
         //ObjectAnimator puede dar problemas a la hora de comprobar colisiones,
