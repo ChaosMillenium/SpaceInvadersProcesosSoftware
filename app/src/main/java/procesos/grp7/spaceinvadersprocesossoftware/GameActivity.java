@@ -30,6 +30,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void disparar(View view) {
             Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
-            bullet.generateView();
+            float coords = spriteShip.getX();
+            float coords2 = spriteShip.getY();
+            bullet.generateView(coords, coords2);
     }
 }
