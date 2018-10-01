@@ -23,7 +23,7 @@ public class Marciano {
         //this.spriteMarciano = BitmapFactory.decodeResource(context.getResources(), R.drawable.spritemarciano) ;
         //this.spriteMarciano = Bitmap.createScaledBitmap(spriteMarciano, length, height, false) ;
         //this.spriteMarciano = new ImageView(this.context);
-        this.x = column * (length + (screenX / 25 )) ;
+        this.x = column * (length + (screenX / 1000 )) ;
         this.y = row * (length + (screenX / 25 )/4) ;
         this.orientacion = "RIGHT";
     }
