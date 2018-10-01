@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".GameActivity">
     <RelativeLayout
         android:id="@+id/relative_buttons"
@@ -17,7 +16,6 @@
             android:layout_height="wrap_content"
             android:text="@string/button_left"
             android:layout_alignParentLeft="true"
-            android:onClick="mueveIzquierda"
             android:layout_alignParentStart="true" />
 
         <Button
@@ -26,7 +24,6 @@
             android:layout_height="wrap_content"
             android:text="@string/button_right"
             android:layout_toRightOf="@id/button_izq"
-            android:onClick="mueveDerecha"
             android:layout_toEndOf="@id/button_izq" />
 
         <Button
@@ -36,10 +33,46 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="@string/button_shoot"
-            android:onClick="disparar"/>
-    </RelativeLayout>
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="419dp"
+            android:text="@string/button_right"
+            android:layout_marginEnd="419dp" />
 
+        <Button
+            android:id="@+id/button_shot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/button_shoot"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp" />
+
+        <TextView
+            android:id="@+id/puntuacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="191dp"
+            android:layout_marginLeft="191dp"
+            android:text="@string/puntuacion"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/Puntos"
+            android:layout_width="69dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="242dp"
+            android:layout_marginRight="242dp"
+            android:text="@string/_0"
+            android:textStyle="bold"/>
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/layout_game"
         android:layout_width="match_parent"
