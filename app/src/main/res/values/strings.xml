@@ -4,4 +4,6 @@
     <string name="button_older">+13</string>
     <string name="button_left">LEFT</string>
     <string name="button_right">RIGHT</string>
+    <string name="_0">0</string>
+    <string name="puntuacion">Puntuación:</string>
 </resources>

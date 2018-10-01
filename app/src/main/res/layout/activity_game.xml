@@ -48,7 +48,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="191dp"
             android:layout_marginLeft="191dp"
-            android:text="Puntuación:"
+            android:text="@string/puntuacion"
             android:textStyle="bold"/>
 
         <TextView
@@ -60,14 +60,17 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="242dp"
             android:layout_marginRight="242dp"
-            android:text="0"
+            android:text="@string/_0"
             android:textStyle="bold"/>
     </RelativeLayout>
+
     <RelativeLayout
+        android:id="@+id/relative_nave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/relative_buttons">
+        android:layout_above="@id/relative_buttons"
+        android:layout_alignParentTop="true">
+
         <ImageView
             android:id="@+id/nave"
             android:layout_width="112dp"

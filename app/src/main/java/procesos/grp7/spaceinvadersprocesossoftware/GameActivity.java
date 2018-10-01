@@ -3,11 +3,13 @@ package procesos.grp7.spaceinvadersprocesossoftware;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener{
     ImageView sprite;
@@ -97,9 +99,10 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     public void mueveDerecha() {
-        if (sprite.getX() < 2000) {
-            float desplazamiento = sprite.getX() + 1;
-            sprite.setX(desplazamiento);
+        RelativeLayout layout = findViewById(R.id.relative_nave);
+        int height = layout.getWidth() - sprite.getWidth();
+        if (sprite.getX() < height) {
+            sprite.setX(sprite.getX() + 1);
         }
     }
 
