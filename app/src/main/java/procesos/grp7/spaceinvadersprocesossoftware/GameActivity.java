@@ -1,16 +1,19 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
 import java.util.ArrayList;
-import android.widget.RelativeLayout;
 
 public class GameActivity extends AppCompatActivity {
     private ImageView spriteShip;
@@ -18,6 +21,10 @@ public class GameActivity extends AppCompatActivity {
     private ArrayList<View> gameViews;
     Display display ;
     Point size;
+    Button buttonLeft;
+    Button buttonRight;
+    boolean pressedLeft = false;
+    boolean pressedRight = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +39,72 @@ public class GameActivity extends AppCompatActivity {
         display.getSize(size);
         VistaInvader marcianitos= new VistaInvader(this, size.x, size.y, gameLayout);
         marcianitos.start();
+        //Definicion de botones
+        buttonLeft = findViewById(R.id.button_izq);
+        buttonRight = findViewById(R.id.button_der);
+        //Listeners del boton izquierdo
+        buttonLeft.setOnTouchListener(this);
+        //Listeners del boton derecho
+        buttonRight.setOnTouchListener(this);
     }
 
-    public void mueveIzquierda(View view) {
-        float desplazamiento = spriteShip.getX() - 10;
-        spriteShip.setX(desplazamiento);
+    public boolean onTouch(View view, MotionEvent event){
+        switch(view.getId()){
+            case R.id.button_der:
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedRight){
+                            pressedRight = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedRight = false;
+                }
+                break;
+            case R.id.button_izq:
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedLeft){
+                            pressedLeft = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedLeft = false;
+                }
+                break;
+        }
+        return true;
+
     }
 
-    public void mueveDerecha(View view) {
-        float desplazamiento = spriteShip.getX() + 10;
-        spriteShip.setX(desplazamiento);
+    private class MovimientoNave extends AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            while (pressedRight){
+                mueveDerecha();
+                try{
+                    Thread.sleep(1);
+                }catch(InterruptedException ex){ex.printStackTrace();}
+            }
+            while (pressedLeft){
+                mueveIzquierda();
+                try{
+                    Thread.sleep(1);
+                }catch(InterruptedException ex){ex.printStackTrace();}
+            }
+
+            return null;
+        }
+
+    public void mueveIzquierda() {
+        if (sprite.getX() > 0) {
+            float desplazamiento = sprite.getX() - 1;
+            sprite.setX(desplazamiento);
+        }
+
     }
 
     public void disparar(View view) {
@@ -65,4 +128,14 @@ public class GameActivity extends AppCompatActivity {
             });
             collisionDetector.start();
     }
-}
+
+    public void mueveDerecha(){
+        RelativeLayout layout = findViewById(R.id.relative_nave);
+        int height = layout.getWidth() - sprite.getWidth();
+        if (sprite.getX() < height) {
+            sprite.setX(sprite.getX() + 1);
+        }
+    }
+
+
+}}}
