@@ -55,4 +55,17 @@
             android:layout_centerHorizontal="true"
             app:srcCompat="@drawable/spritenave" />
     </RelativeLayout>
+   <RelativeLayout
+        android:id="@+id/game_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/relative_buttons">
+        <!--<ImageView
+            android:id="@+id/marcianito"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            app:srcCompat="@drawable/spritemarciano"
+            />-->
+    </RelativeLayout>
 </RelativeLayout>

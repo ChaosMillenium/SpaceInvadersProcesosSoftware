@@ -1,18 +1,23 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import android.widget.RelativeLayout;
 
 public class GameActivity extends AppCompatActivity {
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
     private ArrayList<View> gameViews;
+    Display display ;
+    Point size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,11 @@ public class GameActivity extends AppCompatActivity {
         gameLayout = findViewById(R.id.layout_game);
         gameViews = new ArrayList<>();
         gameViews.add(spriteShip);
+        display = getWindowManager().getDefaultDisplay();
+        size = new Point();
+        display.getSize(size);
+        VistaInvader marcianitos= new VistaInvader(this, size.x, size.y, layout);
+        marcianitos.start();
     }
 
     public void mueveIzquierda(View view) {
