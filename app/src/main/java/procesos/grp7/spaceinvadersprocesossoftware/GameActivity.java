@@ -30,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        VistaInvader marcianitos= new VistaInvader(this, size.x, size.y, layout);
+        VistaInvader marcianitos= new VistaInvader(this, size.x, size.y, gameLayout);
         marcianitos.start();
     }
 
