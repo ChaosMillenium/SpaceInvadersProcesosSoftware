@@ -1,6 +1,7 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.content.Context;
+import android.view.View;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
@@ -15,12 +16,11 @@ public class VistaInvader extends Thread{
     private RelativeLayout layout;
 
     public VistaInvader(Context context, int screenX, int screenY, RelativeLayout layout){
-        this.marcianos = new ArrayList<Marciano>();
+        this.marcianos = new ArrayList<>();
         this.layout = layout;
         this.context=context;
         this.screenX = screenX;
         this.screenY = screenY;
-        this.context = context;
         this.pared = false;
         rellenaMarcianos();
     }
@@ -29,8 +29,9 @@ public class VistaInvader extends Thread{
         this.numMarcianos = 0;
         for(int column = 0 ; column < 6; column++){
             for(int row = 0; row <5 ; row++){
-                this.marcianos.add(numMarcianos, new Marciano(this.context, screenX, screenY, row, column));
-                this.marcianos.get(numMarcianos).addImageView(this.layout);
+                Marciano nuevoMarciano = new Marciano(this.context, screenX, screenY, row, column);
+                this.marcianos.add(numMarcianos, nuevoMarciano);
+                nuevoMarciano.addImageView(this.layout);
                 numMarcianos++;
             }
         }

@@ -55,8 +55,8 @@ public class Bullet {
 
     @Nullable
     public View detectCollision(Iterable<View> views) {
-        Rect bullet = new Rect(bulletView.getLeft(), bulletView.getTop(), bulletView.getRight(), bulletView.getBottom());
         for (View view : views) {
+            Rect bullet = new Rect(bulletView.getLeft(), bulletView.getTop(), bulletView.getRight(), bulletView.getBottom());
             Rect viewRect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
             if (bullet.intersect(viewRect)) {
                 return view;
