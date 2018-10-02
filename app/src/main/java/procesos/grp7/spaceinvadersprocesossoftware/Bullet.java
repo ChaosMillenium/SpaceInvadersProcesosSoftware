@@ -19,10 +19,10 @@ public class Bullet {
     public static final int UP = -1;
     public static final int DOWN = 1;
     private int direction; //-1 hacia arriba, 1 hacia abajo
-    private final int DURATION = 1000;
+    public static final int DURATION = 1000;
     private Point screenSize;
     private ImageView bulletView;
-    private float yPosition;
+    private float yPosition = 0, xPosition = 0;
 
     public Bullet(Activity context, RelativeLayout gameLayout, int direction) {
         this.context = context;
@@ -33,11 +33,11 @@ public class Bullet {
     }
 
     public void generateView(float coordsX, float sizeShipX) {
-        ImageView bulletView = new ImageView(context);
+        final ImageView bulletView = new ImageView(context);
         bulletView.setImageResource(R.drawable.bullet);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.addRule(RelativeLayout.ABOVE, R.id.ship);
-        bulletView.setX(coordsX + (sizeShipX / 2)-2);
+        bulletView.setX(coordsX + (sizeShipX / 2) - 2);
         params.setMargins(0, 0, 0, 5);
         gameLayout.addView(bulletView, params);
         this.bulletView = bulletView;
@@ -49,11 +49,31 @@ public class Bullet {
         bulletAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                yPosition = (Float) animation.getAnimatedValue();
+                xPosition = bulletView.getX();
+                yPosition = bulletView.getY();
             }
         });
     }
 
+    public View detectCollision(Iterable<View> views) {
+        for (View view : views) {
+            Log.d("POSITION_LOG", xPosition + ", " + yPosition + ":" + view.getX() + ", " + view.getY());
+            if (touch(view.getX(), view.getY(), view.getWidth(), view.getHeight())) {
+                bulletView.setVisibility(View.INVISIBLE);
+                return view;
+            }
+        }
+        return null;
+    }
+
+    private boolean touch(float x, float y, float width, float height) {
+        float maxX = x + width;
+        float maxY = y + height;
+        return ((xPosition >= x) && (xPosition <= maxX) && (yPosition >= y) && (yPosition <= maxY));
+    }
+
+    //Versión antigua no funcional
+    /*
     @Nullable
     public View detectCollision(Iterable<View> views) {
         for (View view : views) {
@@ -62,13 +82,11 @@ public class Bullet {
             Rect viewRect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
             Log.d("BULLET_HITBOX", view.toString());
             if (bullet.intersect(viewRect)) {
+                bulletView.setVisibility(View.INVISIBLE);
                 return view;
             }
         }
         return null;
     }
-
-    public synchronized boolean isInScreen() {
-        return (yPosition >= 0) && (yPosition <= screenSize.y);
-    }
+*/
 }

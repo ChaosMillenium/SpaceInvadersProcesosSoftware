@@ -1,13 +1,15 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
-public class VistaInvader extends Thread{
+public class VistaInvader extends Thread {
     private ArrayList<Marciano> marcianos;
+    private ArrayList<View> vistasMarcianos;
     private int numMarcianos;
     private int screenX;
     private int screenY;
@@ -15,23 +17,25 @@ public class VistaInvader extends Thread{
     private boolean pared;
     private RelativeLayout layout;
 
-    public VistaInvader(Context context, int screenX, int screenY, RelativeLayout layout){
+    public VistaInvader(Context context, int screenX, int screenY, RelativeLayout layout) {
         this.marcianos = new ArrayList<>();
+        this.vistasMarcianos = new ArrayList<>();
         this.layout = layout;
-        this.context=context;
+        this.context = context;
         this.screenX = screenX;
         this.screenY = screenY;
         this.pared = false;
         rellenaMarcianos();
     }
 
-    public void rellenaMarcianos(){
+    public void rellenaMarcianos() {
         this.numMarcianos = 0;
-        for(int column = 0 ; column < 6; column++){
-            for(int row = 0; row <5 ; row++){
+        for (int column = 0; column < 6; column++) {
+            for (int row = 0; row < 5; row++) {
                 Marciano nuevoMarciano = new Marciano(this.context, screenX, screenY, row, column);
                 this.marcianos.add(numMarcianos, nuevoMarciano);
                 nuevoMarciano.addImageView(this.layout);
+                vistasMarcianos.add(nuevoMarciano.getSpriteMarciano());
                 numMarcianos++;
             }
         }
@@ -44,33 +48,38 @@ public class VistaInvader extends Thread{
                 movimiento();
                 dibuja();
             }
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.print(e.getCause());
         }
     }
 
-    public void movimiento(){
-        for(int i = 0; i<this.marcianos.size(); i++){
-            if(marcianos.get(i).vivo()){
+    public void movimiento() {
+        for (int i = 0; i < this.marcianos.size(); i++) {
+            if (marcianos.get(i).vivo()) {
+                Log.d("MARCIANO_POS",marcianos.get(i).getX()+","+marcianos.get(i).getY());
                 marcianos.get(i).actualizaPosicion();
-                if(marcianos.get(i).getX() > screenX - marcianos.get(i).getLength() || marcianos.get(i).getX() < 0){
+                if (marcianos.get(i).getX() > screenX - marcianos.get(i).getLength() || marcianos.get(i).getX() < 0) {
                     pared = true;
                 }
             }
         }
-        if (pared){
-            for(int i = 0; i<this.marcianos.size(); i++){
+        if (pared) {
+            for (int i = 0; i < this.marcianos.size(); i++) {
                 marcianos.get(i).choquePared();
                 pared = false;
             }
         }
     }
 
-    public void dibuja(){
-        for(int i = 0; i<this.marcianos.size(); i++){
-            if(marcianos.get(i).vivo()){
+    public void dibuja() {
+        for (int i = 0; i < this.marcianos.size(); i++) {
+            if (marcianos.get(i).vivo()) {
                 this.marcianos.get(i).dibuja();
             }
         }
+    }
+
+    public ArrayList<View> getVistasMarcianos() {
+        return vistasMarcianos;
     }
 }
