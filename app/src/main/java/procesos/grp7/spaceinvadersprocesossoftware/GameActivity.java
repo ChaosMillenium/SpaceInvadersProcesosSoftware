@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -39,7 +37,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout);
+        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
         //Definicion de botones
@@ -86,7 +84,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
         float coordX = spriteShip.getX();
         float sizeX = spriteShip.getWidth();
-        bullet.generateView(coordX, sizeX);
+        float coordY = spriteShip.getY();
+        bullet.generateView(coordX, sizeX, coordY, R.id.ship);
         Thread collisionDetector = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -94,12 +93,15 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 long startTime = System.currentTimeMillis();
                 long actualTime;
                 while (aliveTime < Bullet.DURATION) {
-                    View collider = bullet.detectCollision(gameViews);
+                    final View collider = bullet.detectCollision(gameViews);
                     if (collider == null) {
                         Log.d("BULLET_COLLISION", "No collision");
                     } else {
                         Log.d("BULLET_COLLISION", collider.toString());
-
+                        bullet.delete();
+                        gameViews.remove(collider);
+                        ImageView vistaMarciano = (ImageView) collider;
+                        vistaMarciano.setVisibility(View.INVISIBLE);
                         return;
                     }
                     actualTime = System.currentTimeMillis();
