@@ -20,6 +20,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
     private ArrayList<View> gameViews;
+    private int puntos = 0;
     Display display;
     Point size;
     Button buttonLeft;
@@ -39,6 +40,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         size = new Point();
         display.getSize(size);
         VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout);
+        gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
@@ -88,13 +90,20 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         Thread collisionDetector = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (bullet.isInScreen()) {
+                long aliveTime = 0;
+                long startTime = System.currentTimeMillis();
+                long actualTime;
+                while (aliveTime < Bullet.DURATION) {
                     View collider = bullet.detectCollision(gameViews);
                     if (collider == null) {
                         Log.d("BULLET_COLLISION", "No collision");
                     } else {
                         Log.d("BULLET_COLLISION", collider.toString());
+
+                        return;
                     }
+                    actualTime = System.currentTimeMillis();
+                    aliveTime = actualTime-startTime;
                 }
             }
         });
