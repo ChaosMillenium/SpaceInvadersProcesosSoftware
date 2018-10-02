@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
@@ -57,7 +58,9 @@ public class Bullet {
     public View detectCollision(Iterable<View> views) {
         for (View view : views) {
             Rect bullet = new Rect(bulletView.getLeft(), bulletView.getTop(), bulletView.getRight(), bulletView.getBottom());
+            Log.d("BULLET_HITBOX", bullet.toString());
             Rect viewRect = new Rect(view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+            Log.d("BULLET_HITBOX", view.toString());
             if (bullet.intersect(viewRect)) {
                 return view;
             }
