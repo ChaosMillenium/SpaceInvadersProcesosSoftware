@@ -1,23 +1,26 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.content.Context;
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VistaInvader extends Thread {
     private ArrayList<Marciano> marcianos;
-    private ArrayList<View> vistasMarcianos;
+    private List<ImageView> vistasMarcianos;
     private int numMarcianos;
     private int screenX;
     private int screenY;
-    private Context context;
+    private GameActivity context;
     private boolean pared;
     private RelativeLayout layout;
+    private List<ImageView> gameViews;
 
-    public VistaInvader(Context context, int screenX, int screenY, RelativeLayout layout) {
+    public VistaInvader(GameActivity context, int screenX, int screenY, RelativeLayout layout, List<ImageView> views) {
         this.marcianos = new ArrayList<>();
         this.vistasMarcianos = new ArrayList<>();
         this.layout = layout;
@@ -25,6 +28,7 @@ public class VistaInvader extends Thread {
         this.screenX = screenX;
         this.screenY = screenY;
         this.pared = false;
+        this.gameViews = views;
         rellenaMarcianos();
     }
 
@@ -34,19 +38,32 @@ public class VistaInvader extends Thread {
             for (int row = 0; row < 5; row++) {
                 Marciano nuevoMarciano = new Marciano(this.context, screenX, screenY, row, column);
                 this.marcianos.add(numMarcianos, nuevoMarciano);
-                nuevoMarciano.addImageView(this.layout);
+                nuevoMarciano.addImageView(this.layout, numMarcianos);
                 vistasMarcianos.add(nuevoMarciano.getSpriteMarciano());
+                Thread collisionDetector = new Thread(new MarcianoCollisionDetector(nuevoMarciano, gameViews, context, getVistasMarcianos()));
+                collisionDetector.start();
                 numMarcianos++;
             }
         }
     }
 
     public void run() {
+        final int aux = this.marcianos.size();
         try {
             while (true) {
                 Thread.sleep(150);
                 movimiento();
                 dibuja();
+                this.context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (((int) (Math.random() * 10) + 1) == 3) {
+                            int marciano = (int) (Math.random() * aux);
+                            disparo(marciano);
+                            Log.d("Disparo", "Disparo del marcianito " + marciano);
+                        }
+                    }
+                });
             }
         } catch (InterruptedException e) {
             System.out.print(e.getCause());
@@ -56,7 +73,7 @@ public class VistaInvader extends Thread {
     public void movimiento() {
         for (int i = 0; i < this.marcianos.size(); i++) {
             if (marcianos.get(i).vivo()) {
-                Log.d("MARCIANO_POS",marcianos.get(i).getX()+","+marcianos.get(i).getY());
+                Log.d("MARCIANO_POS", marcianos.get(i).getX() + "," + marcianos.get(i).getY());
                 marcianos.get(i).actualizaPosicion();
                 if (marcianos.get(i).getX() > screenX - marcianos.get(i).getLength() || marcianos.get(i).getX() < 0) {
                     pared = true;
@@ -79,7 +96,19 @@ public class VistaInvader extends Thread {
         }
     }
 
-    public ArrayList<View> getVistasMarcianos() {
+    public void disparo(int marciano) {
+        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN);
+        float coordX = this.marcianos.get(marciano).getX();
+        float sizeX = this.marcianos.get(marciano).getLength();
+        float coordsY = this.marcianos.get(marciano).getY();
+        Log.d("YDisparo", "El marciano tiene y " + coordsY);
+        Log.d("YDisparo", "El marciano tiene id " + marciano);
+        bullet.generateView(coordX, sizeX, coordsY, marciano);
+        Thread collisionDetector = new Thread(new BulletCollisionDetector(bullet, gameViews, context,true, getVistasMarcianos()));
+        collisionDetector.start();
+    }
+
+    public List<ImageView> getVistasMarcianos() {
         return vistasMarcianos;
     }
 }

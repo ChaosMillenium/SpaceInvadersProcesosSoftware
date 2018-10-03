@@ -1,13 +1,12 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -15,11 +14,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
-    private ArrayList<View> gameViews;
+    private CopyOnWriteArrayList<ImageView> gameViews;
+    private List<ImageView> vistasMarcianos;
     private int puntos = 0;
     Display display;
     Point size;
@@ -27,19 +29,22 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     Button buttonRight;
     boolean pressedLeft = false;
     boolean pressedRight = false;
+    public boolean dead;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        dead = false;
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
-        gameViews = new ArrayList<>();
+        gameViews = new CopyOnWriteArrayList<>();
         gameViews.add(spriteShip);
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout);
+        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
+        this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
         //Definicion de botones
@@ -83,31 +88,16 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     public void disparar(View view) {
-        final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
-        float coordX = spriteShip.getX();
-        float sizeX = spriteShip.getWidth();
-        bullet.generateView(coordX, sizeX);
-        Thread collisionDetector = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                long aliveTime = 0;
-                long startTime = System.currentTimeMillis();
-                long actualTime;
-                while (aliveTime < Bullet.DURATION) {
-                    View collider = bullet.detectCollision(gameViews);
-                    if (collider == null) {
-                        Log.d("BULLET_COLLISION", "No collision");
-                    } else {
-                        Log.d("BULLET_COLLISION", collider.toString());
-
-                        return;
-                    }
-                    actualTime = System.currentTimeMillis();
-                    aliveTime = actualTime-startTime;
-                }
-            }
-        });
-        collisionDetector.start();
+        if (!dead) {
+            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
+            float coordX = spriteShip.getX();
+            float sizeX = spriteShip.getWidth();
+            float coordY = spriteShip.getY();
+            bullet.generateView(coordX, sizeX, coordY, R.id.ship);
+            BulletCollisionDetector collisionDetector = new BulletCollisionDetector(bullet, gameViews, this, false, vistasMarcianos);
+            Thread collisionDetectorThread = new Thread(collisionDetector);
+            collisionDetectorThread.start();
+        }
     }
 
     private class MovimientoNave extends AsyncTask<Void, Void, Void> {
@@ -144,13 +134,37 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
 
         public void mueveDerecha() {
-            RelativeLayout layout = findViewById(R.id.layout_game);
-            int height = layout.getWidth() - spriteShip.getWidth();
+            int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + 1);
             }
         }
+    }
 
-
+    public void kill(Object collider1, ImageView collider2) {
+        if (collider1 instanceof Bullet) {
+            ((Bullet) collider1).delete();
+        }
+        if (collider2 == spriteShip) {
+            try {
+                /*Log.d("LIFES", lifes + " lifes remaining");
+                lifes--;
+                if (lifes == 0) {*/
+                if (!dead) {
+                    collider2.setVisibility(View.INVISIBLE);
+                    dead = true;
+                    Thread.sleep(1000);
+                    Intent deathIntent = new Intent(this, GameOverScreen.class);
+                    finish();
+                    startActivity(deathIntent);
+                }
+                //}
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            gameViews.remove(collider2);
+            collider2.setVisibility(View.INVISIBLE);
+        }
     }
 }
