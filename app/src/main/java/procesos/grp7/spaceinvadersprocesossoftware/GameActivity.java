@@ -13,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
-    private ArrayList<View> gameViews;
+    private CopyOnWriteArrayList<View> gameViews;
     private int puntos = 0;
     Display display;
     Point size;
@@ -32,7 +33,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         setContentView(R.layout.activity_game);
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
-        gameViews = new ArrayList<>();
+        gameViews = new CopyOnWriteArrayList<>();
         gameViews.add(spriteShip);
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
