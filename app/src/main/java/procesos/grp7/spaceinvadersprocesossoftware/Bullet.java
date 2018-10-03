@@ -63,24 +63,6 @@ public class Bullet {
             });
     }
 
-    public View detectCollision(Iterable<View> views) {
-        Iterator<View> i = views.iterator();
-        while(i.hasNext()) {
-            View view = i.next();
-            Log.d("POSITION_LOG", xPosition + ", " + yPosition + ":" + view.getX() + ", " + view.getY());
-            if ((yPosition>0)&&touch(view.getX(), view.getY(), view.getWidth(), view.getHeight())) {
-                Log.d("COLLISION_LOG", xPosition + ", " + yPosition + ":" + view.getX() + ", " + view.getY());
-                return view;
-            }
-        }
-        return null;
-    }
-
-    private boolean touch(float x, float y, float width, float height) {
-        float maxX = x + width;
-        float maxY = y + height;
-        return ((xPosition >= x) && (xPosition <= maxX) && (yPosition >= y) && (yPosition <= maxY));
-    }
 
     public void delete(){
         context.runOnUiThread(new Runnable() {
@@ -89,5 +71,9 @@ public class Bullet {
                 gameLayout.removeView(bulletView);
             }
         });
+    }
+
+    public ImageView getBulletView() {
+        return bulletView;
     }
 }
