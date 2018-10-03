@@ -88,14 +88,16 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     public void disparar(View view) {
-        final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
-        float coordX = spriteShip.getX();
-        float sizeX = spriteShip.getWidth();
-        float coordY = spriteShip.getY();
-        bullet.generateView(coordX, sizeX, coordY, R.id.ship);
-        BulletCollisionDetector collisionDetector = new BulletCollisionDetector(bullet, gameViews, this, false, vistasMarcianos);
-        Thread collisionDetectorThread = new Thread(collisionDetector);
-        collisionDetectorThread.start();
+        if (!dead) {
+            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
+            float coordX = spriteShip.getX();
+            float sizeX = spriteShip.getWidth();
+            float coordY = spriteShip.getY();
+            bullet.generateView(coordX, sizeX, coordY, R.id.ship);
+            BulletCollisionDetector collisionDetector = new BulletCollisionDetector(bullet, gameViews, this, false, vistasMarcianos);
+            Thread collisionDetectorThread = new Thread(collisionDetector);
+            collisionDetectorThread.start();
+        }
     }
 
     private class MovimientoNave extends AsyncTask<Void, Void, Void> {
