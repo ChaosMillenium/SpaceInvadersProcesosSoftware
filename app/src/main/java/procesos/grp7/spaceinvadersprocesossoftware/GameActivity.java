@@ -11,14 +11,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
-    private ArrayList<View> gameViews;
+    private CopyOnWriteArrayList<View> gameViews;
     private int puntos = 0;
+    TextView marcadorPuntos;
     Display display;
     Point size;
     Button buttonLeft;
@@ -32,7 +35,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         setContentView(R.layout.activity_game);
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
-        gameViews = new ArrayList<>();
+        marcadorPuntos = findViewById(R.id.Puntos);
+        gameViews = new CopyOnWriteArrayList<>();
         gameViews.add(spriteShip);
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
@@ -98,11 +102,26 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         Log.d("BULLET_COLLISION", "No collision");
                     } else {
                         Log.d("BULLET_COLLISION", collider.toString());
+                        puntos += 100;
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String puntosString = Integer.toString(puntos);
+                                marcadorPuntos.setText(puntosString);
+                            }
+                        });
                         bullet.delete();
                         gameViews.remove(collider);
-                        ImageView vistaMarciano = (ImageView) collider;
-                        vistaMarciano.setVisibility(View.INVISIBLE);
-                        return;
+                        final ImageView vistaMarciano = (ImageView) collider;
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                 vistaMarciano.setVisibility(View.INVISIBLE);
+                            }
+                        });
+                        return; //???
                     }
                     actualTime = System.currentTimeMillis();
                     aliveTime = actualTime-startTime;
@@ -146,8 +165,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
 
         public void mueveDerecha() {
-            RelativeLayout layout = findViewById(R.id.layout_game);
-            int height = layout.getWidth() - spriteShip.getWidth();
+            int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + 1);
             }

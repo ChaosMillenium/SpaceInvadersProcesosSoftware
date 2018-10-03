@@ -18,4 +18,12 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    public void juegoMenor13(View view){
+        Intent intent = new Intent(this, GameUnder13Activity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 }

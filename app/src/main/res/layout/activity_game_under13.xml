@@ -25,30 +25,7 @@
             android:text="@string/button_right"
             android:layout_toRightOf="@id/button_izq"
             android:layout_toEndOf="@id/button_izq" />
-
-        <TextView
-            android:id="@+id/puntuacion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="191dp"
-            android:layout_marginLeft="191dp"
-            android:text="@string/puntuacion"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/Puntos"
-            android:layout_width="69dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="242dp"
-            android:layout_marginRight="242dp"
-            android:text="@string/_0"
-            android:textStyle="bold"/>
+        
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/layout_game"

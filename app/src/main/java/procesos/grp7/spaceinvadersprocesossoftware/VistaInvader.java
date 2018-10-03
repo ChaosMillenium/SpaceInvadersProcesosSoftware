@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class VistaInvader extends Thread {
     private ArrayList<Marciano> marcianos;
@@ -16,9 +17,9 @@ public class VistaInvader extends Thread {
     private Activity context;
     private boolean pared;
     private RelativeLayout layout;
-    private ArrayList<View> gameViews;
+    private List<View> gameViews;
 
-    public VistaInvader(Activity context, int screenX, int screenY, RelativeLayout layout, ArrayList<View> views) {
+    public VistaInvader(Activity context, int screenX, int screenY, RelativeLayout layout, List<View> views) {
         this.marcianos = new ArrayList<>();
         this.vistasMarcianos = new ArrayList<>();
         this.layout = layout;
@@ -26,8 +27,8 @@ public class VistaInvader extends Thread {
         this.screenX = screenX;
         this.screenY = screenY;
         this.pared = false;
-        this.gameViews = views;
         rellenaMarcianos();
+        this.gameViews = views;
     }
 
     public void rellenaMarcianos() {

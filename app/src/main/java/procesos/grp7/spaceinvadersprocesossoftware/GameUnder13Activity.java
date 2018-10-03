@@ -17,7 +17,6 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
     private ArrayList<View> gameViews;
-    private int puntos = 0;
     Display display;
     Point size;
     Button buttonLeft;
@@ -109,8 +108,8 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
 
 
         public void mueveDerecha() {
-            RelativeLayout layout = findViewById(R.id.layout_game);
-            int height = layout.getWidth() - spriteShip.getWidth();
+
+            int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + 1);
             }
