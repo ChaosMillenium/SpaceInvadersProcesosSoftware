@@ -12,10 +12,11 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
     }
-
-    public void juegoMayor13(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
+    public void StartAlertDialog (View view){
+        Intent intent = new Intent(this, AlertDialog.class);
         startActivity(intent);
         finish();
+
     }
+
 }

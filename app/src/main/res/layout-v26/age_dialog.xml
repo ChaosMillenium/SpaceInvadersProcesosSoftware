@@ -5,7 +5,6 @@
     android:background="@color/colorPrimary">
 
     <LinearLayout
-        android:id="@+id/ageTextLayout"
         android:layout_width="289dp"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -44,7 +43,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/titleLayout"
         android:layout_width="460dp"
         android:layout_height="134dp"
         android:layout_alignParentStart="true"

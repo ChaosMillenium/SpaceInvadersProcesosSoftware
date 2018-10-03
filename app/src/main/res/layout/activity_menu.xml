@@ -2,38 +2,61 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LayoutMenu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
+    android:padding="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingBottom="0dp"
+    android:visibility="visible"
     tools:context=".MenuActivity">
     <Space
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"/>
 
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="@string/space_invaders"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/marciano"
+        android:layout_width="78dp"
+        android:layout_height="78dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/marciano"
+        app:srcCompat="@drawable/alien" />
+
+    <ImageView
+        android:id="@+id/Pistola"
+        android:layout_width="114dp"
+        android:layout_height="94dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="-30dp"
+        android:contentDescription="@string/Pistola"
+        app:srcCompat="@drawable/aliengun" />
+
     <Button
-        android:id="@+id/button_older"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:onClick="juegoMayor13"
-        android:text="@string/button_older" />
+        android:id="@+id/Start"
+        android:layout_width="127dp"
+        android:layout_height="68dp"
+        android:layout_marginStart="380dp"
+        android:layout_marginLeft="380dp"
+        android:layout_marginTop="-40dp"
+        android:onClick="StartAlertDialog"
+        android:text="@string/start" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
-
-    <Button
-        android:id="@+id/button_younger"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/button_younger"
-        android:onClick="juegoMayor13"/>
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"/>
 </LinearLayout>

@@ -8,13 +8,13 @@
 
     <ImageView
         android:id="@+id/GameOverImage"
-        android:layout_width="555dp"
-        android:layout_height="289dp"
+        android:layout_width="match_parent"
+        android:layout_height="345dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginLeft="23dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="0dp"
         android:contentDescription="@string/GameOverImage"
         app:srcCompat="@drawable/game_over" />
@@ -44,29 +44,4 @@
         android:layout_marginBottom="11dp"
         android:onClick="GoTOMenu"
         android:text="@string/menu" />
-
-    <TextView
-        android:id="@+id/EtiquetaPuntuacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="46dp"
-        android:layout_marginLeft="46dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/puntuacion"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
-
-    <TextView
-        android:id="@+id/puntuacion"
-        android:layout_width="72dp"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/EtiquetaPuntuacion"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="98dp"
-        android:background="@android:color/white"
-        android:text="@string/_0"
-        android:layout_alignLeft="@+id/EtiquetaPuntuacion" />
 </RelativeLayout>
