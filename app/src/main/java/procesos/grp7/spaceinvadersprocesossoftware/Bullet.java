@@ -46,7 +46,7 @@ public class Bullet {
             Log.d("YDisparo", "El disparo tiene y " + coordsY);
             bulletView.setY(coordsY);
             Log.d("YDisparo", "El disparo se dibujara en y " + bulletView.getY());
-            params.setMargins(0, 0, 0, 5);
+            params.setMargins(0, (int) coordsY, 0, 5);
             gameLayout.addView(bulletView, params);
             this.bulletView = bulletView;
             //ObjectAnimator puede dar problemas a la hora de comprobar colisiones,

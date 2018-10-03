@@ -106,7 +106,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         return;
                     }
                     actualTime = System.currentTimeMillis();
-                    aliveTime = actualTime-startTime;
+                    aliveTime = actualTime - startTime;
                 }
             }
         });
@@ -147,8 +147,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
 
         public void mueveDerecha() {
-            RelativeLayout layout = findViewById(R.id.layout_game);
-            int height = layout.getWidth() - spriteShip.getWidth();
+            int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + 1);
             }
