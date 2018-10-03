@@ -17,4 +17,5 @@
     <string name="aceptar">Aceptar</string>
     <string name="puntuacion">Points:</string>
     <string name="_0">0</string>
+    <string name="puntuacionetiqueta">PUNTUACION:</string>
 </resources>
