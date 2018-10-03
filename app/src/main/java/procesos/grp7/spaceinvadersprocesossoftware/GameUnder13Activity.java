@@ -12,17 +12,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameUnder13Activity extends AppCompatActivity implements View.OnTouchListener{
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
-    private ArrayList<View> gameViews;
+    private CopyOnWriteArrayList<View> gameViews;
     Display display;
     Point size;
     Button buttonLeft;
     Button buttonRight;
-    boolean pressedLeft = false;
-    boolean pressedRight = false;
+    private boolean pressedLeft = false;
+    private boolean pressedRight = false;
+    private int speedShip = 1; //Velocidad de la nave
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
         setContentView(R.layout.activity_game_under13);
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
-        gameViews = new ArrayList<>();
+        gameViews = new CopyOnWriteArrayList<>();
         gameViews.add(spriteShip);
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
@@ -42,11 +44,16 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
+
+        FallingInvaders marcianos = new FallingInvaders(this, size.x, size.y, gameLayout);
+        marcianos.start();
     }
 
     public boolean onTouch(View view, MotionEvent event) {
+        //Switch para ver que boton se pulsa
         switch (view.getId()) {
             case R.id.button_der:
+                //switch que detecta el inicio de la pulsacion
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (!pressedRight) {
@@ -59,6 +66,7 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
                 }
                 break;
             case R.id.button_izq:
+                //Switch que detecta el fin de la pulsacion
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (!pressedLeft) {
@@ -100,18 +108,17 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
 
         public void mueveIzquierda() {
             if (spriteShip.getX() > 0) {
-                float desplazamiento = spriteShip.getX() - 1;
+                float desplazamiento = spriteShip.getX() - speedShip;
                 spriteShip.setX(desplazamiento);
             }
 
         }
 
-
         public void mueveDerecha() {
 
             int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
-                spriteShip.setX(spriteShip.getX() + 1);
+                spriteShip.setX(spriteShip.getX() + speedShip);
             }
         }
 

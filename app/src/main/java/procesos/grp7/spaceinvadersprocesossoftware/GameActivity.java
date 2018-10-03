@@ -26,8 +26,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     Point size;
     Button buttonLeft;
     Button buttonRight;
-    boolean pressedLeft = false;
-    boolean pressedRight = false;
+    private boolean pressedLeft = false;
+    private boolean pressedRight = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

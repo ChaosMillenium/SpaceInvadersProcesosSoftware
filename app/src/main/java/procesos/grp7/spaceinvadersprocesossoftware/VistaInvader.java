@@ -62,6 +62,7 @@ public class VistaInvader extends Thread {
                     }
                 });
             }
+
         } catch (InterruptedException e) {
             System.out.print(e.getCause());
         }
