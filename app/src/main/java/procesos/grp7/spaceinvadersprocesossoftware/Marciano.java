@@ -20,9 +20,6 @@ public class Marciano {
         this.length = screenX / 20;
         this.height = screenY / 20;
         this.isVisible = true;
-        //this.spriteMarciano = BitmapFactory.decodeResource(context.getResources(), R.drawable.spritemarciano) ;
-        //this.spriteMarciano = Bitmap.createScaledBitmap(spriteMarciano, length, height, false) ;
-        //this.spriteMarciano = new ImageView(this.context);
         this.x = column * (length + (screenX / 1000));
         this.y = row * (length + (screenX / 25) / 4);
         this.orientacion = "RIGHT";
@@ -50,13 +47,14 @@ public class Marciano {
         this.spriteMarciano.setY(this.y);
     }
 
-    public void addImageView(RelativeLayout layout) {
+    public void addImageView(RelativeLayout layout, int id) {
         ImageView imageView = new ImageView(context);
         imageView.setImageResource(R.drawable.spritemarciano);
         this.spriteMarciano = imageView;
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-        params.height = 40;
-        params.width = 80;
+        params.height = this.height; //40
+        params.width = this.length; //80
+        imageView.setId(id);
         layout.addView(imageView, params);
     }
 
@@ -78,5 +76,13 @@ public class Marciano {
 
     public float getY() {
         return y;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public RelativeLayout getLayout() {
+        return layout;
     }
 }
