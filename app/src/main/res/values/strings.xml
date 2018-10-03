@@ -6,5 +6,15 @@
     <string name="button_right">RIGHT</string>
     <string name="button_shoot">Shoot</string>
     <string name="puntuacion">Points:</string>
+    <string name="start">Start</string>
+    <string name="marciano">marciano</string>
+    <string name="Pistola">TODO</string>
+    <string name="fondoestrellas">TODO</string>
+    <string name="restart">RESTART</string>
+    <string name="GameOverImage">TODO</string>
+    <string name="space_invaders">Space Invaders</string>
+    <string name="menu">Menu</string>
+    <string name="introduzca_su_edad">Introduzca su edad</string>
+    <string name="aceptar">Aceptar</string>
     <string name="_0">0</string>
 </resources>
