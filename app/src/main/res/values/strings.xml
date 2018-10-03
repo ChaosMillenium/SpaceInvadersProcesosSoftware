@@ -15,4 +15,6 @@
     <string name="menu">Menu</string>
     <string name="introduzca_su_edad">Introduzca su edad</string>
     <string name="aceptar">Aceptar</string>
+    <string name="puntuacion">Points:</string>
+    <string name="_0">0</string>
 </resources>
