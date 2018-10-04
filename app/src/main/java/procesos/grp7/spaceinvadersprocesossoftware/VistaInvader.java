@@ -33,6 +33,7 @@ public class VistaInvader extends Thread {
     }
 
     public void rellenaMarcianos() {
+        this.marcianos.clear();
         this.numMarcianos = 0;
         for (int column = 0; column < 6; column++) {
             for (int row = 0; row < 5; row++) {
@@ -50,7 +51,7 @@ public class VistaInvader extends Thread {
     public void run() {
         final int aux = this.marcianos.size();
         try {
-            while (true) {
+            while (this.numMarcianos != 0) {
                 Thread.sleep(150);
                 movimiento();
                 dibuja();
@@ -59,8 +60,10 @@ public class VistaInvader extends Thread {
                     public void run() {
                         if (((int) (Math.random() * 10) + 1) == 3) {
                             int marciano = (int) (Math.random() * aux);
-                            disparo(marciano);
-                            Log.d("Disparo", "Disparo del marcianito " + marciano);
+                            if(marcianos.get(marciano).getSpriteMarciano().getVisibility() == View.VISIBLE) {
+                                disparo(marciano);
+                                Log.d("Disparo", "Disparo del marcianito " + marciano);
+                            }
                         }
                     }
                 });

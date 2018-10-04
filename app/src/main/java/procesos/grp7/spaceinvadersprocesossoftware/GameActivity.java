@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean dead;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
+    VistaInvader marcianitos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
+        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
@@ -166,5 +167,14 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 spriteShip.setX(spriteShip.getX() + 1);
             }
         }
+    }
+
+    public void reinicia(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recreate();
+            }
+        });
     }
 }
