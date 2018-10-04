@@ -23,7 +23,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private RelativeLayout gameLayout;
     private CopyOnWriteArrayList<ImageView> gameViews;
     private List<ImageView> vistasMarcianos;
-    private int puntos = 0;
     TextView marcadorPuntos;
     Display display;
     Point size;
@@ -32,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     public boolean dead;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
+    VistaInvader marcianitos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
+        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
@@ -114,7 +114,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     collider2.setVisibility(View.INVISIBLE);
                     dead = true;
                     Thread.sleep(1000);
-                    Intent deathIntent = new Intent(this,GameOverScreen.class);
+                    Intent deathIntent = new Intent(this, GameOverScreen.class);
                     finish();
                     startActivity(deathIntent);
                 }
