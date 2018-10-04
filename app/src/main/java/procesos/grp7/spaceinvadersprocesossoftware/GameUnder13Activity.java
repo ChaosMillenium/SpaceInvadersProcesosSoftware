@@ -11,20 +11,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameUnder13Activity extends AppCompatActivity implements View.OnTouchListener{
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
-    private CopyOnWriteArrayList<View> gameViews;
     Display display;
     Point size;
     Button buttonLeft;
     Button buttonRight;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
-    private int speedShip = 1; //Velocidad de la nave
+    private int speedShip = 2; //Velocidad de la nave
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +29,6 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
         setContentView(R.layout.activity_game_under13);
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
-        gameViews = new CopyOnWriteArrayList<>();
-        gameViews.add(spriteShip);
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
