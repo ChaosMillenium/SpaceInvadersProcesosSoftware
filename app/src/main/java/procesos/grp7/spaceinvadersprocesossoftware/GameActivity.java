@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
     VistaInvader marcianitos;
+    VistaDefensas defensas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
+        defensas = new VistaDefensas(gameLayout, this, size.x, size.y);
+        gameViews.addAll(defensas.getVistaDefensa());
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
@@ -121,7 +124,10 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-        } else {
+        } else if(collider2 == marcianitos.getVistasMarcianos().get(0)){
+            gameViews.remove(collider2);
+            collider2.setVisibility(View.INVISIBLE);
+        } else{
             gameViews.remove(collider2);
             collider2.setVisibility(View.INVISIBLE);
         }
