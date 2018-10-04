@@ -32,6 +32,7 @@ public class VistaInvader extends Thread {
     }
 
     public void rellenaMarcianos() {
+        this.marcianos.clear();
         this.numMarcianos = 0;
         for (int column = 0; column < 6; column++) {
             for (int row = 0; row < 5; row++) {
@@ -47,20 +48,22 @@ public class VistaInvader extends Thread {
     public void run() {
         final int aux = this.marcianos.size();
         try {
-            while (true) {
+            while (this.numMarcianos != 0) {
                 Thread.sleep(150);
                 movimiento();
                 dibuja();
-                this.context.runOnUiThread(new Runnable(){
+                this.context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(((int) (Math.random() * 10) + 1 )== 3){
+                        if (((int) (Math.random() * 10) + 1) == 3) {
                             int marciano = (int) (Math.random() * aux);
-                            disparo(marciano);
-                            Log.d("Disparo", "Disparo del marcianito " + marciano);
+                            if(marcianos.get(marciano).getSpriteMarciano().getVisibility() == View.VISIBLE) {
+                                disparo(marciano);
+                                Log.d("Disparo", "Disparo del marcianito " + marciano);
+                            }
                         }
                     }
-                });
+                    });
             }
         } catch (InterruptedException e) {
             System.out.print(e.getCause());
@@ -94,13 +97,15 @@ public class VistaInvader extends Thread {
     }
 
     public void disparo(int marciano) {
-        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN);
-        float coordX = this.marcianos.get(marciano).getX();
-        float sizeX = this.marcianos.get(marciano).getLength();
-        float coordsY = this.marcianos.get(marciano).getY();
-        Log.d("YDisparo", "El marciano tiene y " + coordsY);
-        Log.d("YDisparo", "El marciano tiene id " + marciano);
-        bullet.generateView(coordX, sizeX, coordsY, marciano);
+        if(this.marcianos.get(marciano).vivo()) {
+            final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN);
+            float coordX = this.marcianos.get(marciano).getX();
+            float sizeX = this.marcianos.get(marciano).getLength();
+            float coordsY = this.marcianos.get(marciano).getY();
+            Log.d("YDisparo", "El marciano tiene y " + coordsY);
+            Log.d("YDisparo", "El marciano tiene id " + marciano);
+            bullet.generateView(coordX, sizeX, coordsY, marciano);
+        }
         /*Thread collisionDetector = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -125,5 +130,10 @@ public class VistaInvader extends Thread {
 
     public ArrayList<View> getVistasMarcianos() {
         return vistasMarcianos;
+    }
+
+    public int muerte(){
+        this.numMarcianos--;
+        return this.numMarcianos;
     }
 }

@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     Button buttonRight;
     boolean pressedLeft = false;
     boolean pressedRight = false;
+    VistaInvader marcianitos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
+        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
         //Definicion de botones
@@ -101,8 +102,17 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                         Log.d("BULLET_COLLISION", collider.toString());
                         bullet.delete();
                         gameViews.remove(collider);
-                        ImageView vistaMarciano = (ImageView) collider;
-                        vistaMarciano.setVisibility(View.INVISIBLE);
+                        if(marcianitos.muerte() == 0){
+                            reinicia();
+                        }
+                        final ImageView vistaMarciano = (ImageView) collider;
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                vistaMarciano.setVisibility(View.INVISIBLE);
+                            }
+                        });
+
                         return;
                     }
                     actualTime = System.currentTimeMillis();
@@ -112,6 +122,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         });
         collisionDetector.start();
     }
+
 
     private class MovimientoNave extends AsyncTask<Void, Void, Void> {
 
@@ -152,7 +163,14 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 spriteShip.setX(spriteShip.getX() + 1);
             }
         }
+    }
 
-
+    public void reinicia(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                recreate();
+            }
+        });
     }
 }
