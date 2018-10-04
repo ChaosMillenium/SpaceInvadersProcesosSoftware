@@ -23,7 +23,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private RelativeLayout gameLayout;
     private CopyOnWriteArrayList<ImageView> gameViews;
     private List<ImageView> vistasMarcianos;
-    private int puntos = 0;
     TextView marcadorPuntos;
     Display display;
     Point size;
@@ -115,7 +114,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                     collider2.setVisibility(View.INVISIBLE);
                     dead = true;
                     Thread.sleep(1000);
-                    Intent deathIntent = new Intent(this,GameOverScreen.class);
+                    Intent deathIntent = new Intent(this, GameOverScreen.class);
                     finish();
                     startActivity(deathIntent);
                 }
@@ -167,14 +166,5 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 spriteShip.setX(spriteShip.getX() + 1);
             }
         }
-    }
-
-    public void reinicia(){
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recreate();
-            }
-        });
     }
 }
