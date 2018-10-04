@@ -1,56 +1,37 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.content.Intent;
 import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
+public class GameUnder13Activity extends AppCompatActivity implements View.OnTouchListener{
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
-    private CopyOnWriteArrayList<ImageView> gameViews;
-    private List<ImageView> vistasMarcianos;
-    private int puntos = 0;
-    TextView marcadorPuntos;
     Display display;
     Point size;
     Button buttonLeft;
     Button buttonRight;
-    public boolean dead;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
+    private int speedShip = 2; //Velocidad de la nave
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-        dead = false;
+        setContentView(R.layout.activity_game_under13);
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
-        gameViews = new CopyOnWriteArrayList<>();
-        marcadorPuntos = findViewById(R.id.Puntos);
-        gameViews = new CopyOnWriteArrayList<>();
-        gameViews.add(spriteShip);
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        VistaInvader marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
-        this.vistasMarcianos = marcianitos.getVistasMarcianos();
-        gameViews.addAll(marcianitos.getVistasMarcianos());
-        marcianitos.start();
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
@@ -58,16 +39,20 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
+        FallingInvaders marcianos = new FallingInvaders(this, size.x, size.y, gameLayout);
+        marcianos.start();
     }
 
     public boolean onTouch(View view, MotionEvent event) {
+        //Switch para ver que boton se pulsa
         switch (view.getId()) {
             case R.id.button_der:
+                //switch que detecta el inicio de la pulsacion
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (!pressedRight) {
                             pressedRight = true;
-                            new MovimientoNave().execute();
+                            new GameUnder13Activity.MovimientoNave().execute();
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -75,11 +60,12 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 }
                 break;
             case R.id.button_izq:
+                //Switch que detecta el fin de la pulsacion
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (!pressedLeft) {
                             pressedLeft = true;
-                            new MovimientoNave().execute();
+                            new GameUnder13Activity.MovimientoNave().execute();
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -88,43 +74,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                 break;
         }
         return true;
-
-    }
-
-    public void disparar(View view) {
-        if (!dead) {
-            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
-            float coordX = spriteShip.getX();
-            float sizeX = spriteShip.getWidth();
-            float coordY = spriteShip.getY();
-            bullet.generateView(coordX, sizeX, coordY, R.id.ship);
-            BulletCollisionDetector collisionDetector = new BulletCollisionDetector(bullet, gameViews, this, false, vistasMarcianos);
-            Thread collisionDetectorThread = new Thread(collisionDetector);
-            collisionDetectorThread.start();
-        }
-    }
-
-    public void kill(Object collider1, ImageView collider2) {
-        if (collider1 instanceof Bullet) {
-            ((Bullet) collider1).delete();
-        }
-        if (collider2 == spriteShip) {
-            try {
-                if (!dead) {
-                    collider2.setVisibility(View.INVISIBLE);
-                    dead = true;
-                    Thread.sleep(1000);
-                    Intent deathIntent = new Intent(this,GameOverScreen.class);
-                    finish();
-                    startActivity(deathIntent);
-                }
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            gameViews.remove(collider2);
-            collider2.setVisibility(View.INVISIBLE);
-        }
     }
 
     private class MovimientoNave extends AsyncTask<Void, Void, Void> {
@@ -153,18 +102,20 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         public void mueveIzquierda() {
             if (spriteShip.getX() > 0) {
-                float desplazamiento = spriteShip.getX() - 1;
+                float desplazamiento = spriteShip.getX() - speedShip;
                 spriteShip.setX(desplazamiento);
             }
 
         }
 
-
         public void mueveDerecha() {
+
             int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
-                spriteShip.setX(spriteShip.getX() + 1);
+                spriteShip.setX(spriteShip.getX() + speedShip);
             }
         }
+
+
     }
 }
