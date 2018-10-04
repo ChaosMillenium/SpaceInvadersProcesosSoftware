@@ -41,8 +41,6 @@ public class VistaInvader extends Thread {
                 this.marcianos.add(numMarcianos, nuevoMarciano);
                 nuevoMarciano.addImageView(this.layout, numMarcianos);
                 vistasMarcianos.add(nuevoMarciano.getSpriteMarciano());
-                Thread collisionDetector = new Thread(new MarcianoCollisionDetector(nuevoMarciano, gameViews, context, getVistasMarcianos()));
-                collisionDetector.start();
                 numMarcianos++;
             }
         }

@@ -21,7 +21,7 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
     Button buttonRight;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
-    private int speedShip = 2; //Velocidad de la nave
+    private int speedShip; //Velocidad de la nave
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +39,7 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
+        speedShip = size.x/100;
         FallingInvaders marcianos = new FallingInvaders(this, size.x, size.y, gameLayout);
         marcianos.start();
     }

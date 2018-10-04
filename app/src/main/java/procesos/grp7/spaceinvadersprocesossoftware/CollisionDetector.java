@@ -11,18 +11,20 @@ public abstract class CollisionDetector {
         Iterator<ImageView> i = views.iterator();
         while (i.hasNext()) {
             ImageView view = i.next();
-            Log.d("POSITION_LOG", collider.getX() + ", " + collider + ":" + view.getX() + ", " + view.getY());
-            if ((collider.getY() > 0) && touch(collider, view.getX(), view.getY(), view.getWidth(), view.getHeight())) {
-                Log.d("COLLISION_LOG", collider + ", " + collider + ":" + view.getX() + ", " + view.getY());
-                return view;
+            if (view != collider) {
+                Log.d("POSITION_LOG", collider.getX() + ", " + collider + ":" + view.getX() + ", " + view.getY());
+                if ((collider.getY() > 0) && touch(collider, view.getX(), view.getY(), view.getWidth(), view.getHeight())) {
+                    Log.d("COLLISION_LOG", collider + ", " + collider + ":" + view.getX() + ", " + view.getY());
+                    return view;
+                }
             }
         }
         return null;
     }
 
     private boolean touch(View collider, float x, float y, float width, float height) {
-        float maxX = x + width;
-        float maxY = y + height;
+        float maxX = x + 6*width/5;
+        float maxY = y + 6*height/5;
         return ((collider.getX() >= x) && (collider.getX() <= maxX) && (collider.getY() >= y) && (collider.getY() <= maxY));
     }
 }

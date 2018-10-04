@@ -1,16 +1,21 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class Defensas {
+    private Activity context;
+    private RelativeLayout layout;
     private ImageView defensas;
     private float medidas;
     private int vidas;
 
-    public Defensas(RelativeLayout layout, Context context, int x, int y){
+    public Defensas(RelativeLayout layout, Activity context, int x, int y){
+        this.context=context;
+        this.layout=layout;
         this.defensas = new ImageView(context);
         defensas.setImageResource(R.drawable.defensas);
         defensas.setVisibility(View.VISIBLE);
@@ -28,5 +33,14 @@ public class Defensas {
 
     public ImageView getSprite(){
         return this.defensas;
+    }
+
+    public void delete(){
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                defensas.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }
