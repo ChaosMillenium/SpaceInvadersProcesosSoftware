@@ -17,10 +17,12 @@ public class AlertDialog extends AppCompatActivity {
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Integer.parseInt(edad.getText().toString()) >= 13) {
-                    StartGameOlder(v);
-                } else {
-                    StartGameYounger(v);
+                if (!edad.getText().toString().isEmpty()) {
+                    if (Integer.parseInt(edad.getText().toString()) >= 13) {
+                        StartGameOlder(v);
+                    } else {
+                        StartGameYounger(v);
+                    }
                 }
             }
         });
