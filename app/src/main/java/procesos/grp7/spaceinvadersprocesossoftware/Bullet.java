@@ -19,7 +19,7 @@ public class Bullet {
     public static final int UP = -1;
     public static final int DOWN = 1;
     private int direction; //-1 hacia arriba, 1 hacia abajo
-    public static final int DURATION = 1000;
+    public static final int DURATION = 2000;
     private Point screenSize;
     private ImageView bulletView;
     private float yPosition = 0, xPosition = 0;

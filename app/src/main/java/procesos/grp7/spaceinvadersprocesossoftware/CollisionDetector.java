@@ -23,8 +23,8 @@ public abstract class CollisionDetector {
     }
 
     private boolean touch(View collider, float x, float y, float width, float height) {
-        float maxX = x + 6*width/5;
-        float maxY = y + 6*height/5;
+        float maxX = x + width;
+        float maxY = y + height;
         return ((collider.getX() >= x) && (collider.getX() <= maxX) && (collider.getY() >= y) && (collider.getY() <= maxY));
     }
 }

@@ -114,8 +114,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             ((Bullet) collider1).delete();
         }
         if (collider1 instanceof Defensas) {
-            gameViews.remove(collider1);
-            ((Defensas) collider1).delete();
+            gameViews.remove(((Defensas) collider1).getSprite());
+            ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
         }
         if (collider2 == spriteShip) {
             try {

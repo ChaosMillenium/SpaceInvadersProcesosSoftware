@@ -68,7 +68,7 @@ public class VistaDefensas {
         this.defensas.add(defensa4_3);
 
         for (Defensas def:defensas){
-            Thread defensaCollisionDetector = new Thread(new DefensaCollisionDetector(context, gameViews, def.getSprite()));
+            Thread defensaCollisionDetector = new Thread(new DefensaCollisionDetector(context, gameViews, def));
             defensaCollisionDetector.start();
         }
     }

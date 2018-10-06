@@ -35,12 +35,4 @@ public class Defensas {
         return this.defensas;
     }
 
-    public void delete(){
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                defensas.setVisibility(View.INVISIBLE);
-            }
-        });
-    }
 }
