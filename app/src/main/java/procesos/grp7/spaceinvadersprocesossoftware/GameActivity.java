@@ -32,12 +32,12 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
     VistaInvader marcianitos;
+    VistaDefensas defensas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        dead = false;
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
         gameViews = new CopyOnWriteArrayList<>();
@@ -51,6 +51,8 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
+        defensas = new VistaDefensas(gameLayout, this, size.x, size.y, gameViews);
+        gameViews.addAll(defensas.getVistaDefensa());
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
@@ -58,6 +60,9 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
+        dead = false;
+        Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
+        shipCollisionDetector.start();
     }
 
     public boolean onTouch(View view, MotionEvent event) {
@@ -108,6 +113,10 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         if (collider1 instanceof Bullet) {
             ((Bullet) collider1).delete();
         }
+        if (collider1 instanceof Defensas) {
+            gameViews.remove(collider1);
+            ((Defensas) collider1).delete();
+        }
         if (collider2 == spriteShip) {
             try {
                 if (!dead) {
@@ -121,7 +130,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-        } else {
+        } else{
             gameViews.remove(collider2);
             collider2.setVisibility(View.INVISIBLE);
         }
@@ -153,7 +162,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         public void mueveIzquierda() {
             if (spriteShip.getX() > 0) {
-                float desplazamiento = spriteShip.getX() - 1;
+                float desplazamiento = spriteShip.getX() - size.x/100;
                 spriteShip.setX(desplazamiento);
             }
 
@@ -163,7 +172,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         public void mueveDerecha() {
             int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
-                spriteShip.setX(spriteShip.getX() + 1);
+                spriteShip.setX(spriteShip.getX() + size.x/100);
             }
         }
     }

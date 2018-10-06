@@ -13,10 +13,14 @@ public class Marciano {
     private boolean isVisible;
     private Context context;
     private String orientacion;
+    private int screenX;
+    private int screenY;
     private RelativeLayout layout;
 
     public Marciano(Context context, int screenX, int screenY, int row, int column) {
         this.context = context;
+        this.screenX = screenX;
+        this.screenY = screenY;
         this.length = screenX / 20;
         this.height = screenY / 20;
         this.isVisible = true;
@@ -27,9 +31,9 @@ public class Marciano {
 
     public void actualizaPosicion() {
         if (this.orientacion.equals("RIGHT")) {
-            this.x += 10;
+            this.x += screenX/100;
         } else {
-            this.x -= 10;
+            this.x -= screenX/100;
         }
     }
 
@@ -39,7 +43,7 @@ public class Marciano {
         } else {
             this.orientacion = "RIGHT";
         }
-        this.y += 20;
+        this.y += screenY/40;
     }
 
     public void dibuja() {
