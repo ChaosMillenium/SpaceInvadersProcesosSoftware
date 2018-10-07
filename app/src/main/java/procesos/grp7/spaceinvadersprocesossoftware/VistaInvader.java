@@ -112,4 +112,14 @@ public class VistaInvader extends Thread {
     public List<ImageView> getVistasMarcianos() {
         return vistasMarcianos;
     }
+
+    public boolean respawn(){
+        boolean aux = true;
+        for(Marciano m : this.marcianos){
+            if(m.getSpriteMarciano().getVisibility() == View.VISIBLE){
+                aux = false;
+            }
+        }
+        return aux;
+    }
 }

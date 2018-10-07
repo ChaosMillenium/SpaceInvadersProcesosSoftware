@@ -29,8 +29,13 @@ public class AlertDialog extends AppCompatActivity {
     }
 
     public void StartGameOlder(View view) {
-        Intent intent = new Intent(this, GameActivity.class);
+        /*Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
+        finish();*/
+        Intent intent = new Intent(this, GameActivity.class);
+        String extra = "0";
+        intent.putExtra("EXTRA_MESSAGE", extra);
+        startActivityForResult(intent, 1);
         finish();
     }
 
