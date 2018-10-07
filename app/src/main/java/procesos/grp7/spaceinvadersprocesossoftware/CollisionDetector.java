@@ -1,6 +1,5 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -13,9 +12,7 @@ public abstract class CollisionDetector {
             while (i.hasNext()) {
                 ImageView view = i.next();
                 if ((view != collider) && (view != null)) {
-                    Log.d("POSITION_LOG", collider.getX() + ", " + collider + ":" + view.getX() + ", " + view.getY());
                     if ((collider.getY() > 0) && touch(collider, view.getX(), view.getY(), view.getWidth(), view.getHeight())) {
-                        Log.d("COLLISION_LOG", collider + ", " + collider + ":" + view.getX() + ", " + view.getY());
                         return view;
                     }
                 }
@@ -27,6 +24,6 @@ public abstract class CollisionDetector {
     private boolean touch(View collider, float x, float y, float width, float height) {
         float maxX = x + width;
         float maxY = y + height;
-        return ((collider.getX() >= x) && (collider.getX() <= maxX) && (collider.getY() >= y) && (collider.getY() <= maxY));
+        return ((collider.getX()+collider.getWidth() >= x) && (collider.getX() <= maxX) && (collider.getY()+collider.getHeight() >= y) && (collider.getY() <= maxY));
     }
 }

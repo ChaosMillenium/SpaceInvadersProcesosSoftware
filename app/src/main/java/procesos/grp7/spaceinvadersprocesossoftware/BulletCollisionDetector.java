@@ -1,7 +1,5 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -29,17 +27,13 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
         long actualTime;
         while (aliveTime < Bullet.DURATION) {
             final ImageView collider = detectCollision(gameViews, bullet.getBulletView());
-            if (collider == null) {
-                Log.d("BULLET_COLLISION", "No collision");
-            } else {
+            if (collider != null) {
                 if (fromMarciano) {
                     if (!listaMarcianos.contains(collider)) {
-                        Log.d("BULLET_COLLISION", collider.toString());
                         activity.kill(bullet, collider);
                         return;
                     }
                 } else {
-                    Log.d("BULLET_COLLISION", collider.toString());
                     activity.kill(bullet, collider);
                     return;
                 }

@@ -1,6 +1,5 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -20,10 +19,7 @@ public class ShipCollisionDetector extends CollisionDetector implements Runnable
     public void run() {
         while (!activity.dead) {
             ImageView collider = detectCollision(gameViews, shipSprite);
-            if (collider == null) {
-                Log.d("MARCIANO_COLLISION", "No collision");
-            } else {
-                Log.d("MARCIANO_COLLISION", collider.toString());
+            if (collider != null) {
                 activity.kill(shipSprite, shipSprite);
                 return;
             }
