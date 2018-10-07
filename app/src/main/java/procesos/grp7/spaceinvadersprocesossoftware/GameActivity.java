@@ -2,6 +2,7 @@ package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -130,7 +131,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                     ((Bullet) collider1).delete();
                 }
                 if (collider1 instanceof Defensas) {
-                    gameViews.remove(((Defensas) collider1).getSprite());
+                    if (!gameViews.remove(((Defensas) collider1).getSprite()));// throw new RuntimeException("No se ha eliminado la barrera");
                     ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
                 }
                 if (collider2 == spriteShip) {
@@ -150,7 +151,8 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                 } else{
                     gameViews.remove(collider2);
                     collider2.setVisibility(View.INVISIBLE);
-                    puntos+=100;
+                    if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.spritemarciano)).getBitmap()))
+                        puntos+=100;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
