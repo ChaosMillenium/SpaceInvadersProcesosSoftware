@@ -24,7 +24,7 @@ public class MarcianoUnder13 {
 
     //Velocidad de las fases del movimiento de marcianos
     private static final int DURATION_PHASE1 = 1000;
-    private static final int DURATION_PHASE2 = 400;
+    private static final int DURATION_PHASE2 = 500;
     private static final int DURATION_PHASE3 = 3500;
 
     private Point screenSize;
