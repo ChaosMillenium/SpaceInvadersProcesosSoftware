@@ -1,9 +1,6 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.app.Activity;
-import android.content.Context;
 import android.graphics.Point;
-import android.media.Image;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -12,14 +9,14 @@ import java.util.List;
 
 public class VistaDefensas {
     private RelativeLayout layout;
-    private GameActivity context;
-    private ArrayList<Defensas> defensas ;
+    private PlayActivity context;
+    private ArrayList<Defensas> defensas;
     private List<ImageView> vistaDefensa;
     private List<ImageView> gameViews;
     private int width;
     private int height;
 
-    public VistaDefensas(RelativeLayout layout, GameActivity context, int width, int height, List<ImageView> gameViews){
+    public VistaDefensas(RelativeLayout layout, PlayActivity context, int width, int height, List<ImageView> gameViews) {
         this.layout = layout;
         this.context = context;
         this.gameViews = gameViews;
@@ -32,21 +29,21 @@ public class VistaDefensas {
     }
 
     public void rellenaDefensas() {
-        int y = (height/24) * 13;
-        int x = width/9;
+        int y = (height / 24) * 14;
+        int x = width / 9;
         int pixelesDefensa = 115;
         Point size = new Point();
         context.getWindowManager().getDefaultDisplay().getSize(size);
-        int nivel2 = size.y/30;
-        int nivel3 = nivel2*2;
+        int nivel2 = size.y / 30;
+        int nivel3 = nivel2 * 2;
 
-        Defensas defensa1_1 = new Defensas(layout, context, x, y );
+        Defensas defensa1_1 = new Defensas(layout, context, x, y);
         Defensas defensa1_2 = new Defensas(layout, context, x, y - nivel2);
         Defensas defensa1_3 = new Defensas(layout, context, x, y - nivel3);
         Defensas defensa2_1 = new Defensas(layout, context, 3 * x, y);
         Defensas defensa2_2 = new Defensas(layout, context, 3 * x, y - nivel2);
         Defensas defensa2_3 = new Defensas(layout, context, 3 * x, y - nivel3);
-        Defensas defensa3_1 = new Defensas(layout, context, width - (3 * x) - pixelesDefensa,y);
+        Defensas defensa3_1 = new Defensas(layout, context, width - (3 * x) - pixelesDefensa, y);
         Defensas defensa3_2 = new Defensas(layout, context, width - (3 * x) - pixelesDefensa, y - nivel2);
         Defensas defensa3_3 = new Defensas(layout, context, width - (3 * x) - pixelesDefensa, y - nivel3);
         Defensas defensa4_1 = new Defensas(layout, context, width - x - pixelesDefensa, y);
@@ -67,14 +64,14 @@ public class VistaDefensas {
         this.defensas.add(defensa4_2);
         this.defensas.add(defensa4_3);
 
-        for (Defensas def:defensas){
+        for (Defensas def : defensas) {
             Thread defensaCollisionDetector = new Thread(new DefensaCollisionDetector(context, gameViews, def));
             defensaCollisionDetector.start();
         }
     }
 
-    public void rellenaDefensasVista(){
-        for(int i = 0; i<this.defensas.size(); i++){
+    public void rellenaDefensasVista() {
+        for (int i = 0; i < this.defensas.size(); i++) {
             this.vistaDefensa.add(this.defensas.get(i).getSprite());
         }
     }

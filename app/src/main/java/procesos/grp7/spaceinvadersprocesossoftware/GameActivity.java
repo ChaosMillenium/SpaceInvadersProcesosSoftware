@@ -18,7 +18,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
+public class GameActivity extends PlayActivity implements View.OnTouchListener {
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
     private CopyOnWriteArrayList<ImageView> gameViews;
@@ -29,7 +29,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     Point size;
     Button buttonLeft;
     Button buttonRight;
-    public boolean dead;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
     VistaInvader marcianitos;
@@ -140,7 +139,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
                             collider2.setVisibility(View.INVISIBLE);
                             dead = true;
                             Thread.sleep(1000);
-                            Intent deathIntent = new Intent(GameActivity.this,GameOverScreen.class);
+                            Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
                             finish();
                             startActivity(deathIntent);
                         }
