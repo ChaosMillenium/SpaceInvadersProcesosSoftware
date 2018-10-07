@@ -1,36 +1,42 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.app.Activity;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-public class FallingInvaders extends Thread{
+import java.util.List;
+
+public class FallingInvaders extends Thread {
     private int screenX;
     private int screenY;
-    private Activity context;
+    private PlayActivity context;
     private RelativeLayout layout;
+    private List<ImageView> gameViews;
 
-    public FallingInvaders(Activity context, int screenX, int screenY, RelativeLayout layout){
+    public FallingInvaders(PlayActivity context, int screenX, int screenY, RelativeLayout layout, List<ImageView> gameViews) {
         this.screenX = screenX;
         this.screenY = screenY;
         this.context = context;
         this.layout = layout;
+        this.gameViews = gameViews;
     }
 
 
-    public void run(){
+    public void run() {
         try {
-            while (true) {
+            while (!context.dead) {
                 this.context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        MarcianoUnder13 marciano = new MarcianoUnder13(context,layout, screenX, screenY);
-                        int randomX = (int)(Math.random()*screenX-marciano.getWidth())+1;
+                        MarcianoUnder13 marciano = new MarcianoUnder13(context, layout, screenX, screenY, gameViews);
+                        int randomX = (int) (Math.random() * screenX - marciano.getWidth()) + 1;
                         marciano.generateMarciano(randomX);
                     }
                 });
                 Thread.sleep(500);
 
             }
-        }catch(InterruptedException ex){System.out.println(ex.getCause());}
+        } catch (InterruptedException ex) {
+            System.out.println(ex.getCause());
+        }
     }
 }

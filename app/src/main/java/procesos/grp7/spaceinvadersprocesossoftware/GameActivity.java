@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GameActivity extends AppCompatActivity implements View.OnTouchListener {
+public class GameActivity extends PlayActivity implements View.OnTouchListener {
     private ImageView spriteShip;
     private RelativeLayout gameLayout;
     private CopyOnWriteArrayList<ImageView> gameViews;
@@ -28,7 +28,6 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     Point size;
     Button buttonLeft;
     Button buttonRight;
-    public boolean dead;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
     VistaInvader marcianitos;
@@ -109,7 +108,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         }
     }
 
-    public void kill(Object collider1, ImageView collider2) {
+    public void kill(final Object collider1, final ImageView collider2) {
         if (collider1 instanceof Bullet) {
             ((Bullet) collider1).delete();
         }
@@ -130,7 +129,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-        } else{
+        } else {
             gameViews.remove(collider2);
             collider2.setVisibility(View.INVISIBLE);
         }
@@ -162,7 +161,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
 
         public void mueveIzquierda() {
             if (spriteShip.getX() > 0) {
-                float desplazamiento = spriteShip.getX() - size.x/100;
+                float desplazamiento = spriteShip.getX() - size.x / 100;
                 spriteShip.setX(desplazamiento);
             }
 
@@ -172,7 +171,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         public void mueveDerecha() {
             int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
-                spriteShip.setX(spriteShip.getX() + size.x/100);
+                spriteShip.setX(spriteShip.getX() + size.x / 100);
             }
         }
     }

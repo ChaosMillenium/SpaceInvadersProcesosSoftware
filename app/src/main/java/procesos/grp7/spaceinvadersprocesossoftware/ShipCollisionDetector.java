@@ -6,11 +6,11 @@ import android.widget.ImageView;
 import java.util.List;
 
 public class ShipCollisionDetector extends CollisionDetector implements Runnable {
-    private GameActivity activity;
+    private PlayActivity activity;
     private List<ImageView> gameViews;
     private ImageView shipSprite;
 
-    public ShipCollisionDetector(GameActivity activity, List<ImageView> gameViews, ImageView shipSprite) {
+    public ShipCollisionDetector(PlayActivity activity, List<ImageView> gameViews, ImageView shipSprite) {
         this.activity = activity;
         this.gameViews = gameViews;
         this.shipSprite = shipSprite;

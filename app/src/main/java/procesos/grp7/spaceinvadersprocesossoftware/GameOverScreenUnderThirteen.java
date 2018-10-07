@@ -19,9 +19,8 @@ public class GameOverScreenUnderThirteen extends AppCompatActivity {
         finish();
     }
     public void RestartGame(View view) {
-        //descomentar cuando este hecho el GameActivityUnderthirtenn y cambiarlo en el intent
-        //Intent intent = new Intent(this, GameActivity.class);
-        //startActivity(intent);
-        //finish();
+        Intent intent = new Intent(this, GameUnder13Activity.class);
+        startActivity(intent);
+        finish();
     }
 }

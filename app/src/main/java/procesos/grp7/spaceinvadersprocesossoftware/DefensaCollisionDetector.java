@@ -5,12 +5,12 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-public class DefensaCollisionDetector extends CollisionDetector implements Runnable{
-    private GameActivity activity;
+public class DefensaCollisionDetector extends CollisionDetector implements Runnable {
+    private PlayActivity activity;
     private List<ImageView> gameViews;
     private Defensas defense;
 
-    public DefensaCollisionDetector(GameActivity activity, List<ImageView> gameViews, Defensas defense) {
+    public DefensaCollisionDetector(PlayActivity activity, List<ImageView> gameViews, Defensas defense) {
         this.activity = activity;
         this.gameViews = gameViews;
         this.defense = defense;
