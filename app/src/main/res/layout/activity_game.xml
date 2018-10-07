@@ -4,27 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".GameActivity">
+
     <RelativeLayout
         android:id="@+id/relative_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
+
         <Button
             android:id="@+id/button_izq"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_left"
+            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:text="@string/button_left" />
 
         <Button
             android:id="@+id/button_der"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/button_right"
+            android:layout_toEndOf="@id/button_izq"
             android:layout_toRightOf="@id/button_izq"
-            android:layout_toEndOf="@id/button_izq" />
+            android:text="@string/button_right" />
+
         <Button
             android:id="@+id/button_shoot"
             android:layout_width="wrap_content"
@@ -32,10 +36,10 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:text="@string/button_shoot"
             android:layout_marginEnd="11dp"
             android:layout_marginRight="11dp"
-            android:onClick="disparar"/>
+            android:onClick="disparar"
+            android:text="@string/button_shoot" />
 
         <TextView
             android:id="@+id/puntuacion"
@@ -47,7 +51,8 @@
             android:layout_marginStart="191dp"
             android:layout_marginLeft="191dp"
             android:text="@string/puntuacion"
-            android:textStyle="bold"/>
+            android:textColor="@android:color/holo_green_light"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/Puntos"
@@ -59,8 +64,10 @@
             android:layout_marginEnd="242dp"
             android:layout_marginRight="242dp"
             android:text="@string/_0"
-            android:textStyle="bold"/>
+            android:textColor="@android:color/holo_green_light"
+            android:textStyle="bold" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/layout_game"
         android:layout_width="match_parent"

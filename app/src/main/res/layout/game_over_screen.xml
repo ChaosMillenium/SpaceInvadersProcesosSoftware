@@ -67,5 +67,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="99dp"
         android:background="@android:color/white"
-        android:text="@string/_0" />
+        android:text="@string/_0"
+        android:layout_alignLeft="@+id/etiquetaPuntuacion" />
 </RelativeLayout>

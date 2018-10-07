@@ -140,8 +140,9 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                             dead = true;
                             Thread.sleep(1000);
                             Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
+                            deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
                             finish();
-                            startActivity(deathIntent);
+                            startActivityForResult(deathIntent,1);
                         }
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
