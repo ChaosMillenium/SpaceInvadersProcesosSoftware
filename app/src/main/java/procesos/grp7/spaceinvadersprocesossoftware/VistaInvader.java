@@ -51,14 +51,14 @@ public class VistaInvader extends Thread {
         try {
             while (this.numMarcianos != 0) {
                 Thread.sleep(150);
-                movimiento();
-                dibuja();
                 this.context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        movimiento();
+                        dibuja();
                         if (((int) (Math.random() * 10) + 1) == 3) {
                             int marciano = (int) (Math.random() * aux);
-                            if(marcianos.get(marciano).getSpriteMarciano().getVisibility() == View.VISIBLE) {
+                            if (marcianos.get(marciano).getSpriteMarciano().getVisibility() == View.VISIBLE) {
                                 disparo(marciano);
                                 Log.d("Disparo", "Disparo del marcianito " + marciano);
                             }
@@ -105,7 +105,7 @@ public class VistaInvader extends Thread {
         Log.d("YDisparo", "El marciano tiene y " + coordsY);
         Log.d("YDisparo", "El marciano tiene id " + marciano);
         bullet.generateView(coordX, sizeX, coordsY, marciano);
-        Thread collisionDetector = new Thread(new BulletCollisionDetector(bullet, gameViews, context,true, getVistasMarcianos()));
+        Thread collisionDetector = new Thread(new BulletCollisionDetector(bullet, gameViews, context, true, getVistasMarcianos()));
         collisionDetector.start();
     }
 
