@@ -1,5 +1,6 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class DefensaCollisionDetector extends CollisionDetector implements Runna
     public void run() {
         while (!activity.dead) {
             ImageView collider = detectCollision(gameViews, defense.getSprite());
-            if (collider != null) {
+            if ((collider != null) && (defense.getSprite().getVisibility()!=View.INVISIBLE)) {
                 activity.kill(defense, collider);
                 return;
             }
