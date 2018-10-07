@@ -87,27 +87,32 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
     }
 
     public void kill(final Object collider1, final ImageView collider2) {
-        if (collider1 instanceof Defensas) {
-            gameViews.remove(((Defensas) collider1).getSprite());
-            ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
-        }
-        if (collider2 == spriteShip) {
-            try {
-                if (!dead) {
-                    collider2.setVisibility(View.INVISIBLE);
-                    dead = true;
-                    Thread.sleep(1000);
-                    Intent deathIntent = new Intent(this, GameOverScreenUnderThirteen.class);
-                    finish();
-                    startActivity(deathIntent);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (collider1 instanceof Defensas) {
+                    gameViews.remove(((Defensas) collider1).getSprite());
+                    ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
                 }
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
+                if (collider2 == spriteShip) {
+                    try {
+                        if (!dead) {
+                            collider2.setVisibility(View.INVISIBLE);
+                            dead = true;
+                            Thread.sleep(1000);
+                            Intent deathIntent = new Intent(GameUnder13Activity.this, GameOverScreenUnderThirteen.class);
+                            finish();
+                            startActivity(deathIntent);
+                        }
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                } else {
+                    gameViews.remove(collider2);
+                    collider2.setVisibility(View.INVISIBLE);
+                }
             }
-        } else {
-            gameViews.remove(collider2);
-            collider2.setVisibility(View.INVISIBLE);
-        }
+        });
     }
 
     private class MovimientoNave extends AsyncTask<Void, Void, Void> {
