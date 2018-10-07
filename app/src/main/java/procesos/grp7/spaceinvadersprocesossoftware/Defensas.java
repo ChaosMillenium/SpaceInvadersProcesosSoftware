@@ -1,7 +1,6 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.app.Activity;
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;

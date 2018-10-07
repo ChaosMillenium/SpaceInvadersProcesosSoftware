@@ -43,9 +43,7 @@ public class Bullet {
                 params.addRule(RelativeLayout.BELOW, id);
             }
             bulletView.setX(coordsX + (sizeShipX / 2) - 2);
-            Log.d("YDisparo", "El disparo tiene y " + coordsY);
             bulletView.setY(coordsY);
-            Log.d("YDisparo", "El disparo se dibujara en y " + bulletView.getY());
             params.setMargins(0, (int) coordsY, 0, 5);
             gameLayout.addView(bulletView, params);
             this.bulletView = bulletView;

@@ -1,7 +1,5 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -60,7 +58,6 @@ public class VistaInvader extends Thread {
                             int marciano = (int) (Math.random() * aux);
                             if (marcianos.get(marciano).getSpriteMarciano().getVisibility() == View.VISIBLE) {
                                 disparo(marciano);
-                                Log.d("Disparo", "Disparo del marcianito " + marciano);
                             }
                         }
                     }
@@ -74,7 +71,6 @@ public class VistaInvader extends Thread {
     public void movimiento() {
         for (int i = 0; i < this.marcianos.size(); i++) {
             if (marcianos.get(i).vivo()) {
-                Log.d("MARCIANO_POS", marcianos.get(i).getX() + "," + marcianos.get(i).getY());
                 marcianos.get(i).actualizaPosicion();
                 if (marcianos.get(i).getX() > screenX - marcianos.get(i).getLength() || marcianos.get(i).getX() < 0) {
                     pared = true;
@@ -102,8 +98,6 @@ public class VistaInvader extends Thread {
         float coordX = this.marcianos.get(marciano).getX();
         float sizeX = this.marcianos.get(marciano).getLength();
         float coordsY = this.marcianos.get(marciano).getY();
-        Log.d("YDisparo", "El marciano tiene y " + coordsY);
-        Log.d("YDisparo", "El marciano tiene id " + marciano);
         bullet.generateView(coordX, sizeX, coordsY, marciano);
         Thread collisionDetector = new Thread(new BulletCollisionDetector(bullet, gameViews, context, true, getVistasMarcianos()));
         collisionDetector.start();

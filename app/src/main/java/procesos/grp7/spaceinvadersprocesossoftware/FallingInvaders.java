@@ -32,7 +32,7 @@ public class FallingInvaders extends Thread {
                         marciano.generateMarciano(randomX);
                     }
                 });
-                Thread.sleep(500);
+                Thread.sleep(1000);
 
             }
         } catch (InterruptedException ex) {
