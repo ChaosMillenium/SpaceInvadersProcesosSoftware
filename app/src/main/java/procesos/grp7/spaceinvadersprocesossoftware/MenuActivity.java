@@ -17,6 +17,7 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
 
+
     }
 
 }

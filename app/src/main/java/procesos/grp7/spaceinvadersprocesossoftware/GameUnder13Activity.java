@@ -28,6 +28,7 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
     private int speedShip; //Velocidad de la nave
     private List<ImageView> gameViews = Collections.synchronizedList(new ArrayList<ImageView>(32));
     private VistaDefensas defensas;
+    private static final int SPEEDSHIP_DENOM = 700; //denominador para calcular velocidad: mayor valor, mayor velocidad
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,8 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
-        speedShip = size.x / 100;
         FallingInvaders marcianos = new FallingInvaders(this, size.x, size.y, gameLayout, gameViews);
+        speedShip = size.x/SPEEDSHIP_DENOM;
         marcianos.start();
         defensas = new VistaDefensas(gameLayout, this, size.x, size.y, gameViews);
         Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
