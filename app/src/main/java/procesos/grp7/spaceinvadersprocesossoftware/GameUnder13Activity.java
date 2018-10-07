@@ -22,6 +22,7 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
     private int speedShip; //Velocidad de la nave
+    private static final int SPEEDSHIP_DENOM = 700; //denominador para calcular velocidad: mayor valor, mayor velocidad
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class GameUnder13Activity extends AppCompatActivity implements View.OnTou
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
-        speedShip = size.x/100;
+        speedShip = size.x/SPEEDSHIP_DENOM;
         FallingInvaders marcianos = new FallingInvaders(this, size.x, size.y, gameLayout);
         marcianos.start();
     }
