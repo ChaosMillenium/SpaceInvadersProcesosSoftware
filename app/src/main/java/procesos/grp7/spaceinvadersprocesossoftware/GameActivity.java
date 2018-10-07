@@ -5,7 +5,7 @@ import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -35,7 +35,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
     VistaInvader marcianitos;
     VistaDefensas defensas;
     private int speedShip;
-    private static int SPEEDSHIP_DENOM = 500; //denominador para calcular velocidad: mayor valor, menor velocidad
+    private static final int SPEEDSHIP_DENOM = 500; //denominador para calcular velocidad: mayor valor, menor velocidad
 
 
     @Override
@@ -195,7 +195,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
             return null;
         }
 
-        public void mueveIzquierda() {
+        private void mueveIzquierda() {
             if (spriteShip.getX() > 0) {
                 float desplazamiento = spriteShip.getX() - speedShip;
                 spriteShip.setX(desplazamiento);
@@ -204,7 +204,7 @@ public class GameActivity extends AppCompatActivity implements View.OnTouchListe
         }
 
 
-        public void mueveDerecha() {
+        private void mueveDerecha() {
             int height = gameLayout.getWidth() - spriteShip.getWidth();
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + speedShip);
