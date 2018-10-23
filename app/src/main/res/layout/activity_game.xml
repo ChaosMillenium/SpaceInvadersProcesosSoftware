@@ -74,13 +74,26 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/relative_buttons"
         android:layout_alignParentTop="true">
-
+        <View
+            android:id="@+id/border_up"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/border"/>
         <ImageView
             android:id="@+id/ship"
             android:layout_width="56dp"
             android:layout_height="44dp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/border_down"
+            app:srcCompat="@drawable/spritenave" />
+        <View
+            android:id="@+id/border_down"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/spritenave" />
+            android:background="@drawable/border"/>
     </RelativeLayout>
 </RelativeLayout>

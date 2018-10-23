@@ -94,13 +94,11 @@ public class VistaInvader extends Thread {
     }
 
     public void disparo(int marciano) {
-        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN);
+        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN, gameViews, getVistasMarcianos(), true);
         float coordX = this.marcianos.get(marciano).getX();
         float sizeX = this.marcianos.get(marciano).getLength();
         float coordsY = this.marcianos.get(marciano).getY();
         bullet.generateView(coordX, sizeX, coordsY, marciano);
-        Thread collisionDetector = new Thread(new BulletCollisionDetector(bullet, gameViews, context, true, getVistasMarcianos()));
-        collisionDetector.start();
     }
 
     public List<ImageView> getVistasMarcianos() {

@@ -49,8 +49,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         String puntosString = Integer.toString(puntos);
         marcadorPuntos = findViewById(R.id.Puntos);
         marcadorPuntos.setText(puntosString);
-
-
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
         gameViews = new CopyOnWriteArrayList<>();
@@ -112,14 +110,11 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
 
     public void disparar(View view) {
         if (!dead) {
-            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
+            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false);
             float coordX = spriteShip.getX();
             float sizeX = spriteShip.getWidth();
             float coordY = spriteShip.getY();
             bullet.generateView(coordX, sizeX, coordY, R.id.ship);
-            BulletCollisionDetector collisionDetector = new BulletCollisionDetector(bullet, gameViews, this, false, vistasMarcianos);
-            Thread collisionDetectorThread = new Thread(collisionDetector);
-            collisionDetectorThread.start();
         }
     }
 
