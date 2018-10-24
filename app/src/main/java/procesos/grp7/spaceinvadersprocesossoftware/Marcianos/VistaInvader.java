@@ -1,4 +1,4 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Marcianos;
 
 import android.view.View;
 import android.widget.ImageView;
@@ -6,6 +6,10 @@ import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import procesos.grp7.spaceinvadersprocesossoftware.Bullet;
+import procesos.grp7.spaceinvadersprocesossoftware.Colisiones.BulletCollisionDetector;
+import procesos.grp7.spaceinvadersprocesossoftware.Screens.GameActivity;
 
 public class VistaInvader extends Thread {
     private ArrayList<Marciano> marcianos;
@@ -34,7 +38,7 @@ public class VistaInvader extends Thread {
         this.marcianos.clear();
         this.numMarcianos = 0;
         for (int column = 0; column < 6; column++) {
-            for (int row = 0; row < 5; row++) {
+            for (int row = 0; row < 4; row++) {
                 Marciano nuevoMarciano = new Marciano(this.context, screenX, screenY, row, column);
                 this.marcianos.add(numMarcianos, nuevoMarciano);
                 nuevoMarciano.addImageView(this.layout, numMarcianos);
@@ -48,7 +52,7 @@ public class VistaInvader extends Thread {
         final int aux = this.marcianos.size();
         try {
             while (this.numMarcianos != 0) {
-                Thread.sleep(150);
+                Thread.sleep(175);
                 this.context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

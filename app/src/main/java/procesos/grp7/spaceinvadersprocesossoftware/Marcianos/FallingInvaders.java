@@ -1,9 +1,11 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Marcianos;
 
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import java.util.List;
+
+import procesos.grp7.spaceinvadersprocesossoftware.PlayActivity;
 
 public class FallingInvaders extends Thread {
     private int screenX;

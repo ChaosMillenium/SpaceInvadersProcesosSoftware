@@ -1,4 +1,4 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Marcianos;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import procesos.grp7.spaceinvadersprocesossoftware.R;
 
 public class MarcianoUnder13 {
     public ImageView viewMarciano;

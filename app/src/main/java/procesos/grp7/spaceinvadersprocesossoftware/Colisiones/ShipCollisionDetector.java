@@ -1,8 +1,10 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Colisiones;
 
 import android.widget.ImageView;
 
 import java.util.List;
+
+import procesos.grp7.spaceinvadersprocesossoftware.PlayActivity;
 
 public class ShipCollisionDetector extends CollisionDetector implements Runnable {
     private PlayActivity activity;

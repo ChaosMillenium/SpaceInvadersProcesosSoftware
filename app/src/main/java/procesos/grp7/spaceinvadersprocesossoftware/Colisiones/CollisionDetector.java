@@ -1,4 +1,4 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Colisiones;
 
 import android.view.View;
 import android.widget.ImageView;

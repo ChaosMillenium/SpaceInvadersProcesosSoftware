@@ -1,8 +1,10 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Marcianos;
 
 import android.content.Context;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import procesos.grp7.spaceinvadersprocesossoftware.R;
 
 public class Marciano {
     private /*Bitmap*/ ImageView spriteMarciano;
@@ -25,7 +27,7 @@ public class Marciano {
         this.height = screenY / 20;
         this.isVisible = true;
         this.x = column * (length + (screenX / 1000));
-        this.y = row * (length + (screenX / 25) / 4);
+        this.y = row * (length + (screenX / 25) / 4)+70;
         this.orientacion = "RIGHT";
     }
 

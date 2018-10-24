@@ -1,8 +1,11 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Colisiones;
 
 import android.widget.ImageView;
 
 import java.util.List;
+
+import procesos.grp7.spaceinvadersprocesossoftware.Bullet;
+import procesos.grp7.spaceinvadersprocesossoftware.Screens.GameActivity;
 
 public class BulletCollisionDetector extends CollisionDetector implements Runnable {
 

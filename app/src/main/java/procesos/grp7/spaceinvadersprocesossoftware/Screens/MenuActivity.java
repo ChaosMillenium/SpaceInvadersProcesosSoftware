@@ -1,9 +1,12 @@
-package procesos.grp7.spaceinvadersprocesossoftware;
+package procesos.grp7.spaceinvadersprocesossoftware.Screens;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import procesos.grp7.spaceinvadersprocesossoftware.R;
+import procesos.grp7.spaceinvadersprocesossoftware.Screens.AlertDialog;
 
 public class MenuActivity extends AppCompatActivity {
 

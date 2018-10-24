@@ -12,7 +12,7 @@
     android:paddingRight="0dp"
     android:paddingBottom="0dp"
     android:visibility="visible"
-    tools:context=".MenuActivity">
+    tools:context=".Screens.MenuActivity">
 
     <TextView
         android:id="@+id/Title"
