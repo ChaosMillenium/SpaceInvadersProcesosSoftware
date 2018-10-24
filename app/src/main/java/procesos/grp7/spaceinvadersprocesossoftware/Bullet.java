@@ -24,6 +24,10 @@ public class Bullet {
     private ImageView bulletView;
     private float yPosition = 0, xPosition = 0;
 
+    public int getDirection() {
+        return direction;
+    }
+
     public Bullet(Activity context, RelativeLayout gameLayout, int direction) {
         this.context = context;
         this.gameLayout = gameLayout;

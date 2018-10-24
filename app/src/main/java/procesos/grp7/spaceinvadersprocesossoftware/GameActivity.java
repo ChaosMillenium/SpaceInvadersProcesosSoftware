@@ -1,6 +1,7 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameActivity extends PlayActivity implements View.OnTouchListener {
@@ -122,12 +124,21 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             collisionDetectorThread.start();
         }
     }
-
+    public void cambiarColor(){
+        Random rnd = new Random();
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        for (ImageView m:this.marcianitos.getVistasMarcianos()) {
+            m.setColorFilter(color);
+        }
+    }
     public void kill(final Object collider1, final ImageView collider2) {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (collider1 instanceof Bullet) {
+                    if (defensas.getVistaDefensa().contains(collider2)){
+                        cambiarColor();
+                    }
                     ((Bullet) collider1).delete();
                 }
                 if (collider1 instanceof Defensas) {
