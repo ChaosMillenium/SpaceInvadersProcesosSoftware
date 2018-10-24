@@ -35,6 +35,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     VistaInvader marcianitos;
     VistaDefensas defensas;
     private int speedShip;
+    private ImageView[] bordes;
     private static final int SPEEDSHIP_DENOM = 500; //denominador para calcular velocidad: mayor valor, menor velocidad
 
 
@@ -51,6 +52,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         marcadorPuntos.setText(puntosString);
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
+        bordes = new ImageView[]{findViewById(R.id.border_up), findViewById(R.id.border_down)};
         gameViews = new CopyOnWriteArrayList<>();
         marcadorPuntos = findViewById(R.id.Puntos);
         gameViews = new CopyOnWriteArrayList<>();
@@ -58,7 +60,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
+        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews, bordes);
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
@@ -110,7 +112,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
 
     public void disparar(View view) {
         if (!dead) {
-            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false);
+            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false, bordes);
             float coordX = spriteShip.getX();
             float sizeX = spriteShip.getWidth();
             float coordY = spriteShip.getY();

@@ -28,8 +28,9 @@ public class Bullet {
     private List<ImageView> gameViews, vistasMarcianos;
     private BulletCollisionDetector collisionDetector;
     private boolean fromMarciano;
+    private ImageView[] bordes;
 
-    public Bullet(PlayActivity context, RelativeLayout gameLayout, int direction, List<ImageView> gameViews, List<ImageView> vistasMarcianos, boolean fromMarciano) {
+    public Bullet(PlayActivity context, RelativeLayout gameLayout, int direction, List<ImageView> gameViews, List<ImageView> vistasMarcianos, boolean fromMarciano, ImageView[] bordes) {
         this.context = context;
         this.gameLayout = gameLayout;
         this.direction = direction;
@@ -38,6 +39,7 @@ public class Bullet {
         this.gameViews = gameViews;
         this.vistasMarcianos = vistasMarcianos;
         this.fromMarciano = fromMarciano;
+        this.bordes = bordes;
     }
 
     public void generateView(float coordsX, float sizeShipX, float coordsY, int id) {
@@ -54,17 +56,22 @@ public class Bullet {
         params.setMargins(0, (int) coordsY, 0, 5);
         gameLayout.addView(bulletView, params);
         this.bulletView = bulletView;
-        //ObjectAnimator puede dar problemas a la hora de comprobar colisiones,
-
+        //ObjectAnimator puede dar problemas a la hora de comprobar colisiones.
         ObjectAnimator bulletAnimator = ObjectAnimator.ofFloat(bulletView, "translationY", 0f, (screenSize.y) * direction);
         bulletAnimator.setDuration(DURATION);
         bulletAnimator.setInterpolator(new LinearInterpolator());
         bulletAnimator.start();
-        collisionDetector = new BulletCollisionDetector(this, gameViews, context, fromMarciano, vistasMarcianos);
+        collisionDetector = new BulletCollisionDetector(this, gameViews, context, fromMarciano, vistasMarcianos, bordes);
         Thread collisionDetectorThread = new Thread(collisionDetector);
         collisionDetectorThread.start();
     }
 
+    public void generateAnimation(int direction){
+        this.direction = direction;
+        ObjectAnimator bulletAnimatorY = ObjectAnimator.ofFloat(bulletView, "translationY", 0f, (screenSize.y) * direction);
+        bulletAnimatorY.setInterpolator(new LinearInterpolator());
+        bulletAnimatorY.start();
+    }
 
     public void delete() {
         context.runOnUiThread(new Runnable() {

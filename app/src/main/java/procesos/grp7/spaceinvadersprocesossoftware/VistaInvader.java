@@ -17,8 +17,9 @@ public class VistaInvader extends Thread {
     private boolean pared;
     private RelativeLayout layout;
     private List<ImageView> gameViews;
+    private ImageView[] bordes;
 
-    public VistaInvader(GameActivity context, int screenX, int screenY, RelativeLayout layout, List<ImageView> views) {
+    public VistaInvader(GameActivity context, int screenX, int screenY, RelativeLayout layout, List<ImageView> views, ImageView[] bordes) {
         this.marcianos = new ArrayList<>();
         this.vistasMarcianos = new ArrayList<>();
         this.layout = layout;
@@ -27,6 +28,7 @@ public class VistaInvader extends Thread {
         this.screenY = screenY;
         this.pared = false;
         this.gameViews = views;
+        this.bordes = bordes;
         rellenaMarcianos();
     }
 
@@ -94,7 +96,7 @@ public class VistaInvader extends Thread {
     }
 
     public void disparo(int marciano) {
-        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN, gameViews, getVistasMarcianos(), true);
+        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN, gameViews, getVistasMarcianos(), true, bordes);
         float coordX = this.marcianos.get(marciano).getX();
         float sizeX = this.marcianos.get(marciano).getLength();
         float coordsY = this.marcianos.get(marciano).getY();
