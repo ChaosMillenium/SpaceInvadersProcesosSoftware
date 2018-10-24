@@ -11,6 +11,7 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
     private List<ImageView> gameViews;
     private PlayActivity activity;
     private boolean fromMarciano;
+    private boolean fromNave;
     private List<ImageView> listaMarcianos;
     private ImageView[] bordes; //0 arriba, 1 abajo
 
@@ -19,6 +20,7 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
         this.gameViews = gameViews;
         this.activity = activity;
         this.fromMarciano = fromMarciano;
+        this.fromNave=!fromMarciano;
         this.listaMarcianos = listaMarcianos;
         this.bordes = bordes;
     }
@@ -41,24 +43,9 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
                     return;
                 }
             }
-            for (int i = 0; i < bordes.length; i++) {
-                if (touch(bordes[i], bullet.getBulletView())) {
-                    switch (i) {
-                        case 0:
-                            bullet.generateAnimation(Bullet.DOWN);
-                            break;
-                        case 1:
-                            bullet.generateAnimation(Bullet.UP);
-                            break;
-                    }
-                }
-            }
             actualTime = System.currentTimeMillis();
             aliveTime = actualTime - startTime;
         }
     }
 
-    public void setFromMarciano(boolean fromMarciano) {
-        this.fromMarciano = fromMarciano;
-    }
 }

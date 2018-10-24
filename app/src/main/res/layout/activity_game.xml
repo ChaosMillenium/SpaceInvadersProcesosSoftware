@@ -74,7 +74,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/relative_buttons"
         android:layout_alignParentTop="true">
-        <View
+        <ImageView
             android:id="@+id/border_up"
             android:layout_width="match_parent"
             android:layout_height="5dp"
@@ -88,12 +88,13 @@
             android:layout_centerHorizontal="true"
             android:layout_above="@id/border_down"
             app:srcCompat="@drawable/spritenave" />
-        <View
+        <ImageView
             android:id="@+id/border_down"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/border"/>
+            android:background="@drawable/border"
+            app:srcCompat="@drawable/border"/>
     </RelativeLayout>
 </RelativeLayout>

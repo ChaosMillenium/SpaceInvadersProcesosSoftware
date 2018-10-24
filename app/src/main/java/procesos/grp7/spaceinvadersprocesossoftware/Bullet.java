@@ -19,7 +19,7 @@ public class Bullet {
 
     private PlayActivity context;
     private RelativeLayout gameLayout;
-    public static final int UP = -1;
+    public static final int UP = 0;
     public static final int DOWN = 1;
     private int direction; //-1 hacia arriba, 1 hacia abajo
     public static final int DURATION = 2000;
@@ -28,7 +28,9 @@ public class Bullet {
     private List<ImageView> gameViews, vistasMarcianos;
     private BulletCollisionDetector collisionDetector;
     private boolean fromMarciano;
+    private boolean fromNave;
     private ImageView[] bordes;
+    private ObjectAnimator animator;
 
     public Bullet(PlayActivity context, RelativeLayout gameLayout, int direction, List<ImageView> gameViews, List<ImageView> vistasMarcianos, boolean fromMarciano, ImageView[] bordes) {
         this.context = context;
@@ -39,38 +41,66 @@ public class Bullet {
         this.gameViews = gameViews;
         this.vistasMarcianos = vistasMarcianos;
         this.fromMarciano = fromMarciano;
+        this.fromNave = !fromMarciano;
         this.bordes = bordes;
     }
 
     public void generateView(float coordsX, float sizeShipX, float coordsY, int id) {
         final ImageView bulletView = new ImageView(context);
         bulletView.setImageResource(R.drawable.bullet);
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+       /* RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         if (this.direction == Bullet.UP) {
             params.addRule(RelativeLayout.ABOVE, id);
         } else {
             params.addRule(RelativeLayout.BELOW, id);
-        }
+        }*/
         bulletView.setX(coordsX + (sizeShipX / 2) - 2);
         bulletView.setY(coordsY);
-        params.setMargins(0, (int) coordsY, 0, 5);
-        gameLayout.addView(bulletView, params);
+        //params.setMargins(0, (int) coordsY, 0, 5);
+        gameLayout.addView(bulletView);
         this.bulletView = bulletView;
         //ObjectAnimator puede dar problemas a la hora de comprobar colisiones.
-        ObjectAnimator bulletAnimator = ObjectAnimator.ofFloat(bulletView, "translationY", 0f, (screenSize.y) * direction);
-        bulletAnimator.setDuration(DURATION);
-        bulletAnimator.setInterpolator(new LinearInterpolator());
-        bulletAnimator.start();
+        if (direction == UP) {
+            Log.d("BARRERA_Y", bordes[direction].getY() + "");
+            Log.d("BARRERA_Y", bulletView.getY() + "");
+        }
+        animator = ObjectAnimator.ofFloat(bulletView, "translationY", bulletView.getY(), bordes[direction].getY());
+        animator.setDuration(DURATION);
+        animator.setInterpolator(new LinearInterpolator());
+        Animator.AnimatorListener listener = new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                Log.d("BULLET_Y_START", bulletView.getY() + "");
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Log.d("BULLET_Y_END", bulletView.getY() + "");
+                direction = (direction == UP) ? DOWN : UP;
+                fromMarciano = false;
+                fromNave = false;
+                animator = ObjectAnimator.ofFloat(bulletView, "translationY", bulletView.getY(), bordes[direction].getY());
+                animator.setDuration(DURATION);
+                animator.setInterpolator(new LinearInterpolator());
+                animator.addListener(this);
+                animator.start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        };
+        animator.addListener(listener);
+        animator.start();
         collisionDetector = new BulletCollisionDetector(this, gameViews, context, fromMarciano, vistasMarcianos, bordes);
         Thread collisionDetectorThread = new Thread(collisionDetector);
         collisionDetectorThread.start();
-    }
-
-    public void generateAnimation(int direction){
-        this.direction = direction;
-        ObjectAnimator bulletAnimatorY = ObjectAnimator.ofFloat(bulletView, "translationY", 0f, (screenSize.y) * direction);
-        bulletAnimatorY.setInterpolator(new LinearInterpolator());
-        bulletAnimatorY.start();
     }
 
     public void delete() {
@@ -84,5 +114,9 @@ public class Bullet {
 
     public ImageView getBulletView() {
         return bulletView;
+    }
+
+    public boolean isFromNave() {
+        return fromNave;
     }
 }

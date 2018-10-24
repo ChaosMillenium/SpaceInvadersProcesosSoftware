@@ -3,6 +3,7 @@ package procesos.grp7.spaceinvadersprocesossoftware;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -66,7 +67,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         marcianitos.start();
         defensas = new VistaDefensas(gameLayout, this, size.x, size.y, gameViews);
         gameViews.addAll(defensas.getVistaDefensa());
-        speedShip = size.x/SPEEDSHIP_DENOM;
+        speedShip = size.x / SPEEDSHIP_DENOM;
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
@@ -115,7 +116,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false, bordes);
             float coordX = spriteShip.getX();
             float sizeX = spriteShip.getWidth();
-            float coordY = spriteShip.getY();
+            float coordY = spriteShip.getY() - 25;
             bullet.generateView(coordX, sizeX, coordY, R.id.ship);
         }
     }
@@ -124,32 +125,27 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (collider1 instanceof Bullet) {
-                    ((Bullet) collider1).delete();
-                }
-                if (collider1 instanceof Defensas) {
-                    if (!gameViews.remove(((Defensas) collider1).getSprite()));// throw new RuntimeException("No se ha eliminado la barrera");
-                    ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
-                }
                 if (collider2 == spriteShip) {
                     try {
                         if (!dead) {
+                            if (collider1 instanceof Bullet) return;
                             collider2.setVisibility(View.INVISIBLE);
                             dead = true;
-                            Thread.sleep(1000);
+                            Thread.sleep(500);
                             Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
                             deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
                             finish();
-                            startActivityForResult(deathIntent,1);
+                            startActivityForResult(deathIntent, 1);
+
                         }
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
                     }
-                } else{
+                } else {
                     gameViews.remove(collider2);
                     collider2.setVisibility(View.INVISIBLE);
                     if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.spritemarciano)).getBitmap()))
-                        puntos+=100;
+                        puntos += 100;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -158,12 +154,20 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                         }
                     });
 
-                    if(marcianitos.respawn()){
+                    if (marcianitos.respawn()) {
                         Intent intent = new Intent(GameActivity.this, GameActivity.class);
                         String extra = marcadorPuntos.getText().toString();
                         intent.putExtra("EXTRA_MESSAGE", extra);
                         startActivityForResult(intent, 1);
                     }
+                }
+                if (collider1 instanceof Bullet) {
+                    ((Bullet) collider1).delete();
+                }
+                if (collider1 instanceof Defensas) {
+                    if (!gameViews.remove(((Defensas) collider1).getSprite()))
+                        ;// throw new RuntimeException("No se ha eliminado la barrera");
+                    ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
                 }
             }
         });
