@@ -128,7 +128,8 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                 if (collider2 == spriteShip) {
                     try {
                         if (!dead) {
-                            if (collider1 instanceof Bullet) return;
+                            if (collider1 instanceof Bullet)
+                                if (((Bullet) collider1).isFromNave()) return;
                             collider2.setVisibility(View.INVISIBLE);
                             dead = true;
                             Thread.sleep(500);
@@ -136,7 +137,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                             deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
                             finish();
                             startActivityForResult(deathIntent, 1);
-
                         }
                     } catch (InterruptedException ex) {
                         ex.printStackTrace();
@@ -153,7 +153,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                             marcadorPuntos.setText(puntosString);
                         }
                     });
-
                     if (marcianitos.respawn()) {
                         Intent intent = new Intent(GameActivity.this, GameActivity.class);
                         String extra = marcadorPuntos.getText().toString();
@@ -165,9 +164,10 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                     ((Bullet) collider1).delete();
                 }
                 if (collider1 instanceof Defensas) {
-                    if (!gameViews.remove(((Defensas) collider1).getSprite()))
-                        ;// throw new RuntimeException("No se ha eliminado la barrera");
-                    ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
+                    if (!gameViews.remove(((Defensas) collider1).getSprite())) {
+                        // throw new RuntimeException("No se ha eliminado la barrera");
+                        ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
+                    }
                 }
             }
         });
