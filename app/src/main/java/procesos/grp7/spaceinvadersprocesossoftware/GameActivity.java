@@ -32,8 +32,12 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     Point size;
     Button buttonLeft;
     Button buttonRight;
+    Button buttonUp;
+    Button buttonDown;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
+    private boolean pressedUp = false;
+    private boolean pressedDown = false;
     VistaInvader marcianitos;
     VistaDefensas defensas;
     private int speedShip;
@@ -72,10 +76,14 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
+        buttonUp = findViewById(R.id.button_up);
+        buttonDown = findViewById(R.id.button_down);
         //Listeners del boton izquierdo
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
+        buttonUp.setOnTouchListener(this);
+        buttonDown.setOnTouchListener(this);
         dead = false;
         Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
         shipCollisionDetector.start();
@@ -105,6 +113,30 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                         break;
                     case MotionEvent.ACTION_UP:
                         pressedLeft = false;
+                }
+                break;
+            case R.id.button_up:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedUp) {
+                            pressedUp = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedUp = false;
+                }
+                break;
+            case R.id.button_down:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedDown) {
+                            pressedDown = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedDown = false;
                 }
                 break;
         }
@@ -204,6 +236,22 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                     ex.printStackTrace();
                 }
             }
+            while (pressedUp) {
+                mueveArriba();
+                try {
+                    Thread.sleep(3);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            while (pressedDown) {
+                mueveAbajo();
+                try {
+                    Thread.sleep(3);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
 
             return null;
         }
@@ -222,6 +270,19 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + speedShip);
             }
+        }
+        private void mueveAbajo() {
+            int height = gameLayout.getHeight() - spriteShip.getHeight();
+            if (spriteShip.getY() < height) {
+                spriteShip.setY(spriteShip.getY() + speedShip);
+            }
+        }
+        private void mueveArriba() {
+            if (spriteShip.getY() > 0) {
+                float desplazamiento = spriteShip.getY() - speedShip;
+                spriteShip.setY(desplazamiento);
+            }
+
         }
     }
 }

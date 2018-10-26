@@ -10,8 +10,35 @@
     <RelativeLayout
         android:id="@+id/relative_buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_height="56dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="0dp">
+
+        <Button
+            android:id="@+id/button_up"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="184dp"
+            android:layout_marginLeft="184dp"
+            android:layout_marginBottom="2dp"
+            android:text="UP" />
+
+        <Button
+            android:id="@+id/button_down"
+            android:layout_width="101dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="243dp"
+            android:layout_marginLeft="243dp"
+            android:layout_marginBottom="0dp"
+            android:text="DOWN" />
 
         <Button
             android:id="@+id/button_izq"
@@ -19,12 +46,21 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="0dp"
             android:text="@string/button_left" />
 
         <Button
             android:id="@+id/button_der"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-3dp"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginBottom="0dp"
             android:layout_toEndOf="@id/button_izq"
             android:layout_toRightOf="@id/button_izq"
             android:text="@string/button_right" />
@@ -36,8 +72,9 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="11dp"
-            android:layout_marginRight="11dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
             android:onClick="disparar"
             android:text="@string/button_shoot" />
 
@@ -45,11 +82,11 @@
             android:id="@+id/puntuacion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button_izq"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="191dp"
-            android:layout_marginLeft="191dp"
+            android:layout_marginStart="370dp"
+            android:layout_marginLeft="370dp"
             android:text="@string/puntuacion"
             android:textColor="@android:color/holo_green_light"
             android:textStyle="bold" />
@@ -58,11 +95,11 @@
             android:id="@+id/Puntos"
             android:layout_width="69dp"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/button_up"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="242dp"
-            android:layout_marginRight="242dp"
+            android:layout_marginEnd="102dp"
+            android:layout_marginRight="102dp"
             android:text="@string/_0"
             android:textColor="@android:color/holo_green_light"
             android:textStyle="bold" />
@@ -71,9 +108,13 @@
     <RelativeLayout
         android:id="@+id/layout_game"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="317dp"
         android:layout_above="@id/relative_buttons"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="-6dp">
 
         <ImageView
             android:id="@+id/ship"
@@ -81,6 +122,8 @@
             android:layout_height="44dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginBottom="9dp"
             app:srcCompat="@drawable/spritenave" />
+
     </RelativeLayout>
 </RelativeLayout>
