@@ -136,7 +136,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             @Override
             public void run() {
                 if (collider1 instanceof Bullet) {
-                    if (defensas.getVistaDefensa().contains(collider2)){
+                    if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.defensas)).getBitmap())){
                         cambiarColor();
                     }
                     ((Bullet) collider1).delete();
