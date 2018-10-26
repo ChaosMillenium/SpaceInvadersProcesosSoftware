@@ -3,17 +3,14 @@ package procesos.grp7.spaceinvadersprocesossoftware;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.graphics.Point;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public class Bullet {
 
@@ -30,7 +27,7 @@ public class Bullet {
     private boolean fromMarciano;
     private boolean fromNave;
     private ImageView[] bordes;
-    private ObjectAnimator animator;
+    private Animator animator;
 
     public Bullet(PlayActivity context, RelativeLayout gameLayout, int direction, List<ImageView> gameViews, List<ImageView> vistasMarcianos, boolean fromMarciano, ImageView[] bordes) {
         this.context = context;
@@ -45,7 +42,7 @@ public class Bullet {
         this.bordes = bordes;
     }
 
-    public void generateView(float coordsX, float sizeShipX, float coordsY, int id) {
+    public void generateView(float coordsX, float sizeShipX, float coordsY) {
         final ImageView bulletView = new ImageView(context);
         bulletView.setImageResource(R.drawable.bullet);
        /* RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -76,14 +73,25 @@ public class Bullet {
             @Override
             public void onAnimationEnd(Animator animation) {
                 Log.d("BULLET_Y_END", bulletView.getY() + "");
-                direction = (direction == UP) ? DOWN : UP;
-                fromMarciano = false;
-                fromNave = false;
-                animator = ObjectAnimator.ofFloat(bulletView, "translationY", bulletView.getY(), bordes[direction].getY());
-                animator.setDuration(DURATION);
-                animator.setInterpolator(new LinearInterpolator());
-                animator.addListener(this);
-                animator.start();
+                if (bulletView.getX() < 0 || bulletView.getX() > screenSize.x) {
+                    gameLayout.removeView(bulletView);
+                } else {
+                    direction = (direction == UP) ? DOWN : UP;
+                    collisionDetector.bounce();
+                    fromMarciano = false;
+                    fromNave = false;
+                    Random r = new Random();
+                    float offsetX=r.nextFloat();
+                    ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletView, "translationX", bulletView.getX(), offsetX*screenSize.x);
+                    ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletView, "translationY", bulletView.getY(), bordes[direction].getY());
+                    AnimatorSet animatorSet = new AnimatorSet();
+                    animatorSet.playTogether(animatorX,animatorY);
+                    animatorSet.setInterpolator(new LinearInterpolator());
+                    animatorSet.setDuration(DURATION);
+                    animatorSet.addListener(this);
+                    animator = animatorSet;
+                    animator.start();
+                }
             }
 
             @Override
@@ -98,7 +106,7 @@ public class Bullet {
         };
         animator.addListener(listener);
         animator.start();
-        collisionDetector = new BulletCollisionDetector(this, gameViews, context, fromMarciano, vistasMarcianos, bordes);
+        collisionDetector = new BulletCollisionDetector(this, gameViews, context, fromMarciano, vistasMarcianos);
         Thread collisionDetectorThread = new Thread(collisionDetector);
         collisionDetectorThread.start();
     }

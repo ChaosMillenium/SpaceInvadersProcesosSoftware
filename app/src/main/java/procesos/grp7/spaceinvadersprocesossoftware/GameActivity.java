@@ -3,10 +3,8 @@ package procesos.grp7.spaceinvadersprocesossoftware;
 import android.content.Intent;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import android.view.Display;
 import android.view.MotionEvent;
@@ -44,7 +42,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
         puntos = Integer.parseInt(message);
@@ -54,6 +51,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
         bordes = new ImageView[]{findViewById(R.id.border_up), findViewById(R.id.border_down)};
+        bordes[1].setY(1);
         gameViews = new CopyOnWriteArrayList<>();
         marcadorPuntos = findViewById(R.id.Puntos);
         gameViews = new CopyOnWriteArrayList<>();
@@ -117,7 +115,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             float coordX = spriteShip.getX();
             float sizeX = spriteShip.getWidth();
             float coordY = spriteShip.getY() - 25;
-            bullet.generateView(coordX, sizeX, coordY, R.id.ship);
+            bullet.generateView(coordX, sizeX, coordY);
         }
     }
 
@@ -126,20 +124,15 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             @Override
             public void run() {
                 if (collider2 == spriteShip) {
-                    try {
-                        if (!dead) {
-                            if (collider1 instanceof Bullet)
-                                if (((Bullet) collider1).isFromNave()) return;
-                            collider2.setVisibility(View.INVISIBLE);
-                            dead = true;
-                            Thread.sleep(500);
-                            Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
-                            deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
-                            finish();
-                            startActivityForResult(deathIntent, 1);
-                        }
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                    if (!dead) {
+                        if (collider1 instanceof Bullet)
+                            if (((Bullet) collider1).isFromNave()) return;
+                        collider2.setVisibility(View.INVISIBLE);
+                        dead = true;
+                        Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
+                        deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
+                        finish();
+                        startActivityForResult(deathIntent, 1);
                     }
                 } else {
                     gameViews.remove(collider2);

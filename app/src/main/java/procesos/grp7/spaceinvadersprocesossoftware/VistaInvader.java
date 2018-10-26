@@ -100,7 +100,7 @@ public class VistaInvader extends Thread {
         float coordX = this.marcianos.get(marciano).getX();
         float sizeX = this.marcianos.get(marciano).getLength();
         float coordsY = this.marcianos.get(marciano).getY();
-        bullet.generateView(coordX, sizeX, coordsY, marciano);
+        bullet.generateView(coordX, sizeX, coordsY);
     }
 
     public List<ImageView> getVistasMarcianos() {

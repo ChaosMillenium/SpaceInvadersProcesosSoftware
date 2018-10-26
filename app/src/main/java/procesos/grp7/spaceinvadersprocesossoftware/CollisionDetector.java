@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import java.util.Iterator;
 
 public abstract class CollisionDetector {
-    public synchronized ImageView detectCollision(Iterable<ImageView> views, ImageView collider) {
+    public ImageView detectCollision(Iterable<ImageView> views, ImageView collider) {
         synchronized (views) {
             Iterator<ImageView> i = views.iterator();
             while (i.hasNext()) {
