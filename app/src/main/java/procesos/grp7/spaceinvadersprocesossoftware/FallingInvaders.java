@@ -5,6 +5,8 @@ import android.widget.RelativeLayout;
 
 import java.util.List;
 
+import procesos.grp7.spaceinvadersprocesossoftware.PlayActivity;
+
 public class FallingInvaders extends Thread {
     private int screenX;
     private int screenY;

@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import procesos.grp7.spaceinvadersprocesossoftware.R;
+
 public class GameOverScreen extends AppCompatActivity {
     TextView puntosFinales;
     @Override

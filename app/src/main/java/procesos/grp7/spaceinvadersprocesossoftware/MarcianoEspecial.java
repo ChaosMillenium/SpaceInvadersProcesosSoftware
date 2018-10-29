@@ -1,13 +1,14 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import procesos.grp7.spaceinvadersprocesossoftware.R;
 
-public class Marciano {
-    private /*Bitmap*/ ImageView spriteMarciano;
+public class MarcianoEspecial {
+    private ImageView spriteMarciano;
     private int length;
     private int height;
     private float x;
@@ -19,43 +20,22 @@ public class Marciano {
     private int screenY;
     private RelativeLayout layout;
 
-    public Marciano(Context context, int screenX, int screenY, int row, int column) {
+    public MarcianoEspecial(Context context, int screenX, int screenY) {
         this.context = context;
         this.screenX = screenX;
         this.screenY = screenY;
         this.length = screenX / 20;
         this.height = screenY / 20;
         this.isVisible = true;
-        this.x = column * (length + (screenX / 1000));
-        this.y = row * (length + (screenX / 25) / 4)+70;
+        this.x = 0;
+        this.y = 0;
         this.orientacion = "RIGHT";
-    }
-
-    public void actualizaPosicion() {
-        if (this.orientacion.equals("RIGHT")) {
-            this.x += screenX/100;
-        } else {
-            this.x -= screenX/100;
-        }
-    }
-
-    public void choquePared() {
-        if (orientacion.equals("RIGHT")) {
-            this.orientacion = "LEFT";
-        } else {
-            this.orientacion = "RIGHT";
-        }
-        this.y += screenY/40;
-    }
-
-    public void dibuja() {
-        this.spriteMarciano.setX(this.x);
-        this.spriteMarciano.setY(this.y);
     }
 
     public void addImageView(RelativeLayout layout, int id) {
         ImageView imageView = new ImageView(context);
-        imageView.setImageResource(R.drawable.spritemarciano);
+        imageView.setImageResource(R.drawable.spritemarciano2);
+        imageView.setColorFilter(Color.RED);
         this.spriteMarciano = imageView;
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         params.height = this.height; //40
@@ -68,27 +48,28 @@ public class Marciano {
         return this.isVisible;
     }
 
-    public float getX() {
-        return this.x;
+    public void actualizaPosicion() {
+        this.x += this.screenX/100;
     }
 
-    public int getLength() {
-        return this.length;
+    public void dibuja() {
+        this.spriteMarciano.setX(this.x);
+        this.spriteMarciano.setY(this.y);
     }
 
     public ImageView getSpriteMarciano() {
         return spriteMarciano;
     }
 
+    public float getX() {
+        return x;
+    }
+
     public float getY() {
         return y;
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public RelativeLayout getLayout() {
-        return layout;
+    public int getLength() {
+        return length;
     }
 }

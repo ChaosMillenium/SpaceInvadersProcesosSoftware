@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import java.util.List;
 import java.util.Random;
 
+import procesos.grp7.spaceinvadersprocesossoftware.Bullet;
+
+
 public class BulletCollisionDetector extends CollisionDetector implements Runnable {
 
     private Bullet bullet;

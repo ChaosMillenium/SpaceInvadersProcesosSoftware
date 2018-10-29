@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import procesos.grp7.spaceinvadersprocesossoftware.R;
+
 public class MarcianoUnder13 {
     public ImageView viewMarciano;
     private int width;

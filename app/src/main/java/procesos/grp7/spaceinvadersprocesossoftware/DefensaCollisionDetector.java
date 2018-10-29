@@ -7,6 +7,9 @@ import android.widget.ImageView;
 
 import java.util.List;
 
+import procesos.grp7.spaceinvadersprocesossoftware.Defensas;
+import procesos.grp7.spaceinvadersprocesossoftware.PlayActivity;
+
 public class DefensaCollisionDetector extends CollisionDetector implements Runnable {
     private PlayActivity activity;
     private List<ImageView> gameViews;

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import procesos.grp7.spaceinvadersprocesossoftware.R;
+
 public class GameOverScreenUnderThirteen extends AppCompatActivity {
 
     @Override

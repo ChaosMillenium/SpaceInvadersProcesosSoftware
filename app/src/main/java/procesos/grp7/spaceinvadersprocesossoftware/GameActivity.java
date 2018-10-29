@@ -40,8 +40,9 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     private boolean pressedDown = false;
     VistaInvader marcianitos;
     VistaDefensas defensas;
+    private VistaMarcianoEspecial marcianoEspecial;
     private int speedShip;
-    private ImageView[] bordes;
+    public ImageView[] bordes;
     private static final int SPEEDSHIP_DENOM = 500; //denominador para calcular velocidad: mayor valor, menor velocidad
 
 
@@ -69,7 +70,10 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews, bordes);
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
+        marcianoEspecial = new VistaMarcianoEspecial(this, size.x, size.y, gameLayout, gameViews, this.vistasMarcianos);
+        gameViews.addAll(marcianoEspecial.getVistasMarciano());
         marcianitos.start();
+        marcianoEspecial.start();
         defensas = new VistaDefensas(gameLayout, this, size.x, size.y, gameViews);
         gameViews.addAll(defensas.getVistaDefensa());
         speedShip = size.x / SPEEDSHIP_DENOM;
@@ -221,22 +225,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                     ex.printStackTrace();
                 }
             }
-            while (pressedUp) {
-                mueveArriba();
-                try {
-                    Thread.sleep(3);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            while (pressedDown) {
-                mueveAbajo();
-                try {
-                    Thread.sleep(3);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
 
             return null;
         }
@@ -255,19 +243,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + speedShip);
             }
-        }
-        private void mueveAbajo() {
-            int height = gameLayout.getHeight() - spriteShip.getHeight();
-            if (spriteShip.getY() < height) {
-                spriteShip.setY(spriteShip.getY() + speedShip);
-            }
-        }
-        private void mueveArriba() {
-            if (spriteShip.getY() > 0) {
-                float desplazamiento = spriteShip.getY() - speedShip;
-                spriteShip.setY(desplazamiento);
-            }
-
         }
     }
 }
