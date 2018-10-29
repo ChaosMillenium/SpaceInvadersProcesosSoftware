@@ -8,24 +8,23 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
 
     private Bullet bullet;
     private List<ImageView> gameViews;
-    private GameActivity activity;
+    private PlayActivity activity;
     private boolean fromMarciano;
+    private boolean fromNave;
     private List<ImageView> listaMarcianos;
 
-    public BulletCollisionDetector(Bullet bullet, List<ImageView> gameViews, GameActivity activity, boolean fromMarciano, List<ImageView> listaMarcianos) {
+    public BulletCollisionDetector(Bullet bullet, List<ImageView> gameViews, PlayActivity activity, boolean fromMarciano, List<ImageView> listaMarcianos) {
         this.bullet = bullet;
         this.gameViews = gameViews;
         this.activity = activity;
         this.fromMarciano = fromMarciano;
+        this.fromNave = !fromMarciano;
         this.listaMarcianos = listaMarcianos;
     }
 
     @Override
     public void run() {
-        long aliveTime = 0;
-        long startTime = System.currentTimeMillis();
-        long actualTime;
-        while (aliveTime < Bullet.DURATION) {
+        while (true) {
             final ImageView collider = detectCollision(gameViews, bullet.getBulletView());
             if (collider != null) {
                 if (fromMarciano) {
@@ -38,8 +37,10 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
                     return;
                 }
             }
-            actualTime = System.currentTimeMillis();
-            aliveTime = actualTime - startTime;
         }
+    }
+    public void bounce(){
+        fromMarciano=false;
+        fromNave=false;
     }
 }

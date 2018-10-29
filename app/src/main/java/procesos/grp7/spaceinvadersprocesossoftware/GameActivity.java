@@ -6,7 +6,6 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import android.view.Display;
 import android.view.MotionEvent;
@@ -41,6 +40,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     VistaInvader marcianitos;
     VistaDefensas defensas;
     private int speedShip;
+    private ImageView[] bordes;
     private static final int SPEEDSHIP_DENOM = 500; //denominador para calcular velocidad: mayor valor, menor velocidad
 
 
@@ -48,17 +48,16 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
         puntos = Integer.parseInt(message);
         String puntosString = Integer.toString(puntos);
         marcadorPuntos = findViewById(R.id.Puntos);
         marcadorPuntos.setText(puntosString);
-
-
         spriteShip = findViewById(R.id.ship);
         gameLayout = findViewById(R.id.layout_game);
+        bordes = new ImageView[]{findViewById(R.id.border_up), findViewById(R.id.border_down)};
+        bordes[1].setY(1);
         gameViews = new CopyOnWriteArrayList<>();
         marcadorPuntos = findViewById(R.id.Puntos);
         gameViews = new CopyOnWriteArrayList<>();
@@ -66,13 +65,13 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews);
+        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews, bordes);
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
         marcianitos.start();
         defensas = new VistaDefensas(gameLayout, this, size.x, size.y, gameViews);
         gameViews.addAll(defensas.getVistaDefensa());
-        speedShip = size.x/SPEEDSHIP_DENOM;
+        speedShip = size.x / SPEEDSHIP_DENOM;
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
@@ -146,14 +145,11 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
 
     public void disparar(View view) {
         if (!dead) {
-            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP);
+            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false, bordes);
             float coordX = spriteShip.getX();
             float sizeX = spriteShip.getWidth();
-            float coordY = spriteShip.getY();
-            bullet.generateView(coordX, sizeX, coordY, R.id.ship);
-            BulletCollisionDetector collisionDetector = new BulletCollisionDetector(bullet, gameViews, this, false, vistasMarcianos);
-            Thread collisionDetectorThread = new Thread(collisionDetector);
-            collisionDetectorThread.start();
+            float coordY = spriteShip.getY() - 25;
+            bullet.generateView(coordX, sizeX, coordY);
         }
     }
     public void cambiarColor(){
@@ -167,35 +163,22 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (collider1 instanceof Bullet) {
-                    if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.defensas)).getBitmap())){
-                        cambiarColor();
-                    }
-                    ((Bullet) collider1).delete();
-                }
-                if (collider1 instanceof Defensas) {
-                    if (!gameViews.remove(((Defensas) collider1).getSprite()));// throw new RuntimeException("No se ha eliminado la barrera");
-                    ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
-                }
                 if (collider2 == spriteShip) {
-                    try {
-                        if (!dead) {
-                            collider2.setVisibility(View.INVISIBLE);
-                            dead = true;
-                            Thread.sleep(1000);
-                            Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
-                            deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
-                            finish();
-                            startActivityForResult(deathIntent,1);
-                        }
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                    if (!dead) {
+                        if (collider1 instanceof Bullet)
+                            if (((Bullet) collider1).isFromNave()) return;
+                        collider2.setVisibility(View.INVISIBLE);
+                        dead = true;
+                        Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
+                        deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
+                        finish();
+                        startActivityForResult(deathIntent, 1);
                     }
-                } else{
+                } else {
                     gameViews.remove(collider2);
                     collider2.setVisibility(View.INVISIBLE);
                     if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.spritemarciano)).getBitmap()))
-                        puntos+=100;
+                        puntos += 100;
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -203,12 +186,20 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                             marcadorPuntos.setText(puntosString);
                         }
                     });
-
-                    if(marcianitos.respawn()){
+                    if (marcianitos.respawn()) {
                         Intent intent = new Intent(GameActivity.this, GameActivity.class);
                         String extra = marcadorPuntos.getText().toString();
                         intent.putExtra("EXTRA_MESSAGE", extra);
                         startActivityForResult(intent, 1);
+                    }
+                }
+                if (collider1 instanceof Bullet) {
+                    ((Bullet) collider1).delete();
+                }
+                if (collider1 instanceof Defensas) {
+                    if (!gameViews.remove(((Defensas) collider1).getSprite())) {
+                        // throw new RuntimeException("No se ha eliminado la barrera");
+                        ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
                     }
                 }
             }
