@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
@@ -87,7 +88,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
         shipCollisionDetector.start();
     }
-
     public boolean onTouch(View view, MotionEvent event) {
         switch (view.getId()) {
             case R.id.button_der:
@@ -152,13 +152,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             bullet.generateView(coordX, sizeX, coordY);
         }
     }
-    public void cambiarColor(){
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        for (ImageView m:this.marcianitos.getVistasMarcianos()) {
-            m.setColorFilter(color);
-        }
-    }
+
     public void kill(final Object collider1, final ImageView collider2) {
         this.runOnUiThread(new Runnable() {
             @Override
@@ -194,9 +188,6 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                     }
                 }
                 if (collider1 instanceof Bullet) {
-                    if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.defensas)).getBitmap())){
-                        cambiarColor();
-                    }
                     ((Bullet) collider1).delete();
                 }
                 if (collider1 instanceof Defensas) {
