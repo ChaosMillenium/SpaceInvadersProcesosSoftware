@@ -194,6 +194,9 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                     }
                 }
                 if (collider1 instanceof Bullet) {
+                    if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.defensas)).getBitmap())){
+                        cambiarColor();
+                    }
                     ((Bullet) collider1).delete();
                 }
                 if (collider1 instanceof Defensas) {
