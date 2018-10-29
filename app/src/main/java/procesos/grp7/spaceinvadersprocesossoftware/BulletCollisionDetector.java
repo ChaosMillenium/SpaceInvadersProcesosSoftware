@@ -33,14 +33,22 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
                         return;
                     }
                 } else {
-                    activity.kill(bullet, collider);
-                    return;
+                    if (fromNave) {
+                        if (collider != activity.findViewById(R.id.ship)) {
+                            activity.kill(bullet, collider);
+                            return;
+                        }
+                    } else {
+                        activity.kill(bullet, collider);
+                        return;
+                    }
                 }
             }
         }
     }
-    public void bounce(){
-        fromMarciano=false;
-        fromNave=false;
+
+    public void bounce() {
+        fromMarciano = false;
+        fromNave = false;
     }
 }
