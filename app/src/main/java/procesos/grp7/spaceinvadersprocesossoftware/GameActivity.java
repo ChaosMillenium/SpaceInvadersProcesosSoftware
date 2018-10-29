@@ -1,6 +1,7 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameActivity extends PlayActivity implements View.OnTouchListener {
@@ -29,8 +31,12 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     Point size;
     Button buttonLeft;
     Button buttonRight;
+    Button buttonUp;
+    Button buttonDown;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
+    private boolean pressedUp = false;
+    private boolean pressedDown = false;
     VistaInvader marcianitos;
     VistaDefensas defensas;
     private int speedShip;
@@ -69,10 +75,14 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
+        buttonUp = findViewById(R.id.button_up);
+        buttonDown = findViewById(R.id.button_down);
         //Listeners del boton izquierdo
         buttonLeft.setOnTouchListener(this);
         //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
+        buttonUp.setOnTouchListener(this);
+        buttonDown.setOnTouchListener(this);
         dead = false;
         Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
         shipCollisionDetector.start();
@@ -104,6 +114,30 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                         pressedLeft = false;
                 }
                 break;
+            case R.id.button_up:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedUp) {
+                            pressedUp = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedUp = false;
+                }
+                break;
+            case R.id.button_down:
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (!pressedDown) {
+                            pressedDown = true;
+                            new MovimientoNave().execute();
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        pressedDown = false;
+                }
+                break;
         }
         return true;
 
@@ -118,7 +152,13 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             bullet.generateView(coordX, sizeX, coordY);
         }
     }
-
+    public void cambiarColor(){
+        Random rnd = new Random();
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        for (ImageView m:this.marcianitos.getVistasMarcianos()) {
+            m.setColorFilter(color);
+        }
+    }
     public void kill(final Object collider1, final ImageView collider2) {
         this.runOnUiThread(new Runnable() {
             @Override
@@ -187,6 +227,22 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                     ex.printStackTrace();
                 }
             }
+            while (pressedUp) {
+                mueveArriba();
+                try {
+                    Thread.sleep(3);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            while (pressedDown) {
+                mueveAbajo();
+                try {
+                    Thread.sleep(3);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
 
             return null;
         }
@@ -205,6 +261,19 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + speedShip);
             }
+        }
+        private void mueveAbajo() {
+            int height = gameLayout.getHeight() - spriteShip.getHeight();
+            if (spriteShip.getY() < height) {
+                spriteShip.setY(spriteShip.getY() + speedShip);
+            }
+        }
+        private void mueveArriba() {
+            if (spriteShip.getY() > 0) {
+                float desplazamiento = spriteShip.getY() - speedShip;
+                spriteShip.setY(desplazamiento);
+            }
+
         }
     }
 }
