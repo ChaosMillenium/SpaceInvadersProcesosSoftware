@@ -15,7 +15,7 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
     private boolean fromMarciano;
     private boolean fromNave;
     private List<ImageView> listaMarcianos;
-    long tiempodecolisionanterior=0;
+    private long tiempodecolisionanterior=0;
 
     public BulletCollisionDetector(Bullet bullet, List<ImageView> gameViews, PlayActivity activity, boolean fromMarciano, List<ImageView> listaMarcianos) {
         this.bullet = bullet;
@@ -56,7 +56,7 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
     public void run() {
         long startTime = System.currentTimeMillis();
         tiempodecolisionanterior=startTime;
-        while (true) {
+        while (!activity.dead) {
             final ImageView collider = detectCollision(gameViews, bullet.getBulletView());
             if (collider != null) {
                 cambiarColorComprobandoTiempo(collider);
@@ -66,14 +66,22 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
                         return;
                     }
                 } else {
-                    activity.kill(bullet, collider);
-                    return;
+                    if (fromNave) {
+                        if (collider != activity.findViewById(R.id.ship)) {
+                            activity.kill(bullet, collider);
+                            return;
+                        }
+                    } else {
+                        activity.kill(bullet, collider);
+                        return;
+                    }
                 }
             }
         }
     }
-    public void bounce(){
-        fromMarciano=false;
-        fromNave=false;
+
+    public void bounce() {
+        fromMarciano = false;
+        fromNave = false;
     }
 }

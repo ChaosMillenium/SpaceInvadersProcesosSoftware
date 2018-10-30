@@ -30,7 +30,7 @@ public class VistaMarcianoEspecial extends Thread{
         this.gameViews = views;
         this.temp = true;
         this.vistasMarciano = new ArrayList<>();
-        this.c = new Cronometro(this);
+        this.c = new Cronometro(this, context);
         this.marciano = new MarcianoEspecial(this.context, screenX, screenY);
         this.marciano.addImageView(this.layout, 1);
         this.vistasMarciano.add(this.marciano.getSpriteMarciano());
@@ -52,7 +52,7 @@ public class VistaMarcianoEspecial extends Thread{
     public void run() {
         try {
             this.c.start();
-            while (true) {
+            while (!context.dead) {
                 Thread.sleep(75);
                 if(this.temp) {
                     this.context.runOnUiThread(new Runnable() {

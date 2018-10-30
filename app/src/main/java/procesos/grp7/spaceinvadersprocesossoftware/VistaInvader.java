@@ -49,7 +49,7 @@ public class VistaInvader extends Thread {
     public void run() {
         final int aux = this.marcianos.size();
         try {
-            while (this.numMarcianos != 0) {
+            while ((this.numMarcianos != 0) && !context.dead) {
                 Thread.sleep(175);
                 this.context.runOnUiThread(new Runnable() {
                     @Override
