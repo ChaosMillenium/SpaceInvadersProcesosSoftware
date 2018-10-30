@@ -15,7 +15,7 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
     private boolean fromMarciano;
     private boolean fromNave;
     private List<ImageView> listaMarcianos;
-    long tiempodecolisionanterior=0;
+    private long tiempodecolisionanterior=0;
 
     public BulletCollisionDetector(Bullet bullet, List<ImageView> gameViews, PlayActivity activity, boolean fromMarciano, List<ImageView> listaMarcianos) {
         this.bullet = bullet;
@@ -56,7 +56,7 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
     public void run() {
         long startTime = System.currentTimeMillis();
         tiempodecolisionanterior=startTime;
-        while (true) {
+        while (!activity.dead) {
             final ImageView collider = detectCollision(gameViews, bullet.getBulletView());
             if (collider != null) {
                 cambiarColorComprobandoTiempo(collider);
