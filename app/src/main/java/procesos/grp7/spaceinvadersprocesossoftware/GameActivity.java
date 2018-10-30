@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameActivity extends PlayActivity implements View.OnTouchListener {
@@ -88,10 +90,25 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         buttonRight.setOnTouchListener(this);
         buttonUp.setOnTouchListener(this);
         buttonDown.setOnTouchListener(this);
+        final Button shoot = findViewById(R.id.button_shoot);
+        shoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disparar();
+                shoot.setEnabled(false);
+                shoot.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        shoot.setEnabled(true);
+                    }
+                }, 250);
+            }
+        });
         dead = false;
         Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
         shipCollisionDetector.start();
     }
+
     public boolean onTouch(View view, MotionEvent event) {
         switch (view.getId()) {
             case R.id.button_der:
@@ -147,7 +164,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
 
     }
 
-    public void disparar(View view) {
+    public void disparar() {
         if (!dead) {
             final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false, bordes);
             float coordX = spriteShip.getX();
@@ -156,7 +173,13 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             bullet.generateView(coordX, sizeX, coordY);
         }
     }
-
+    public void cambiarColor(){
+        Random rnd = new Random();
+        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+        for (ImageView m:this.marcianitos.getVistasMarcianos()) {
+            m.setColorFilter(color);
+        }
+    }
     public void kill(final Object collider1, final ImageView collider2) {
         this.runOnUiThread(new Runnable() {
             @Override
@@ -175,15 +198,16 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                 } else {
                     gameViews.remove(collider2);
                     collider2.setVisibility(View.INVISIBLE);
-                    if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.spritemarciano)).getBitmap()))
+                    if (((BitmapDrawable) collider2.getDrawable()).getBitmap().sameAs(((BitmapDrawable) getResources().getDrawable(R.drawable.spritemarciano)).getBitmap())) {
                         puntos += 100;
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            String puntosString = Integer.toString(puntos);
-                            marcadorPuntos.setText(puntosString);
-                        }
-                    });
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String puntosString = Integer.toString(puntos);
+                                marcadorPuntos.setText(puntosString);
+                            }
+                        });
+                    }
                     if (marcianitos.respawn()) {
                         Intent intent = new Intent(GameActivity.this, GameActivity.class);
                         String extra = marcadorPuntos.getText().toString();

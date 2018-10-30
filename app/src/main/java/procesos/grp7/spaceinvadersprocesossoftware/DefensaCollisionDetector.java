@@ -20,7 +20,7 @@ public class DefensaCollisionDetector extends CollisionDetector implements Runna
 
     @Override
     public void run() {
-        while (!activity.dead) {
+        while (defense.getSprite().getVisibility()!=View.INVISIBLE && !activity.dead) {
             ImageView collider = detectCollision(gameViews, defense.getSprite());
             if ((collider != null) && (defense.getSprite().getVisibility()!=View.INVISIBLE)) {
                 activity.kill(defense, collider);

@@ -107,7 +107,7 @@ public class Bullet {
         animator.addListener(listener);
         animator.start();
         collisionDetector = new BulletCollisionDetector(this, gameViews, context, fromMarciano, vistasMarcianos);
-        Thread collisionDetectorThread = new Thread(collisionDetector);
+        Thread collisionDetectorThread = new Thread(collisionDetector, "Bullet");
         collisionDetectorThread.start();
     }
 
