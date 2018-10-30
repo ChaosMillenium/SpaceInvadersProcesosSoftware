@@ -173,13 +173,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             bullet.generateView(coordX, sizeX, coordY);
         }
     }
-    public void cambiarColor(){
-        Random rnd = new Random();
-        int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        for (ImageView m:this.marcianitos.getVistasMarcianos()) {
-            m.setColorFilter(color);
-        }
-    }
+
     public void kill(final Object collider1, final ImageView collider2) {
         this.runOnUiThread(new Runnable() {
             @Override
@@ -284,12 +278,14 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                 spriteShip.setX(spriteShip.getX() + speedShip);
             }
         }
+
         private void mueveAbajo() {
             int height = gameLayout.getHeight() - spriteShip.getHeight();
             if (spriteShip.getY() < height) {
                 spriteShip.setY(spriteShip.getY() + speedShip);
             }
         }
+
         private void mueveArriba() {
             if (spriteShip.getY() > 0) {
                 float desplazamiento = spriteShip.getY() - speedShip;
