@@ -63,7 +63,7 @@ public class VistaMarcianoEspecial extends Thread{
                             }
                             marciano.actualizaPosicion();
                             marciano.dibuja();
-                            if (((int) (Math.random() * 8) + 1) == 3) {
+                            if (((int) (Math.random() * 10) + 1) == 3) {
                                 if (marciano.getSpriteMarciano().getVisibility() == View.VISIBLE) {
                                     disparo();
                                 }

@@ -56,7 +56,7 @@ public class VistaInvader extends Thread {
                     public void run() {
                         movimiento();
                         dibuja();
-                        if (((int) (Math.random() * 10) + 1) == 3) {
+                        if (((int) (Math.random() * 15) + 1) == 3) {
                             int marciano = (int) (Math.random() * aux);
                             if (marcianos.get(marciano).getSpriteMarciano().getVisibility() == View.VISIBLE) {
                                 disparo(marciano);

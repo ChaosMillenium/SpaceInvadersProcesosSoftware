@@ -18,7 +18,6 @@ public class GameOverScreen extends AppCompatActivity {
         puntosFinales.setText(msg);
     }
     public void GoTOMenu(View view) {
-
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();
