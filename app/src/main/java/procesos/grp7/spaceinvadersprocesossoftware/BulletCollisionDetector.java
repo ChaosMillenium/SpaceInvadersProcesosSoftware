@@ -54,10 +54,20 @@ public class BulletCollisionDetector extends CollisionDetector implements Runnab
             long diferenciaTiempo = tiempodecolision - tiempodecolisionanterior;
             if (diferenciaTiempo <= 100) {
                 tiempodecolisionanterior = tiempodecolision;
-                cambiarColorAleatorio();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cambiarColorAleatorio();
+                    }
+                });
             } else {
                 tiempodecolisionanterior = tiempodecolision;
-                cambiarColor();
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        cambiarColor();
+                    }
+                });
             }
         }
     }
