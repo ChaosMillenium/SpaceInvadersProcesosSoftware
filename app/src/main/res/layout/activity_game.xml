@@ -28,7 +28,7 @@
             android:layout_marginStart="82dp"
             android:layout_marginLeft="82dp"
             android:layout_marginBottom="27dp"
-            android:text="UP"
+            android:text="@string/button_up"
 
             />
 
@@ -42,7 +42,7 @@
             android:layout_marginStart="82dp"
             android:layout_marginLeft="82dp"
             android:layout_marginBottom="0dp"
-            android:text="DOWN" />
+            android:text="@string/button_down" />
 
         <Button
             android:id="@+id/button_izq"

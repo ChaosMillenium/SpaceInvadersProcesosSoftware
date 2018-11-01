@@ -18,4 +18,6 @@
     <string name="puntuacion">Points:</string>
     <string name="_0">0</string>
     <string name="puntuacionetiqueta">PUNTUACION:</string>
+    <string name="button_up">UP</string>
+    <string name="button_down">DOWN</string>
 </resources>
