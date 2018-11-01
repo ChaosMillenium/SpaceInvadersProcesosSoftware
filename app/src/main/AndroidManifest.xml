@@ -38,6 +38,11 @@
             android:name=".GameUnder13Activity"
             android:screenOrientation="landscape">
         </activity>
+        <activity
+            android:name=".RankingActivity"
+            android:screenOrientation="landscape"
+            android:label="@string/title_activity_ranking"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>
