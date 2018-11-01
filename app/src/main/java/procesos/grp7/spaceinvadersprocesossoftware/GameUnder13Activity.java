@@ -1,6 +1,5 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.AsyncTask;
@@ -24,13 +23,8 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
     Point size;
     Button buttonLeft;
     Button buttonRight;
-    Button buttonUp;
-    Button buttonDown;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
-    private boolean pressedUp = false;
-    private boolean pressedDown = false;
-
     private int speedShip; //Velocidad de la nave
     private List<ImageView> gameViews = Collections.synchronizedList(new ArrayList<ImageView>(32));
     private VistaDefensas defensas;
@@ -48,14 +42,10 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
         //Definicion de botones
         buttonLeft = findViewById(R.id.button_izq);
         buttonRight = findViewById(R.id.button_der);
-        buttonUp = findViewById(R.id.button_up);
-        buttonDown = findViewById(R.id.button_down);
-        //Listeners de los botones
+        //Listeners del boton izquierdo
         buttonLeft.setOnTouchListener(this);
+        //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
-        buttonUp.setOnTouchListener(this);
-        buttonDown.setOnTouchListener(this);
-
         FallingInvaders marcianos = new FallingInvaders(this, size.x, size.y, gameLayout, gameViews);
         speedShip = size.x/SPEEDSHIP_DENOM;
         marcianos.start();
@@ -91,30 +81,6 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
                         break;
                     case MotionEvent.ACTION_UP:
                         pressedLeft = false;
-                }
-                break;
-            case R.id.button_up:
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        if (!pressedUp) {
-                            pressedUp = true;
-                            new GameUnder13Activity.MovimientoNave().execute();
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        pressedUp = false;
-                }
-                break;
-            case R.id.button_down:
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
-                        if (!pressedDown) {
-                            pressedDown = true;
-                            new GameUnder13Activity.MovimientoNave().execute();
-                        }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        pressedDown = false;
                 }
                 break;
         }
@@ -170,22 +136,6 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
                     ex.printStackTrace();
                 }
             }
-            while (pressedUp) {
-                mueveArriba();
-                try {
-                    Thread.sleep(3);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
-            while (pressedDown) {
-                mueveAbajo();
-                try {
-                    Thread.sleep(3);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-            }
 
             return null;
         }
@@ -204,21 +154,6 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
             if (spriteShip.getX() < height) {
                 spriteShip.setX(spriteShip.getX() + speedShip);
             }
-        }
-
-        private void mueveAbajo() {
-            int height = gameLayout.getHeight() - spriteShip.getHeight();
-            if (spriteShip.getY() < height) {
-                spriteShip.setY(spriteShip.getY() + speedShip);
-            }
-        }
-
-        private void mueveArriba() {
-            if (spriteShip.getY() > 0) {
-                float desplazamiento = spriteShip.getY() - speedShip;
-                spriteShip.setY(desplazamiento);
-            }
-
         }
 
 

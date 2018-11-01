@@ -20,7 +20,7 @@ public class ShipCollisionDetector extends CollisionDetector implements Runnable
         while (!activity.dead) {
             ImageView collider = detectCollision(gameViews, shipSprite);
             if (collider != null) {
-                activity.kill(collider, shipSprite);
+                activity.kill(shipSprite, shipSprite);
                 return;
             }
         }
