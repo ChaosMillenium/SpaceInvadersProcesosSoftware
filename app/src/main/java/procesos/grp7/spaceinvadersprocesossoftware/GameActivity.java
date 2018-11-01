@@ -84,9 +84,8 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         buttonRight = findViewById(R.id.button_der);
         buttonUp = findViewById(R.id.button_up);
         buttonDown = findViewById(R.id.button_down);
-        //Listeners del boton izquierdo
+        //Listeners de los botones
         buttonLeft.setOnTouchListener(this);
-        //Listeners del boton derecho
         buttonRight.setOnTouchListener(this);
         buttonUp.setOnTouchListener(this);
         buttonDown.setOnTouchListener(this);
