@@ -25,7 +25,7 @@ public class Marciano {
         this.height = screenY / 20;
         this.isVisible = true;
         this.x = column * (length + (screenX / 1000));
-        this.y = row * (length + (screenX / 25) / 4);
+        this.y = row * (length + (screenX / 25) / 4) + 70;
         this.orientacion = "RIGHT";
     }
 
