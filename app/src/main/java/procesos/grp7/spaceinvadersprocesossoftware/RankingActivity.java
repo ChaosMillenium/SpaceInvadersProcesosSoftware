@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -29,32 +30,16 @@ public class RankingActivity extends AppCompatActivity {
         puntos = intent.getStringExtra("EXTRA_MESSAGE2");
         puntuaciones = new Usuario[10];
         Usuario user = new Usuario(name, puntos);
-        sacarPuntuaciones(puntuaciones);
+        sacarPuntuaciones();
         leerFile();
         colocarUsuario(user);
-        puntuar();
         writeFile();
+        puntuar();
+
 
     }
 
-    public void GoTOMenu(View view) {
-
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-
-        finish();
-    }
-
-    public void RestartGame(View view) {
-
-        Intent intent = new Intent(this, GameActivity.class);
-        String extra = "0";
-        intent.putExtra("EXTRA_MESSAGE", extra);
-        startActivityForResult(intent, 1);
-        finish();
-    }
-
-    public void sacarPuntuaciones(Usuario[] punts) {
+    public void sacarPuntuaciones() {
         for (int i = 0; i < 10; i++) {
             puntuaciones[i] = new Usuario("Vacío", 0 + "");
         }
@@ -77,45 +62,42 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     public void puntuar() {
-
-
-        TextView puntos = findViewById(R.id.punt1);
-        puntos.setText(puntuaciones[0].getMessage());
+        TextView puntos = findViewById(R.id.punt);
+        puntos.setText(("1- "+puntuaciones[0].getMessage()));
         TextView puntos0 = findViewById(R.id.punt2);
-        puntos0.setText(puntuaciones[1].getMessage());
+        puntos0.setText(("2- "+puntuaciones[1].getMessage()));
         TextView puntos1 = findViewById(R.id.punt3);
-        puntos1.setText(puntuaciones[2].getMessage());
+        puntos1.setText(("3- "+puntuaciones[2].getMessage()));
         TextView puntos2 = findViewById(R.id.punt4);
-        puntos2.setText(puntuaciones[3].getMessage());
+        puntos2.setText(("4- "+puntuaciones[3].getMessage()));
         TextView puntos3 = findViewById(R.id.punt5);
-        puntos3.setText(puntuaciones[4].getMessage());
+        puntos3.setText(("5- "+puntuaciones[4].getMessage()));
         TextView puntos4 = findViewById(R.id.punt6);
-        puntos4.setText(puntuaciones[5].getMessage());
+        puntos4.setText(("6- "+puntuaciones[5].getMessage()));
         TextView puntos5 = findViewById(R.id.punt7);
-        puntos5.setText(puntuaciones[6].getMessage());
+        puntos5.setText(("7- "+puntuaciones[6].getMessage()));
         TextView puntos6 = findViewById(R.id.punt8);
-        puntos6.setText(puntuaciones[7].getMessage());
+        puntos6.setText(("8- "+puntuaciones[7].getMessage()));
         TextView puntos7 = findViewById(R.id.punt9);
-        puntos7.setText(puntuaciones[8].getMessage());
+        puntos7.setText(("9- "+puntuaciones[8].getMessage()));
         TextView puntos8 = findViewById(R.id.punt10);
-        puntos8.setText(puntuaciones[9].getMessage());
+        puntos8.setText(("10- "+puntuaciones[9].getMessage()));
     }
 
 
     public void leerFile() {
         try {
-            InputStream fraw =
-                    getResources().openRawResource(R.raw.points);
-
-            BufferedReader brin =
-                    new BufferedReader(new InputStreamReader(fraw));
+            BufferedReader fin =
+                    new BufferedReader(
+                            new InputStreamReader(
+                                    openFileInput("puntos.txt")));
 
             for (int i = 0; i < 10; i++) {
-                puntuaciones[i] = new Usuario(brin.readLine(), brin.readLine());
+                puntuaciones[i] = new Usuario(fin.readLine(), fin.readLine());
             }
 
 
-            fraw.close();
+            fin.close();
         } catch (Exception ex) {
             Log.e("Ficheros", "Error al leer fichero desde recurso raw");
         }
@@ -125,11 +107,11 @@ public class RankingActivity extends AppCompatActivity {
         try {
             OutputStreamWriter fout =
                     new OutputStreamWriter(
-                            openFileOutput("/res/raw/points", Context.MODE_PRIVATE));
+                            openFileOutput("puntos.txt", Context.MODE_PRIVATE));
 
             for (int i = 0; i < 10; i++) {
-                fout.write(puntuaciones[i].getNombre() + "\n");
-                fout.write(puntuaciones[i].getPunts() + "\n");
+                fout.write((puntuaciones[i].getNombre() + "\n"));
+                fout.write((puntuaciones[i].getPunts() + "\n"));
             }
             fout.close();
         } catch (Exception ex) {
@@ -137,5 +119,21 @@ public class RankingActivity extends AppCompatActivity {
         }
 
 
+    }
+    public void GoTOMenu(View view) {
+
+        Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+
+        finish();
+    }
+
+    public void RestartGame(View view) {
+
+        Intent intent = new Intent(this, GameActivity.class);
+        String extra = "0";
+        intent.putExtra("EXTRA_MESSAGE", extra);
+        startActivityForResult(intent, 1);
+        finish();
     }
 }

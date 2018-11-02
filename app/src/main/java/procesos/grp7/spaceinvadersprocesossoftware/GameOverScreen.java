@@ -26,29 +26,18 @@ public class GameOverScreen extends AppCompatActivity {
 
 
 
-    }
-    public void GoTOMenu(View view) {
 
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-
-        finish();
     }
     public void GoTOPoints(View view) {
         final EditText nombreU = findViewById(R.id.Nombre);
         nombre = nombreU.getText().toString();
-        Intent intent = new Intent(this, RankingActivity.class);
-        intent.putExtra("EXTRA_MESSAGE", nombre);
-        intent.putExtra("EXTRA_MESSAGE2", puntuacion+"");
-        startActivity(intent);
-        finish();
+        if (!nombre.equals("")) {
+            Intent intent = new Intent(this, RankingActivity.class);
+            intent.putExtra("EXTRA_MESSAGE", nombre);
+            intent.putExtra("EXTRA_MESSAGE2", puntuacion + "");
+            startActivity(intent);
+            finish();
+        }
     }
-    public void RestartGame(View view) {
 
-        Intent intent = new Intent(this, GameActivity.class);
-        String extra = "0";
-        intent.putExtra("EXTRA_MESSAGE", extra);
-        startActivityForResult(intent, 1);
-        finish();
-    }
 }

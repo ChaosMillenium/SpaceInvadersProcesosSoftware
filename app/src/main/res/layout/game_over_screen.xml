@@ -13,27 +13,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/GameOverImage"
-        app:srcCompat="@drawable/game_over" />
-
-    <Button
-        android:id="@+id/restart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/GameOverImage"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="99dp"
-        android:onClick="RestartGame"
-        android:text="@string/restart" />
-
-    <Button
-        android:id="@+id/Menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/GameOverImage"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="103dp"
-        android:onClick="GoTOMenu"
-        android:text="@string/menu" />
+        app:srcCompat="@drawable/game_over"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/Ranking"
@@ -79,7 +60,8 @@
         android:layout_marginBottom="173dp"
         android:text="Introduce tu nombre"
         android:textColor="@color/colorAccent"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:layout_alignLeft="@+id/etiquetaPuntuacion" />
 
     <EditText
         android:id="@+id/Nombre"
@@ -90,6 +72,7 @@
         android:layout_marginBottom="116dp"
         android:ems="10"
         android:inputType="text"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:layout_alignLeft="@+id/etiquetaPuntuacion" />
 
 </RelativeLayout>
