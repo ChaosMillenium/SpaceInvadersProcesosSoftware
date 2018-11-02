@@ -57,9 +57,10 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
         buttonDown.setOnTouchListener(this);
 
         FallingInvaders marcianos = new FallingInvaders(this, size.x, size.y, gameLayout, gameViews);
-        speedShip = size.x/SPEEDSHIP_DENOM;
         marcianos.start();
+        speedShip = size.x / SPEEDSHIP_DENOM;
         defensas = new VistaDefensas(gameLayout, this, size.x, size.y, gameViews);
+        gameViews.addAll(defensas.getVistaDefensa());
         Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
         shipCollisionDetector.start();
     }
@@ -130,17 +131,12 @@ public class GameUnder13Activity extends PlayActivity implements View.OnTouchLis
                     ((Defensas) collider1).getSprite().setVisibility(View.INVISIBLE);
                 }
                 if (collider2 == spriteShip) {
-                    try {
-                        if (!dead) {
-                            collider2.setVisibility(View.INVISIBLE);
-                            dead = true;
-                            Thread.sleep(1000);
-                            Intent deathIntent = new Intent(GameUnder13Activity.this, GameOverScreenUnderThirteen.class);
-                            finish();
-                            startActivity(deathIntent);
-                        }
-                    } catch (InterruptedException ex) {
-                        ex.printStackTrace();
+                    if (!dead) {
+                        collider2.setVisibility(View.INVISIBLE);
+                        dead = true;
+                        Intent deathIntent = new Intent(GameUnder13Activity.this, GameOverScreenUnderThirteen.class);
+                        finish();
+                        startActivity(deathIntent);
                     }
                 } else {
                     gameViews.remove(collider2);
