@@ -11,39 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="345dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
         android:contentDescription="@string/GameOverImage"
-        app:srcCompat="@drawable/game_over" />
+        app:srcCompat="@drawable/game_over"
+        android:layout_alignParentLeft="true" />
 
     <Button
-        android:id="@+id/restart"
+        android:id="@+id/Ranking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="163dp"
-        android:layout_marginLeft="163dp"
-        android:layout_marginBottom="11dp"
-        android:onClick="RestartGame"
-        android:text="@string/restart" />
-
-    <Button
-        android:id="@+id/Menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="156dp"
-        android:layout_marginRight="156dp"
-        android:layout_marginBottom="11dp"
-        android:onClick="GoTOMenu"
-        android:text="@string/menu" />
+        android:layout_alignBottom="@+id/GameOverImage"
+        android:layout_centerHorizontal="true"
+        android:onClick="GoTOPoints"
+        android:text="ranking" />
 
     <TextView
         android:id="@+id/etiquetaPuntuacion"
@@ -69,4 +49,30 @@
         android:textColor="@android:color/white"
         android:text="@string/_0"
         android:layout_alignLeft="@+id/etiquetaPuntuacion" />
+
+    <TextView
+        android:id="@+id/TituloNombre"
+        style="@android:style/Widget.DeviceDefault.Light.TextView"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/etiquetaPuntuacion"
+        android:layout_marginBottom="173dp"
+        android:text="Introduce tu nombre"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:layout_alignLeft="@+id/etiquetaPuntuacion" />
+
+    <EditText
+        android:id="@+id/Nombre"
+        android:layout_width="211dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/etiquetaPuntuacion"
+        android:layout_marginBottom="116dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        android:layout_alignLeft="@+id/etiquetaPuntuacion" />
+
 </RelativeLayout>
