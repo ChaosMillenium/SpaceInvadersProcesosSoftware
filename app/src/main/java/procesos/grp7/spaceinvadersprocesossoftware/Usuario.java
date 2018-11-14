@@ -1,8 +1,5 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-
-import android.graphics.Bitmap;
-
 public class Usuario<E> implements Comparable<E>{
 
     private String nombre;

@@ -1,28 +1,17 @@
 package procesos.grp7.spaceinvadersprocesossoftware;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapRegionDecoder;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.graphics.Bitmap;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
 
 public class RankingActivity extends AppCompatActivity {
 
@@ -162,22 +151,6 @@ public class RankingActivity extends AppCompatActivity {
 
         } catch (Exception e) {
         }
-        /*
-        try {
-            BufferedReader fin =
-                    new BufferedReader(
-                            new InputStreamReader(
-                                    openFileInput("puntos.bin")));
-
-            for (int i = 0; i < 10; i++) {
-                puntuaciones[i] = new Usuario(fin.readLine(), fin.readLine());
-            }
-
-
-            fin.close();
-        } catch (Exception ex) {
-            Log.e("Ficheros", "Error al leer fichero desde recurso raw");
-        }*/
     }
 
     public void writeFile() {
@@ -192,7 +165,6 @@ public class RankingActivity extends AppCompatActivity {
                 puntuaciones[i].getPerfil().writeObject(fileout);
             }
             fileout.close();
-            System.out.println("Copia de seguridad realizada con exito");
             fileout.close();
             fileoutputstream.close();
         } catch (Exception ex) {
@@ -201,24 +173,6 @@ public class RankingActivity extends AppCompatActivity {
             System.out.println(ex.toString());
         }
     }
-    /*public void writeFile() {
-        try {
-
-            OutputStreamWriter fout =
-                    new OutputStreamWriter(
-                            openFileOutput("puntos.bin", Context.MODE_PRIVATE));
-
-            for (int i = 0; i < 10; i++) {
-                fout.write((puntuaciones[i].getNombre() + "\n"));
-                fout.write((puntuaciones[i].getPunts() + "\n"));
-            }
-            fout.close();*/
-        /*} catch (Exception ex) {
-            Log.e("Ficheros", "Error al escribir fichero a memoria interna");
-        }
-
-
-    }*/
 
     public void GoTOMenu(View view) {
 
