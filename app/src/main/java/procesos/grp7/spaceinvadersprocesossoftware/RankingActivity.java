@@ -2,22 +2,33 @@ package procesos.grp7.spaceinvadersprocesossoftware;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapRegionDecoder;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.graphics.Bitmap;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 
 public class RankingActivity extends AppCompatActivity {
 
     private String puntos;
     private String name;
+    private BitMapDataObject perfil;
 
     private Usuario[] puntuaciones;
 
@@ -28,8 +39,9 @@ public class RankingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("EXTRA_MESSAGE");
         puntos = intent.getStringExtra("EXTRA_MESSAGE2");
+        perfil = new BitMapDataObject((Bitmap) intent.getExtras().get("PHOTO"));
         puntuaciones = new Usuario[10];
-        Usuario user = new Usuario(name, puntos);
+        Usuario user = new Usuario(name, puntos, perfil);
         sacarPuntuaciones();
         leerFile();
         colocarUsuario(user);
@@ -40,8 +52,15 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     public void sacarPuntuaciones() {
+        ImageView perfil9 = findViewById(R.id.imageView9);
+        perfil9.buildDrawingCache();
+        Bitmap bmap = perfil9.getDrawingCache();
+        BitMapDataObject b = new BitMapDataObject(bmap);
+
         for (int i = 0; i < 10; i++) {
-            puntuaciones[i] = new Usuario("Vacío", 0 + "");
+
+            puntuaciones[i] = new Usuario("Vacío", 0 + "", b);
+
         }
     }
 
@@ -63,34 +82,92 @@ public class RankingActivity extends AppCompatActivity {
 
     public void puntuar() {
         TextView puntos = findViewById(R.id.punt);
-        puntos.setText(("1- "+puntuaciones[0].getMessage()));
+        puntos.setText(("1- " + puntuaciones[0].getMessage()));
+        ImageView perfil1 = findViewById(R.id.imageView);
+        perfil1.setImageBitmap(puntuaciones[0].getPerfil().getCurrentImage());
+
         TextView puntos0 = findViewById(R.id.punt2);
-        puntos0.setText(("2- "+puntuaciones[1].getMessage()));
+        puntos0.setText(("2- " + puntuaciones[1].getMessage()));
+        ImageView perfil2 = findViewById(R.id.imageView2);
+        perfil2.setImageBitmap(puntuaciones[1].getPerfil().getCurrentImage());
+
         TextView puntos1 = findViewById(R.id.punt3);
-        puntos1.setText(("3- "+puntuaciones[2].getMessage()));
+        puntos1.setText(("3- " + puntuaciones[2].getMessage()));
+        ImageView perfil3 = findViewById(R.id.imageView3);
+        perfil3.setImageBitmap(puntuaciones[2].getPerfil().getCurrentImage());
+
         TextView puntos2 = findViewById(R.id.punt4);
-        puntos2.setText(("4- "+puntuaciones[3].getMessage()));
+        puntos2.setText(("4- " + puntuaciones[3].getMessage()));
+        ImageView perfil4 = findViewById(R.id.imageView4);
+
+        perfil4.setImageBitmap(puntuaciones[3].getPerfil().getCurrentImage());
+
         TextView puntos3 = findViewById(R.id.punt5);
-        puntos3.setText(("5- "+puntuaciones[4].getMessage()));
+        puntos3.setText(("5- " + puntuaciones[4].getMessage()));
+        ImageView perfil5 = findViewById(R.id.imageView5);
+
+        perfil5.setImageBitmap(puntuaciones[4].getPerfil().getCurrentImage());
+
         TextView puntos4 = findViewById(R.id.punt6);
-        puntos4.setText(("6- "+puntuaciones[5].getMessage()));
+        puntos4.setText(("6- " + puntuaciones[5].getMessage()));
+        ImageView perfil6 = findViewById(R.id.imageView6);
+
+        perfil6.setImageBitmap(puntuaciones[5].getPerfil().getCurrentImage());
+
         TextView puntos5 = findViewById(R.id.punt7);
-        puntos5.setText(("7- "+puntuaciones[6].getMessage()));
+        puntos5.setText(("7- " + puntuaciones[6].getMessage()));
+        ImageView perfil7 = findViewById(R.id.imageView7);
+
+        perfil7.setImageBitmap(puntuaciones[6].getPerfil().getCurrentImage());
+
         TextView puntos6 = findViewById(R.id.punt8);
-        puntos6.setText(("8- "+puntuaciones[7].getMessage()));
+        puntos6.setText(("8- " + puntuaciones[7].getMessage()));
+        ImageView perfil8 = findViewById(R.id.imageView8);
+
+        perfil8.setImageBitmap(puntuaciones[7].getPerfil().getCurrentImage());
+
         TextView puntos7 = findViewById(R.id.punt9);
-        puntos7.setText(("9- "+puntuaciones[8].getMessage()));
+        puntos7.setText(("9- " + puntuaciones[8].getMessage()));
+        ImageView perfil9 = findViewById(R.id.imageView9);
+
+        perfil9.setImageBitmap(puntuaciones[8].getPerfil().getCurrentImage());
+
         TextView puntos8 = findViewById(R.id.punt10);
-        puntos8.setText(("10- "+puntuaciones[9].getMessage()));
+        puntos8.setText(("10- " + puntuaciones[9].getMessage()));
+        ImageView perfil10 = findViewById(R.id.imageView10);
+
+        perfil10.setImageBitmap(puntuaciones[9].getPerfil().getCurrentImage());
+
     }
 
 
     public void leerFile() {
         try {
+            File directory = this.getFilesDir();
+            File file = new File(directory, "Ranking.bin");
+            ObjectInputStream filein = new ObjectInputStream(new FileInputStream(file));
+            for (int i = 0; i < 10; i++) {
+                ImageView perfil9 = findViewById(R.id.imageView9);
+                perfil9.buildDrawingCache();
+                Bitmap bmap = perfil9.getDrawingCache();
+                BitMapDataObject p = new BitMapDataObject(bmap);
+                Object nombre = filein.readObject();
+                Object puntuacion = filein.readObject();
+                p.readObject(filein);
+                puntuaciones[i] = new Usuario((String) nombre, (String) puntuacion, p);
+
+            }
+            filein.close();
+
+
+        } catch (Exception e) {
+        }
+        /*
+        try {
             BufferedReader fin =
                     new BufferedReader(
                             new InputStreamReader(
-                                    openFileInput("puntos.txt")));
+                                    openFileInput("puntos.bin")));
 
             for (int i = 0; i < 10; i++) {
                 puntuaciones[i] = new Usuario(fin.readLine(), fin.readLine());
@@ -100,26 +177,49 @@ public class RankingActivity extends AppCompatActivity {
             fin.close();
         } catch (Exception ex) {
             Log.e("Ficheros", "Error al leer fichero desde recurso raw");
-        }
+        }*/
     }
 
     public void writeFile() {
         try {
+            File directory = this.getFilesDir();
+            File file = new File(directory, "Ranking.bin");
+            FileOutputStream fileoutputstream = new FileOutputStream(file);
+            ObjectOutputStream fileout = new ObjectOutputStream(fileoutputstream);
+            for (int i = 0; i < 10; i++) {
+                fileout.writeObject(puntuaciones[i].getNombre());
+                fileout.writeObject(puntuaciones[i].getPunts());
+                puntuaciones[i].getPerfil().writeObject(fileout);
+            }
+            fileout.close();
+            System.out.println("Copia de seguridad realizada con exito");
+            fileout.close();
+            fileoutputstream.close();
+        } catch (Exception ex) {
+            System.out.println("Error serializando");
+            System.out.println(ex.getMessage());
+            System.out.println(ex.toString());
+        }
+    }
+    /*public void writeFile() {
+        try {
+
             OutputStreamWriter fout =
                     new OutputStreamWriter(
-                            openFileOutput("puntos.txt", Context.MODE_PRIVATE));
+                            openFileOutput("puntos.bin", Context.MODE_PRIVATE));
 
             for (int i = 0; i < 10; i++) {
                 fout.write((puntuaciones[i].getNombre() + "\n"));
                 fout.write((puntuaciones[i].getPunts() + "\n"));
             }
-            fout.close();
-        } catch (Exception ex) {
+            fout.close();*/
+        /*} catch (Exception ex) {
             Log.e("Ficheros", "Error al escribir fichero a memoria interna");
         }
 
 
-    }
+    }*/
+
     public void GoTOMenu(View view) {
 
         Intent intent = new Intent(this, MenuActivity.class);
