@@ -10,7 +10,7 @@ public class CronoMusic extends Thread {
     public CronoMusic(MediaPlayer m, MenuActivity activity){
         this.music = m;
         this.activity = activity;
-        this.songs = new int[3];
+        this.songs = new int[5];
         rellenaSongs();
     }
 
@@ -18,6 +18,8 @@ public class CronoMusic extends Thread {
         this.songs[0] = R.raw.shovel;
         this.songs[1] = R.raw.got;
         this.songs[2] = R.raw.undertale;
+        this.songs[3] = R.raw.shootingstars;
+        this.songs[4] = R.raw.pokemon;
     }
 
     public void run(){
@@ -26,8 +28,8 @@ public class CronoMusic extends Thread {
             try {
                 this.music.start();
                 Thread.sleep(20000);
-                if(i == 2){
-                    i=0;
+                if(i == 4){
+                    i = 0;
                 }
                 else {
                     i++;
