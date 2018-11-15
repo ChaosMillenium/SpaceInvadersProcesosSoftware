@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -90,9 +91,11 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         buttonUp.setOnTouchListener(this);
         buttonDown.setOnTouchListener(this);
         final Button shoot = findViewById(R.id.button_shoot);
+        final MediaPlayer sound = MediaPlayer.create(this, R.raw.shoot);
         shoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sound.start();
                 disparar();
                 shoot.setEnabled(false);
                 shoot.postDelayed(new Runnable() {
