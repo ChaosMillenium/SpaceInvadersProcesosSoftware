@@ -20,9 +20,10 @@ public class VistaMarcianoEspecial extends Thread{
     private Cronometro c;
     private List<ImageView> aliados;
     private ImageView[] bordes;
+    private boolean rebote;
 
 
-    public VistaMarcianoEspecial(GameActivity context, int screenX, int screenY, RelativeLayout layout, List<ImageView> views, List<ImageView> aliados, ImageView[] bordes) {
+    public VistaMarcianoEspecial(GameActivity context, int screenX, int screenY, RelativeLayout layout, List<ImageView> views, List<ImageView> aliados, ImageView[] bordes,boolean reb) {
         this.layout = layout;
         this.context = context;
         this.screenX = screenX;
@@ -37,10 +38,11 @@ public class VistaMarcianoEspecial extends Thread{
         this.aliados = aliados;
         this.aliados.addAll(this.vistasMarciano);
         this.bordes = bordes;
+        this.rebote=reb;
     }
 
     public void disparo() {
-        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN, gameViews, aliados, true, bordes);
+        final Bullet bullet = new Bullet(this.context, this.layout, Bullet.DOWN, gameViews, aliados, true, bordes,rebote);
         float coordX = this.marciano.getX();
         float sizeX = this.marciano.getLength();
         float coordsY = this.marciano.getY();
