@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.io.File;
@@ -16,6 +17,7 @@ import java.io.ObjectOutputStream;
 public class RankingActivity extends AppCompatActivity {
 
     private String puntos;
+    private int points;
     private String name;
     private BitMapDataObject perfil;
 
@@ -28,6 +30,8 @@ public class RankingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("EXTRA_MESSAGE");
         puntos = intent.getStringExtra("EXTRA_MESSAGE2");
+        points = Integer.parseInt(puntos);
+        opcionesPorPuntos();
         perfil = new BitMapDataObject((Bitmap) intent.getExtras().get("PHOTO"));
         puntuaciones = new Usuario[10];
         Usuario user = new Usuario(name, puntos, perfil);
@@ -36,6 +40,7 @@ public class RankingActivity extends AppCompatActivity {
         colocarUsuario(user);
         writeFile();
         puntuar();
+
 
 
     }
@@ -59,13 +64,15 @@ public class RankingActivity extends AppCompatActivity {
             i--;
         }
         i++;
-        if (i >= 0) {
+        if (i<10) {
+            if (i >= 0) {
 
-            if (i != 9)
-                for (int j = 8; j >= i; j--) {
-                    puntuaciones[j + 1] = puntuaciones[j];
-                }
-            puntuaciones[i] = user;
+                if (i != 9)
+                    for (int j = 8; j >= i; j--) {
+                        puntuaciones[j + 1] = puntuaciones[j];
+                    }
+                puntuaciones[i] = user;
+            }
         }
     }
 
@@ -171,6 +178,15 @@ public class RankingActivity extends AppCompatActivity {
             System.out.println("Error serializando");
             System.out.println(ex.getMessage());
             System.out.println(ex.toString());
+        }
+    }
+
+    public void opcionesPorPuntos (){
+        if (this.points>=500){
+
+            Button botMenu = findViewById(R.id.points2);
+            botMenu.setVisibility(View.VISIBLE);
+            //mostrar dos botones
         }
     }
 

@@ -174,17 +174,18 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:onClick="RestartGame"
-            android:text="RESTART" />
+            android:text="RESTART"
+            android:visibility="invisible" />
 
         <Button
             android:id="@+id/points"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/puntuaciones"
-            android:layout_alignLeft="@+id/puntuaciones"
-            android:layout_alignBottom="@+id/GameOverImage"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:onClick="GoTOMenu"
             android:text="MENU"
+            android:visibility="visible"
             tools:ignore="NotSibling" />
     </RelativeLayout>
 
