@@ -20,7 +20,7 @@ import android.widget.TextView;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
-import java.util.TimerTask;
+import java.lang.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class GameActivity extends PlayActivity implements View.OnTouchListener {
@@ -46,6 +46,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     private int speedShip;
     private ImageView[] bordes;
     private static final int SPEEDSHIP_DENOM = 500; //denominador para calcular velocidad: mayor valor, menor velocidad
+    //private float shipInitY; // posicion inicial de la nave en el eje Y, para el teletransporte
 
 
     @Override
@@ -66,6 +67,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         marcadorPuntos = findViewById(R.id.Puntos);
         gameViews = new CopyOnWriteArrayList<>();
         gameViews.add(spriteShip);
+
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
@@ -105,6 +107,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         });
         dead = false;
         Thread shipCollisionDetector = new Thread(new ShipCollisionDetector(this, gameViews, spriteShip));
+        //shipInitY = gameLayout.getHeight() - spriteShip.getHeight();
         shipCollisionDetector.start();
     }
 
@@ -224,6 +227,9 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
 
     private class MovimientoNave extends AsyncTask<Void, Void, Void> {
 
+        private Random randomPosition = new Random();
+
+
         @Override
         protected Void doInBackground(Void... voids) {
             while (pressedRight) {
@@ -236,6 +242,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             }
             while (pressedLeft) {
                 mueveIzquierda();
+
                 try {
                     Thread.sleep(3);
                 } catch (InterruptedException ex) {
@@ -266,15 +273,19 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             if (spriteShip.getX() > 0) {
                 float desplazamiento = spriteShip.getX() - speedShip;
                 spriteShip.setX(desplazamiento);
+            }else{
+                teleport();
             }
 
         }
 
 
         private void mueveDerecha() {
-            int height = gameLayout.getWidth() - spriteShip.getWidth();
-            if (spriteShip.getX() < height) {
+            int width = gameLayout.getWidth() - spriteShip.getWidth();
+            if (spriteShip.getX() < width) {
                 spriteShip.setX(spriteShip.getX() + speedShip);
+            }else{
+                teleport();
             }
         }
 
@@ -289,8 +300,16 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
             if (spriteShip.getY() > 0) {
                 float desplazamiento = spriteShip.getY() - speedShip;
                 spriteShip.setY(desplazamiento);
+            }else{
+                teleport();
             }
 
+        }
+
+        private void teleport(){
+            float newX = (float)randomPosition.nextInt(gameLayout.getWidth()-2)+1;
+            spriteShip.setX(newX);
+            spriteShip.setY(gameLayout.getHeight() - spriteShip.getHeight()-30);
         }
     }
 }
