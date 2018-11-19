@@ -57,7 +57,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         String message = intent.getStringExtra("EXTRA_MESSAGE");
         puntos = Integer.parseInt(message);
         String mensajeReb = intent.getStringExtra("REBOTE");
-        rebotes= (mensajeReb.equals("SI"));
+        rebotes = mensajeReb.equals("SI");
         System.out.println(rebotes);
         String puntosString = Integer.toString(puntos);
         marcadorPuntos = findViewById(R.id.Puntos);
@@ -189,6 +189,12 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                         dead = true;
                         Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
                         deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
+                        String mensajeReb;
+                        if(rebotes)
+                            mensajeReb = "SI";
+                        else
+                            mensajeReb = "NO";
+                        deathIntent.putExtra("REBOTE", mensajeReb);
                         finish();
                         startActivityForResult(deathIntent, 1);
                     }

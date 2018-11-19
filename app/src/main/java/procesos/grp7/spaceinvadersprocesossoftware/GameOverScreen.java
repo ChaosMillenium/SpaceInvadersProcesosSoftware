@@ -16,6 +16,7 @@ public class GameOverScreen extends AppCompatActivity {
     String nombre;
     int puntuacion;
     Usuario user;
+    String rebote;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +24,7 @@ public class GameOverScreen extends AppCompatActivity {
         puntosFinales = findViewById(R.id.puntuacionfinal);
         Intent intent = getIntent();
         String msg  = intent.getStringExtra("EXTRA_POINTS");
+        rebote = intent.getStringExtra("REBOTE");
         puntosFinales.setText(msg);
         puntuacion = Integer.parseInt(msg);
 
@@ -54,6 +56,7 @@ public class GameOverScreen extends AppCompatActivity {
             intent.putExtra("PHOTO", imageBitmap);
             intent.putExtra("EXTRA_MESSAGE", nombre);
             intent.putExtra("EXTRA_MESSAGE2", puntuacion + "");
+            intent.putExtra("REBOTE", rebote);
             startActivity(intent);
             finish();
         }

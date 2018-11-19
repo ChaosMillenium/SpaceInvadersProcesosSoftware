@@ -20,7 +20,7 @@ public class RankingActivity extends AppCompatActivity {
     private int points;
     private String name;
     private BitMapDataObject perfil;
-
+    private String rebote;
     private Usuario[] puntuaciones;
 
 
@@ -30,6 +30,7 @@ public class RankingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("EXTRA_MESSAGE");
         puntos = intent.getStringExtra("EXTRA_MESSAGE2");
+        rebote = intent.getStringExtra("REBOTE");
         points = Integer.parseInt(puntos);
         opcionesPorPuntos();
         perfil = new BitMapDataObject((Bitmap) intent.getExtras().get("PHOTO"));
@@ -203,6 +204,7 @@ public class RankingActivity extends AppCompatActivity {
         Intent intent = new Intent(this, GameActivity.class);
         String extra = "0";
         intent.putExtra("EXTRA_MESSAGE", extra);
+        intent.putExtra("REBOTE", rebote);
         startActivityForResult(intent, 1);
         finish();
     }
