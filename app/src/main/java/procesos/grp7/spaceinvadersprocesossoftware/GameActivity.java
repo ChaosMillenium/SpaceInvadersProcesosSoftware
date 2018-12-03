@@ -37,6 +37,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
     Button buttonRight;
     Button buttonUp;
     Button buttonDown;
+    private boolean rebotes;
     private boolean pressedLeft = false;
     private boolean pressedRight = false;
     private boolean pressedUp = false;
@@ -56,6 +57,9 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         Intent intent = getIntent();
         String message = intent.getStringExtra("EXTRA_MESSAGE");
         puntos = Integer.parseInt(message);
+        String mensajeReb = intent.getStringExtra("REBOTE");
+        rebotes = mensajeReb.equals("SI");
+        System.out.println(rebotes);
         String puntosString = Integer.toString(puntos);
         marcadorPuntos = findViewById(R.id.Puntos);
         marcadorPuntos.setText(puntosString);
@@ -70,10 +74,10 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
         display = getWindowManager().getDefaultDisplay();
         size = new Point();
         display.getSize(size);
-        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews, bordes);
+        marcianitos = new VistaInvader(this, size.x, size.y, gameLayout, gameViews, bordes,rebotes);
         this.vistasMarcianos = marcianitos.getVistasMarcianos();
         gameViews.addAll(marcianitos.getVistasMarcianos());
-        marcianoEspecial = new VistaMarcianoEspecial(this, size.x, size.y, gameLayout, gameViews, this.vistasMarcianos, bordes);
+        marcianoEspecial = new VistaMarcianoEspecial(this, size.x, size.y, gameLayout, gameViews, this.vistasMarcianos, bordes,rebotes);
         gameViews.addAll(marcianoEspecial.getVistasMarciano());
         marcianitos.start();
         marcianoEspecial.start();
@@ -168,7 +172,7 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
 
     public void disparar() {
         if (!dead) {
-            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false, bordes);
+            final Bullet bullet = new Bullet(this, gameLayout, Bullet.UP, gameViews, vistasMarcianos, false, bordes,rebotes);
             float coordX = spriteShip.getX();
             float sizeX = spriteShip.getWidth();
             float coordY = spriteShip.getY() - 25;
@@ -188,6 +192,12 @@ public class GameActivity extends PlayActivity implements View.OnTouchListener {
                         dead = true;
                         Intent deathIntent = new Intent(GameActivity.this, GameOverScreen.class);
                         deathIntent.putExtra("EXTRA_POINTS", Integer.toString(puntos));
+                        String mensajeReb;
+                        if(rebotes)
+                            mensajeReb = "SI";
+                        else
+                            mensajeReb = "NO";
+                        deathIntent.putExtra("REBOTE", mensajeReb);
                         finish();
                         startActivityForResult(deathIntent, 1);
                     }

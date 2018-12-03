@@ -28,8 +28,9 @@ public class Bullet {
     private boolean fromNave;
     private ImageView[] bordes;
     private Animator animator;
+    private boolean rebote;
 
-    public Bullet(PlayActivity context, RelativeLayout gameLayout, int direction, List<ImageView> gameViews, List<ImageView> vistasMarcianos, boolean fromMarciano, ImageView[] bordes) {
+    public Bullet(PlayActivity context, RelativeLayout gameLayout, int direction, List<ImageView> gameViews, List<ImageView> vistasMarcianos, boolean fromMarciano, ImageView[] bordes, boolean rebote) {
         this.context = context;
         this.gameLayout = gameLayout;
         this.direction = direction;
@@ -40,6 +41,7 @@ public class Bullet {
         this.fromMarciano = fromMarciano;
         this.fromNave = !fromMarciano;
         this.bordes = bordes;
+        this.rebote = rebote;
     }
 
     public void generateView(float coordsX, float sizeShipX, float coordsY) {
@@ -80,18 +82,23 @@ public class Bullet {
                     collisionDetector.bounce();
                     fromMarciano = false;
                     fromNave = false;
-                    Random r = new Random();
-                    float offsetX=r.nextFloat();
-                    ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletView, "translationX", bulletView.getX(), offsetX*screenSize.x);
-                    ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletView, "translationY", bulletView.getY(), bordes[direction].getY());
-                    AnimatorSet animatorSet = new AnimatorSet();
-                    animatorSet.playTogether(animatorX,animatorY);
-                    animatorSet.setInterpolator(new LinearInterpolator());
-                    animatorSet.setDuration(DURATION);
-                    animatorSet.addListener(this);
-                    animator = animatorSet;
-                    animator.start();
+                    if (rebote) {
+                        Random r = new Random();
+                        float offsetX = r.nextFloat();
+                        ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletView, "translationX", bulletView.getX(), offsetX * screenSize.x);
+                        ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletView, "translationY", bulletView.getY(), bordes[direction].getY());
+                        AnimatorSet animatorSet = new AnimatorSet();
+                        animatorSet.playTogether(animatorX, animatorY);
+                        animatorSet.setInterpolator(new LinearInterpolator());
+                        animatorSet.setDuration(DURATION);
+                        animatorSet.addListener(this);
+                        animator = animatorSet;
+                        animator.start();
+                    }else{
+                        gameLayout.removeView(bulletView);
+                    }
                 }
+
             }
 
             @Override
